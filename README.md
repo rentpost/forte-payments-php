@@ -17,9 +17,7 @@ composer require rentpost/forte-payments-php
 ### Author
 
 Sam Anthony (On behalf of Rentpost)
-
 <sam@expertcoder.io>
-
 https://github.com/expertcoder
 
 
