@@ -15,7 +15,7 @@
         }
     ],
     "require": {
-        "php":                          ">=7.0.0",
+        "php":                          ">=7.2.0",
         "guzzlehttp/guzzle":            "~6.3",
         "monolog/monolog":              "^1.23",
         "doctrine/common":              "^2.8",
@@ -23,7 +23,7 @@
         "symfony/property-access":      "~4.1",
         "symfony/property-info":        "~4.1",
         "symfony/serializer":           "dev-master",
-        "symfony/dumper":               "~4.1",
+        "symfony/var-dumper":           "~4.1",
         "symfony/yaml":                 "~4.1"
     },
     "require-dev": {
