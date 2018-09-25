@@ -1,0 +1,11 @@
+##################################
+#      ForteApi Git Ignore       #
+##################################
+
+# Composer
+composer.lock
+vendor/*
+
+# Configs
+test/settings.php
+test/UserSettings.php
