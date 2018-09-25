@@ -17,18 +17,21 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 class ValidatingSerializer
 {
+    
     /** @var Serializer */
     protected $internalSerializer;
 
     /** @var Validator */
     protected $internalValidator;
 
+    
     public function __construct(Serializer $serializer, ValidatorInterface $validator)
     {
         $this->internalSerializer = $serializer;
         $this->internalValidator = $validator;
     }
 
+    
     public function serialize(ValidatableSerializableInterface $object): string
     {
         $this->validate($object);
@@ -42,6 +45,7 @@ class ValidatingSerializer
         return $this->internalSerializer->deserialize($json, $responseFqns, 'json');
     }
 
+    
     /**
      * Validates the object, throws exception on validation error
      *
@@ -64,6 +68,7 @@ class ValidatingSerializer
         throw new ValidationException($exceptionMessage);
     }
 
+    
     /**
      * @inheritDoc
      */
@@ -87,6 +92,4 @@ class ValidatingSerializer
 
         return $this->internalSerializer->normalize($filter);
     }
-
-
 }

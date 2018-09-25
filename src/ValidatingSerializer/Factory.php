@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class Factory
 {
+    
     public function make(): ValidatingSerializer
     {
         $validator = $this->makeValidator();
@@ -21,6 +22,7 @@ class Factory
         return $validatingSerializer;
     }
 
+    
     protected function makeValidator(): ValidatorInterface
     {
         $builder = Validation::createValidatorBuilder();

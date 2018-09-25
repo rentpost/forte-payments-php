@@ -6,5 +6,4 @@ namespace Rentpost\ForteApi\ValidatingSerializer;
 
 interface ValidatableSerializableInterface
 {
-
 }

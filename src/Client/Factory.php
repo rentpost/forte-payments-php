@@ -18,7 +18,7 @@ class Factory
 {
 
     /**
-     * @param array $settings Nested associative array, see `settings.yml.dist`
+     * @param array $settings Nested associative array, see `settings.php.dist`
      * @param LoggerInterface $logger
      */
     public function make(array $settings, LoggerInterface $logger): ForteClient

@@ -63,7 +63,7 @@ class HttpClient
         $json = $response->getBody()->__toString();
 
         $model = $this->validatingSerializer->deserialize($json, $responseModelFqns);
-
+       
         if ($response->getStatusCode() < 200
             || $response->getStatusCode() >= 300
         ) {

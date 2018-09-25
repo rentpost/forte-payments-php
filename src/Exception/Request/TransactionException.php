@@ -13,11 +13,15 @@ class TransactionException extends AbstractRequestException
         \Psr\Http\Message\ResponseInterface $response,
         Model\AbstractModel $model
     ) {
-        $message =
-            'Forte Transaction Problem (' . $response->getStatusCode() . ' HTTP Response): ' .
-            $model->getResponse()->getResponseCode() . ' ' .
-            $model->getResponse()->getResponseDesc();
-
+        $message = 'Forte Transaction Problem (' . $response->getStatusCode() . ' HTTP Response)';
+        
+        if ($model->getResponse()) {
+            $message .= ': ';
+            $message .= $model->getResponse()->getResponseCode();
+            $message .= ' ';
+            $message .= $model->getResponse()->getResponseDesc();
+        }
+        
         parent::__construct($response, $model, $message);
     }
 }

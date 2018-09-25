@@ -8,9 +8,8 @@ use Rentpost\ForteApi\ValidatingSerializer\ValidatableSerializableInterface;
 
 abstract class AbstractModel implements ValidatableSerializableInterface
 {
-    /**
-     * @var Response|null
-     */
+    
+    /** @var Response|null */
     protected $response;
 
 

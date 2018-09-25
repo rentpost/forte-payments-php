@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class Transaction extends AbstractModel
 {
+    
     /**
      * @var Attribute\Id\OrganizationId
      */
@@ -748,6 +749,4 @@ class Transaction extends AbstractModel
 
         return $this;
     }
-
-
 }

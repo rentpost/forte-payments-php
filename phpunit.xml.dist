@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit
+    bootstrap="test/bootstrap.php"
+    verbose="true"
+    colors="true"
+    stopOnFailure="true"
+>
+    <groups>
+        <exclude>
+            <group>skip</group>
+        </exclude>
+    </groups>
+    
+    <testsuites>
+        <!-- we want to run unit test first -->
+        <testsuite name="Unit">
+            <directory>test/Unit/*</directory>
+        </testsuite>
+        <testsuite name="Integration">
+            <directory>test/Integration/*</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
