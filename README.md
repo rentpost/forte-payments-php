@@ -14,12 +14,14 @@ Run the following command
 composer require rentpost/forte-payments-php
 ```
 
-### Author
+### Authors and Maintainers
 
 Sam Anthony (On behalf of Rentpost)
 <sam@expertcoder.io>
 https://github.com/expertcoder
 
+Jacob Thomason
+<jacob@rentpost.com>
 
 ### Issues / Bugs / Questions
 
@@ -28,13 +30,10 @@ Please feel free to raise an issue against this repository if you have any quest
 ### Contributing
 
 New contributors to this project are welcome. If you are interested in contributing please
-send a courtesy email to jacob@rentpost.com
+send a courtesy email to dev@rentpost.com
 
-There are someone automated tests written for this library but due to various reasons they have not been
-included in this repository yet.
-
+There are someone automated tests written for this library but due to various reasons they have not been included in this repository yet.
 
 ### License
 
-This bundle is under MIT license
-
+This library is released under the MIT license.
