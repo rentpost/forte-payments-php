@@ -12,13 +12,16 @@ use Rentpost\ForteApi\Test\UserSettings;
 class ApplicationsTest extends AbstractIntegrationTest
 {
     
+    /**
+     * Tests creating an Application
+     */
     public function testCreate()
     {
         $riskSessionId = rand().rand().time();
-//        $riskUrl = 'https://img3.forte.net/fp/tags.js?org_id=xdzpgyj7&session_id=' . $riskSessionId . '&pageid=1';
-//        $tempGuzzle = new GuzzleClient();
-//        $tempGuzzle->get($riskUrl);
-//        sleep(10); // this is attemping to fake risk session id, might not be working anyway
+        // $riskUrl = 'https://img3.forte.net/fp/tags.js?org_id=xdzpgyj7&session_id=' . $riskSessionId . '&pageid=1';
+        // $tempGuzzle = new GuzzleClient();
+        // $tempGuzzle->get($riskUrl);
+        // sleep(10); // this is attemping to fake risk session id, might not be working anyway
 
 
         $owner1 = new Model\Owner();

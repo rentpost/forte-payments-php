@@ -36,6 +36,9 @@ class TransactionsTest extends AbstractIntegrationTest
     }
 
 
+    /**
+     * Tests creating a transaction
+     */
     public function testCreate()
     {
         $client = $this->getForteClient();
