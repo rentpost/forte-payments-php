@@ -15,12 +15,11 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
  */
 class ForteObjectNormalizer extends ObjectNormalizer
 {
+
     /**
      * @param string $class fqcn.
      *
      * @internal
-     *
-     * @return boolean
      */
     protected function isPreProcessDenormalizationInterface(string $class): bool
     {
@@ -50,14 +49,23 @@ class ForteObjectNormalizer extends ObjectNormalizer
         return parent::denormalize($normalizedData, $class, $format, $context);
     }
 
+
+    /**
+     * Normalizes an object
+     *
+     * @param object $object
+     * @param string|null $format
+     * @param array $context
+     *
+     * @return array
+     */
     public function normalize($object, $format = null, array $context = array())
     {
         $data = parent::normalize($object, $format, $context);
 
         // Remove properties with `null` values
-        return array_filter($data, function ($value) {
+        return array_filter($data, function($value) {
             return ($value !== null);
         });
     }
 }
-

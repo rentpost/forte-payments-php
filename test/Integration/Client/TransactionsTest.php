@@ -91,13 +91,13 @@ class TransactionsTest extends AbstractIntegrationTest
         return $returnedTransaction->getTransactionId();
     }
 
-    
+
     public function testVerify()
     {
         $client = $this->getForteClient();
 
-//        $organizationId = UserSettings::getLivetestMerchantOrganizationId();
-//        $locationId = UserSettings::getLivetestMerchantLocationId();
+        // $organizationId = UserSettings::getLivetestMerchantOrganizationId();
+        // $locationId = UserSettings::getLivetestMerchantLocationId();
         $organizationId = UserSettings::getSandboxMerchantOrganizationId();
         $locationId = UserSettings::getSandboxMerchantLocationId();
 
@@ -108,7 +108,7 @@ class TransactionsTest extends AbstractIntegrationTest
 
         $eCheck = new Model\Echeck();
         $eCheck
-            //            ->setSecCode('WEB')
+            // ->setSecCode('WEB')
             ->setAccountType('Checking')
             ->setRoutingNumber(new Attribute\BankRoutingNumber('021000021'))
             ->setAccountNumber(new Attribute\BankAccountNumber('123456'))
@@ -158,7 +158,7 @@ class TransactionsTest extends AbstractIntegrationTest
 
         $transaction = $client->useTransactions()->findOneWait($organizationId, $locationId, $invalidTransactionId);
     }
-    
+
 
     /**
      * @depends testCreate
@@ -244,7 +244,7 @@ class TransactionsTest extends AbstractIntegrationTest
         );
     }
 
-    
+
     /**
      * @depends testFindOne
      * after `testFindOne` has ran, we know for sure the new item inserted in available from the API
@@ -265,7 +265,7 @@ class TransactionsTest extends AbstractIntegrationTest
         $this->assertInstanceOf(Model\Transaction::class, $returnedTransaction);
     }
 
-    
+
     protected function assertTransactionModel(Model\Transaction $returnedTransaction, bool $isCreate)
     {
         $this->assertInstanceOf(Model\Transaction::class, $returnedTransaction);

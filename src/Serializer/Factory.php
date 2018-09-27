@@ -17,7 +17,27 @@ use Symfony\Component\Serializer\Serializer;
  */
 class Factory
 {
-    
+
+    /**
+     * @return NameConverterInterface
+     */
+    protected function makeNameConverter(): NameConverterInterface
+    {
+        $nameConverter = new AmendableCamelCaseToSnakeCaseNameConverter();
+
+        // Note: Some of Forte parameter names could not be converted by the default `CamelCaseToSnakeCaseNameConverter`
+        // hence a few amendments/exceptions have been hard coded here. Also forte was not 100% consistent with attribute
+        // naming convention, eg `last4_ssn` and `last_4_account_number`
+        $nameConverter->addAmendment('last4AccountNumber', 'last_4_account_number');
+        $nameConverter->addAmendment('owner1', 'owner');
+        $nameConverter->addAmendment('owner2', 'owner_2');
+        $nameConverter->addAmendment('owner3', 'owner_3');
+        $nameConverter->addAmendment('owner4', 'owner_4');
+
+        return $nameConverter;
+    }
+
+
     /**
      * This will typically serializer `AbstractModel` and `AbstractAttribute`
      *
@@ -56,25 +76,5 @@ class Factory
         );
 
         return $serializer;
-    }
-
-
-    /**
-     * @return NameConverterInterface
-     */
-    protected function makeNameConverter(): NameConverterInterface
-    {
-        $nameConverter = new AmendableCamelCaseToSnakeCaseNameConverter();
-
-        // Note: Some of Forte parameter names could not be converted by the default `CamelCaseToSnakeCaseNameConverter`
-        // hence a few amendments/exceptions have been hard coded here. Also forte was not 100% consistent with attribute
-        // naming convention, eg `last4_ssn` and `last_4_account_number`
-        $nameConverter->addAmendment('last4AccountNumber', 'last_4_account_number');
-        $nameConverter->addAmendment('owner1', 'owner');
-        $nameConverter->addAmendment('owner2', 'owner_2');
-        $nameConverter->addAmendment('owner3', 'owner_3');
-        $nameConverter->addAmendment('owner4', 'owner_4');
-
-        return $nameConverter;
     }
 }
