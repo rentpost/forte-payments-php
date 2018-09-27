@@ -98,12 +98,14 @@ class Dispute extends AbstractModel
     /**
      * @var Model\Reason
      * @Assert\NotBlank()
+     * @Assert\Valid
      */
     protected $reason;
 
     /**
      * @var Model\Card
      * @Assert\NotBlank()
+     * @Assert\Valid
      */
     protected $card;
 

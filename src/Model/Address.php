@@ -90,6 +90,7 @@ class Address extends AbstractModel
 
     /**
      * @var Model\PhysicalAddress
+     * @Assert\Valid
      */
     protected $physicalAddress;
 

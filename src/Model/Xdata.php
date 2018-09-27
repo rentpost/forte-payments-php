@@ -11,8 +11,15 @@ use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
+
+/**
+ * Xdata
+ *
+ * @author Sam Anthony <sam@rentpost.com>
+ */
 class Xdata extends AbstractModel implements NormalizableInterface, PreProcessDenormalizationInterface
 {
+    
     /**
      * @var string[]
      */

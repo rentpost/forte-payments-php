@@ -76,27 +76,32 @@ class Application extends AbstractModel
     /**
      * @var Model\ApplicantOrganization
      * @Assert\NotBlank()
+     * @Assert\Valid
      */
     protected $applicantOrganization;
 
     /**
      * @var Model\Owner
      * @Assert\NotBlank()
+     * @Assert\Valid
      */
     protected $owner1;
 
     /**
      * @var Model\Owner
+     * @Assert\Valid
      */
     protected $owner2;
 
     /**
      * @var Model\Owner
+     * @Assert\Valid
      */
     protected $owner3;
 
     /**
      * @var Model\Owner
+     * @Assert\Valid
      */
     protected $owner4;
 

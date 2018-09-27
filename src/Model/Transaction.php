@@ -128,31 +128,37 @@ class Transaction extends AbstractModel
 
     /**
      * @var Model\Address
+     * @Assert\Valid
      */
     protected $billingAddress;
 
     /**
      * @var Model\Address
+     * @Assert\Valid
      */
     protected $shippingAddress;
 
     /**
      * @var Model\Card
+     * @Assert\Valid
      */
     protected $card;
 
     /**
      * @var Model\Echeck
+     * @Assert\Valid
      */
     protected $echeck;
 
     /**
      * @var Model\LineItems
+     * @Assert\Valid
      */
     protected $lineItems;
 
     /**
      * @var Model\Xdata
+     * @Assert\Valid
      */
     protected $xdata;
 
