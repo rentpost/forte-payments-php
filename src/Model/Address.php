@@ -14,9 +14,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  * on the fly using hte physical_address attribute. This is not clearly documented
  * in the forte documentation however forte tech support confirmed this.
  * WONTFIX Consider making validation rules inside this class to suit this scenario if possible.
+ *
+ * @author Sam Anthony <sam@rentpost.com>
+ * @author Jacob Thomason <jacob@rentpost.com>
  */
 class Address extends AbstractModel
 {
+
     /**
      * @var Attribute\Id\AddressToken
      */
@@ -39,21 +43,18 @@ class Address extends AbstractModel
 
     /**
      * @var string
-     * @Assert\NotBlank()
      * @Assert\Length(max=50)
      */
     protected $firstName;
 
     /**
      * @var string
-     * @Assert\NotBlank()
      * @Assert\Length(max=50)
      */
     protected $lastName;
 
     /**
      * @var string
-     * @Assert\NotBlank()
      * @Assert\Length(max=50)
      */
     protected $companyName;
@@ -379,6 +380,4 @@ class Address extends AbstractModel
 
         return $this;
     }
-
-
 }
