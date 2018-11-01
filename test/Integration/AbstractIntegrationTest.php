@@ -9,24 +9,24 @@ use Rentpost\ForteApi\Client\ForteClient;
 use Rentpost\ForteApi\Exception\LibraryGenericException;
 use Rentpost\ForteApi\HttpClient\HttpClient;
 use Rentpost\ForteApi\Test\AbstractTestCase;
-use Rentpost\ForteApi\Logger\VoidLogger;
-use Rentpost\ForteApi\Logger\Factory as LoggerFactory;
+use Rentpost\ForteApi\Void\Logger as VoidLogger;
+use Rentpost\ForteApi\File\Logger\Factory as FileLoggerFactory;
 use Symfony\Component\Yaml\Yaml;
 use Rentpost\ForteApi\Test\UserSettings;
 
 abstract class AbstractIntegrationTest extends AbstractTestCase
 {
-    
+
     protected function getAllSettingsFromFile(): array
     {
         return get_forte_settings();
     }
 
-    
+
     protected function getForteClient(): ForteClient
     {
         $logDir = UserSettings::getLogLocation();
-        $logger = (new LoggerFactory($logDir))->makeFileLogger('forte');
+        $logger = (new FileLoggerFactory($logDir))->make('forte');
 
         $allSettings = $this->getAllSettingsFromFile();
 

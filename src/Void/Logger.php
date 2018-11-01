@@ -1,12 +1,12 @@
 <?php
 
-namespace Rentpost\ForteApi\Logger;
+namespace Rentpost\ForteApi\Void;
 
 use Psr\Log\LoggerInterface;
 
-class VoidLogger implements LoggerInterface
+class Logger implements LoggerInterface
 {
-    
+
     public function emergency($message, array $context = array())
     {
         /* intentionally do nothing, this is the Void logger */

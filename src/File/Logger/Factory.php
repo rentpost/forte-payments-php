@@ -2,12 +2,13 @@
 
 declare(strict_types = 1);
 
-namespace Rentpost\ForteApi\Logger;
+namespace Rentpost\ForteApi\File\Logger;
 
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 use Psr\Log\LoggerInterface;
 use Rentpost\ForteApi\Miscellaneous\Inflector;
+use Rentpost\ForteApi\Void\Logger as VoidLogger;
 
 /**
  * Logger Factory
@@ -37,7 +38,7 @@ class Factory
      *
      * @param string $name
      */
-    public function makeFileLogger(string $name): LoggerInterface
+    public function make(string $name): LoggerInterface
     {
         if (! $this->loggerBasePath) {
             return new VoidLogger();
