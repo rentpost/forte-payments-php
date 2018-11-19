@@ -42,7 +42,7 @@ class ForteEnvironment
      * @param string $apiSecureKey
      * @param Attribute\Id\OrganizationId $authenticatingOrganizationId
      * @param bool $sandbox
-     * @param null|string $baseUri Passing null the baseUri will be infered from the sandbox setting (recommended)
+     * @param string|null $baseUri Passing null the baseUri will be infered from the sandbox setting (recommended)
      * @param LoggerInterface $logger
      */
     public function __construct(
