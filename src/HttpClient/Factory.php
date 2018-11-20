@@ -16,11 +16,12 @@ use Rentpost\ForteApi\Attribute;
 class Factory
 {
     /**
-     * @param bool $sandbox        is this forte sandbox or not
-     * @param string $apiAccessId    forte credential
-     * @param string $apiSecureKey   forte credential
-     * @param string $authenticatingOrganizationId forte organization id
-     * @param LoggerInterface $logger         PSR3 compatible logger
+     * @param bool $sandbox                         Is this Forte sandbox or not
+     * @param string $apiAccessId                   Forte credential
+     * @param string $apiSecureKey                  Forte credential
+     * @param string $authenticatingOrganizationId  Forte organization id
+     * @param LoggerInterface $logger               PSR3 compatible logger
+     * @param bool $debug                           If we want to debug the HTTP responses
      *
      * @return HttpClient
      */
@@ -29,7 +30,8 @@ class Factory
         string $apiSecureKey,
         Attribute\Id\OrganizationId $authenticatingOrganizationId,
         string $baseUri,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        bool $debug
     ): HttpClient
     {
         $headers = [
@@ -46,7 +48,7 @@ class Factory
             'verify' => false, // FIXME - this was put here to ignore invalid tsl certificate problem
         ];
 
-        $stackHandler = $this->getGuzzleStackHandler($logger);
+        $stackHandler = $this->getGuzzleStackHandler($logger, $debug);
         if ($stackHandler) {
             $config['handler'] = $stackHandler;
         }
@@ -63,23 +65,19 @@ class Factory
      * Creates a Guzzle stack handler with logger
      *
      * @param LoggerInterface $logger
+     * @param bool $debug
      *
      * @return HandlerStack|null
      */
-    protected function getGuzzleStackHandler(LoggerInterface $logger): ?HandlerStack
+    protected function getGuzzleStackHandler(LoggerInterface $logger, bool $debug): ?HandlerStack
     {
-        if ($logger) {
-            $stack = HandlerStack::create();
-            $stack->push(
-                Middleware::log(
-                    $logger,
-                    new JsonMessageFormatter()
-                )
-            );
+        $stack = HandlerStack::create();
 
-            return $stack;
-        } else {
-            return null;
+        // If we need to debug log the HTTP responses
+        if ($debug) {
+            $stack->push(Middleware::log($logger, new JsonMessageFormatter()));
         }
+
+        return $stack;
     }
 }

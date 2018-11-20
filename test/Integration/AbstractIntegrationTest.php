@@ -13,6 +13,7 @@ use Rentpost\ForteApi\Void\Logger as VoidLogger;
 use Rentpost\ForteApi\File\Logger\Factory as FileLoggerFactory;
 use Symfony\Component\Yaml\Yaml;
 use Rentpost\ForteApi\Test\UserSettings;
+use Rentpost\Sprocket\Environment\Detective;
 
 abstract class AbstractIntegrationTest extends AbstractTestCase
 {

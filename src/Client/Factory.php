@@ -36,19 +36,23 @@ class Factory
             }
 
             if (empty($envSettings['access_id'])) {
-                throw new LibraryGenericException('array key "environment.access_id" must be provided');
+                throw new LibraryGenericException('array key "environments.access_id" must be provided');
             }
 
             if (empty($envSettings['secure_key'])) {
-                throw new LibraryGenericException('array key "environment.secure_key" must be provided');
+                throw new LibraryGenericException('array key "environments.secure_key" must be provided');
             }
 
             if (empty($envSettings['authenticating_organization_id'])) {
-                throw new LibraryGenericException('array key "environment.authenticating_organization_id" must be provided');
+                throw new LibraryGenericException('array key "environments.authenticating_organization_id" must be provided');
             }
 
             if (!isset($envSettings['sandbox'])) {
-                throw new LibraryGenericException('array key "environment.sandbox" must be provided');
+                throw new LibraryGenericException('array key "environments.sandbox" must be provided');
+            }
+
+            if (!isset($envSettings['debug']) || !is_bool($envSettings['debug'])) {
+                throw new LibraryGenericException('array key "environments.debug" must be provided and be a boolean');
             }
 
             $baseUri = $envSettings['base_uri'] ?? null;  // Optional setting
@@ -59,7 +63,8 @@ class Factory
                 new Attribute\Id\OrganizationId($envSettings['authenticating_organization_id']),
                 $envSettings['sandbox'],
                 $baseUri,
-                $logger
+                $logger,
+                $envSettings['debug']
             );
         }
 

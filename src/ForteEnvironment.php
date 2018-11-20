@@ -44,6 +44,7 @@ class ForteEnvironment
      * @param bool $sandbox
      * @param string|null $baseUri Passing null the baseUri will be infered from the sandbox setting (recommended)
      * @param LoggerInterface $logger
+     * @param bool $debug
      */
     public function __construct(
         string $apiAccessId,
@@ -51,7 +52,8 @@ class ForteEnvironment
         Attribute\Id\OrganizationId $authenticatingOrganizationId,
         bool $sandbox,
         ?string $baseUri,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        bool $debug = false
     ) {
         $this->apiAccessId = $apiAccessId;
         $this->apiSecureKey = $apiSecureKey;
@@ -61,7 +63,7 @@ class ForteEnvironment
 
         $baseUri = $baseUri ? $baseUri : $this->inferBaseUri($sandbox);
 
-        $this->httpClient = (new Factory())->make($apiAccessId, $apiSecureKey, $authenticatingOrganizationId, $baseUri, $logger);
+        $this->httpClient = (new Factory())->make($apiAccessId, $apiSecureKey, $authenticatingOrganizationId, $baseUri, $logger, $debug);
     }
 
 
