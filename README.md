@@ -16,12 +16,11 @@ composer require rentpost/forte-payments-php
 
 ## Authors and Maintainers
 
-Sam Anthony (On behalf of Rentpost)
-<sam@expertcoder.io>
-https://github.com/expertcoder
-
 Jacob Thomason
 <jacob@rentpost.com>
+
+Sam Anthony
+<sam@expertcoder.io>
 
 ## Issues / Bugs / Questions
 
@@ -54,7 +53,7 @@ The integration tests require some settings. This is done via the `test/settings
 Before running tests, you'll need to be sure all vendor packages are installed via `Composer`.  To do so, run `composer install` first.  Then you can run tests as follows (`testsuite` flag optional):
 
 ```
-./vendor/bin/phpunit --testsuite Unit 
+./vendor/bin/phpunit --testsuite Unit
 ```
 
 ## License
