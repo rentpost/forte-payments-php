@@ -52,7 +52,8 @@ abstract class AbstractIntegrationTest extends AbstractTestCase
             $settings['secure_key'],
             new Attribute\Id\OrganizationId($settings['authenticating_organization_id']),
             $baseUrl,
-            new VoidLogger()
+            new VoidLogger(),
+            $settings['debug']
         );
     }
 }

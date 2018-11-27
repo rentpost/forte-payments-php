@@ -11,19 +11,21 @@ use Psr\Log\LoggerInterface;
 use Rentpost\ForteApi\Attribute;
 
 /**
+ * Factory to build out our HTTP Client
+ *
  * @author Sam Anthony <sam@rentpost.com>
+ * @author Jacob Thomason <jacob@rentpost.com>
  */
 class Factory
 {
+
     /**
-     * @param bool $sandbox                         Is this Forte sandbox or not
-     * @param string $apiAccessId                   Forte credential
-     * @param string $apiSecureKey                  Forte credential
-     * @param string $authenticatingOrganizationId  Forte organization id
-     * @param LoggerInterface $logger               PSR3 compatible logger
-     * @param bool $debug                           If we want to debug the HTTP responses
-     *
-     * @return HttpClient
+     * @param string $apiAccessId                                           Forte credential
+     * @param string $apiSecureKey                                          Forte credential
+     * @param Attribute\Id\OrganizationId $authenticatingOrganizationId     Forte organization id
+     * @param string $baseUri                                               Base URI for request
+     * @param LoggerInterface $logger                                       PSR3 compatible logger
+     * @param bool $debug                                                   Debug the HTTP responses
      */
     public function make(
         string $apiAccessId,
@@ -31,7 +33,7 @@ class Factory
         Attribute\Id\OrganizationId $authenticatingOrganizationId,
         string $baseUri,
         LoggerInterface $logger,
-        bool $debug
+        bool $debug = false
     ): HttpClient
     {
         $headers = [
