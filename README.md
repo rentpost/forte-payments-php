@@ -16,8 +16,8 @@ composer require rentpost/forte-payments-php
 
 ## Authors and Maintainers
 
-Jacob Thomason <jacob@rentpost.com>
-Sam Anthony <sam@expertcoder.io>
+- Jacob Thomason <jacob@rentpost.com>
+- Sam Anthony <sam@expertcoder.io>
 
 ## Issues / Bugs / Questions
 
