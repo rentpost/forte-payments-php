@@ -5,14 +5,13 @@ declare(strict_types = 1);
 namespace Rentpost\ForteApi\Test\Integration\HttpClient;
 
 use Rentpost\ForteApi\Exception\Request\AbstractRequestException;
-use Rentpost\ForteApi\Exception\Request\ParseException;
 use Rentpost\ForteApi\Exception\Request\ServerErrorException;
 use Rentpost\ForteApi\Model\Transaction;
 use Rentpost\ForteApi\Test\Integration\AbstractIntegrationTest;
 
 class HttpClientTest extends AbstractIntegrationTest
 {
-    
+
     /**
      * Ensure the correct exception is thrown on Forte 5xx HTTP errors
      */
@@ -29,7 +28,7 @@ class HttpClientTest extends AbstractIntegrationTest
         );
     }
 
-    
+
     /**
      * Ensure the correct exception is thrown on Forte 4xx HTTP errors
      */
@@ -45,7 +44,7 @@ class HttpClientTest extends AbstractIntegrationTest
             Transaction::class
         );
     }
-    
+
 
     /**
      * Ensure the correct exception is thrown on Forte 3xx HTTP response

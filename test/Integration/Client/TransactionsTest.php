@@ -52,8 +52,7 @@ class TransactionsTest extends AbstractIntegrationTest
             ->setLastName('Green');
 
         $card = new Model\Card();
-        $card
-            ->setCardType('visa')
+        $card->setCardType('visa')
             ->setExpireYear(2021)
             ->setExpireMonth(1)
             ->setNameOnCard('Paul Green')
@@ -61,21 +60,18 @@ class TransactionsTest extends AbstractIntegrationTest
 
 
         $lineItems = new Model\LineItems();
-        $lineItems
-            ->setLineItemHeader(new Attribute\CommaList(['SKU', 'Price', 'Qty']))
+        $lineItems->setLineItemHeader(new Attribute\CommaList(['SKU', 'Price', 'Qty']))
             ->addLineItem(new Attribute\CommaList(['021000021', '45.00', '2']))
             ->addLineItem(new Attribute\CommaList(['021000021', '36.99', '10']))
             ->addLineItem(new Attribute\CommaList(['021000023', '27.50', '7']));
 
         $xdata = new Model\Xdata();
-        $xdata
-            ->addXdata('some xdata one')
+        $xdata->addXdata('some xdata one')
             ->addXdata('some xdata two');
 
 
         $transaction = new Model\Transaction();
-        $transaction
-            ->setAction('sale')
+        $transaction->setAction('sale')
             ->setCustomerIpAddress(new Attribute\IpAddress('100.10.11.123'))
             ->setBillingAddress($billingAddress)
             ->setCard($card)
@@ -102,35 +98,30 @@ class TransactionsTest extends AbstractIntegrationTest
         $locationId = UserSettings::getSandboxMerchantLocationId();
 
         $billingAddress = new Model\Address();
-        $billingAddress
-            ->setFirstName('Paul')
+        $billingAddress->setFirstName('Paul')
             ->setLastName('Green');
 
         $eCheck = new Model\Echeck();
-        $eCheck
-            // ->setSecCode('WEB')
-            ->setAccountType('Checking')
+        $eCheck->setAccountType('Checking')
             ->setRoutingNumber(new Attribute\BankRoutingNumber('021000021'))
             ->setAccountNumber(new Attribute\BankAccountNumber('123456'))
             ->setAccountHolder('John Smith');
+            // ->setSecCode('WEB')
 
 
         $lineItems = new Model\LineItems();
-        $lineItems
-            ->setLineItemHeader(new Attribute\CommaList(['SKU', 'Price', 'Qty']))
+        $lineItems->setLineItemHeader(new Attribute\CommaList(['SKU', 'Price', 'Qty']))
             ->addLineItem(new Attribute\CommaList(['021000021', '45.00', '2']))
             ->addLineItem(new Attribute\CommaList(['021000021', '36.99', '10']))
             ->addLineItem(new Attribute\CommaList(['021000023', '27.50', '7']));
 
         $xdata = new Model\Xdata();
-        $xdata
-            ->addXdata('some xdata one')
+        $xdata->addXdata('some xdata one')
             ->addXdata('some xdata two');
 
 
         $transaction = new Model\Transaction();
-        $transaction
-            ->setAction('verify')
+        $transaction->setAction('verify')
             ->setCustomerIpAddress(new Attribute\IpAddress('100.10.11.123'))
             ->setBillingAddress($billingAddress)
             ->setEcheck($eCheck)
@@ -140,6 +131,8 @@ class TransactionsTest extends AbstractIntegrationTest
         $transaction->setAuthorizationAmount(new Attribute\Money('00.01')); // Need to send at least 1 cent to verify (person will not be chargd this amount)
 
         $returnedTransaction = $client->useTransactions()->create($organizationId, $locationId, $transaction);
+
+        $this->assertInstanceOf('Rentpost\ForteApi\Attribute\Id\TransactionId', $returnedTransaction->getTransactionId());
 
         return $returnedTransaction->getTransactionId();
     }
@@ -181,8 +174,9 @@ class TransactionsTest extends AbstractIntegrationTest
 
 
     /**
+     * After `testFindOne` has ran, we know for sure the new item inserted in available from the API
+     *
      * @depends testFindOne
-     * after `testFindOne` has ran, we know for sure the new item inserted in available from the API
      */
     public function testFindListAll()
     {
@@ -212,6 +206,7 @@ class TransactionsTest extends AbstractIntegrationTest
     /**
      * We want to run this after `testFindOne` which is ran after `testCreate`. At that stage we will know a new
      * entry has just been inserted
+     *
      * @depends testFindListAll
      */
     public function testFindListFilterValid(int $countEntireList)
@@ -223,8 +218,8 @@ class TransactionsTest extends AbstractIntegrationTest
 
         $pagination = new PaginationData();
 
-        //Intentionally putting the data range not to select the most recently inserted record,
-        //Then we can check if the count is any differnt to test the filter
+        // Intentionally putting the data range not to select the most recently inserted record,
+        // Then we can check if the count is any differnt to test the filter
         $yestarday = (new \DateTime())->sub(\DateInterval::createFromDateString('1 day'));
 
         $filter = new TransactionFilter();
@@ -246,8 +241,9 @@ class TransactionsTest extends AbstractIntegrationTest
 
 
     /**
+     * After `testFindOne` has ran, we know for sure the new item inserted in available from the API
+     *
      * @depends testFindOne
-     * after `testFindOne` has ran, we know for sure the new item inserted in available from the API
      */
     public function testVoid(Model\Transaction $transaction)
     {
@@ -271,7 +267,7 @@ class TransactionsTest extends AbstractIntegrationTest
         $this->assertInstanceOf(Model\Transaction::class, $returnedTransaction);
         $this->assertInstanceOf(Model\Response::class, $returnedTransaction->getResponse());
         $this->assertInstanceOf(Model\Address::class, $returnedTransaction->getBillingAddress());
-//        $this->assertInstanceOf(Model\Echeck::class, $returnedTransaction->getEcheck());
+        // $this->assertInstanceOf(Model\Echeck::class, $returnedTransaction->getEcheck());
         $this->assertInstanceOf(Model\LineItems::class, $returnedTransaction->getLineItems());
         $this->assertInstanceOf(Model\Xdata::class, $returnedTransaction->getXdata());
 
@@ -287,7 +283,7 @@ class TransactionsTest extends AbstractIntegrationTest
 
         $lineItemsExpected = ['021000021,45.00,2', '021000021,36.99,10', '021000023,27.50,7'];
         $i = 0;
-        foreach($returnedTransaction->getLineItems()->getLineItems() as $lineItem) {
+        foreach ($returnedTransaction->getLineItems()->getLineItems() as $lineItem) {
             $this->assertInstanceOf(Attribute\CommaList::class, $lineItem);
             $this->assertEquals($lineItemsExpected[$i], $lineItem->getValue());
             $i++;
