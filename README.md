@@ -38,7 +38,11 @@ recipes just execute `make`.
 
 ### Requirements
 
-Running tests against Forte's sandbox environment will not return back any meaningful results.  Therefore, an additional "livetest" account is needed for running various tests.  This is a real account.  You could use a production account in place of this.  But be aware that, in either case, real money will be moved if used for transaction endpoints.
+Running tests against Forte's sandbox environment will not return back any meaningful results for
+many resources.  Therefore, an additional "livetest" account is needed for running various tests.
+This is a real account.  You could use a production account in place of this (not advised).  But be
+aware that, in either case, real money will be moved if used for transaction endpoints.  Forte can
+setup a "livetest" account for you if needed with very low transaction limits to prevent mistakes.
 
 The following dev composer packages are required for automated testing.
 
@@ -49,11 +53,12 @@ PHPUnit is used for both unit tests, and integration test (Testing actual API ca
 
 ### Configuration
 
-The integration tests require some settings. This is done via the `test/settings.php` file.  See `test\settings.php.dist` as an example.
+The integration tests require some settings. This is done via the `test/settings.php` file.  See `test/settings.php.dist` as an example.
 
 ### Running
 
-Before running tests, you'll need to be sure all vendor packages are installed via `Composer`.  To do so, run `make install-vendor` first.  Then you can run tests as follows:
+Before running tests, you'll need to be sure the project is initialized and vendor packages are
+installed via `Composer`.  To do so, run `make init` first.  Then you can run tests as follows:
 
 ```
 make test
