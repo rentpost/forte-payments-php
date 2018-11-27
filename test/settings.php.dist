@@ -1,42 +1,42 @@
 <?php
 
+declare(strict_types = 1);
+
 /**
  * Settings needed for the Forte API
  */
 function get_forte_settings(): array
 {
-    return array (
-        'environments' =>
-            array (
-                'sandbox' =>
-                    array (
-                        'access_id' => 'xxxxxx',
-                        'secure_key' => 'xxxxxx',
-                        'authenticating_organization_id' => 'xxxxxx',
-                        'sandbox' => true,
-                        'base_uri' => NULL,
-                    ),
-                'livetest' =>
-                    array (
-                        'access_id' => 'xxxxxx',
-                        'secure_key' => 'xxxxxx',
-                        'authenticating_organization_id' => 'xxxxxx',
-                        'sandbox' => false,
-                        'base_uri' => NULL,
-                    ),
-            ),
-        'override_sub_resource_environments' =>
-            array (
-                'address' => 'livetest',
-                'application' => 'livetest',
-                'customer' => 'livetest',
-                'dispute' => 'livetest',
-                'document' => 'livetest',
-                'funding' => 'livetest',
-                'pay_method' => 'livetest',
-                'schedule_item' => 'livetest',
-                'settlement' => 'livetest',
-                'transaction' => NULL,
-            ),
-    );
+    return [
+        'environments' => [
+            'sandbox' => [
+                'access_id' => 'xxxxx',
+                'secure_key' => 'xxxxx',
+                'authenticating_organization_id' => 'xxxxx',
+                'sandbox' => true,
+                'base_uri' => null,
+                'debug' => false,
+            ],
+            'livetest' => [
+                'access_id' => 'xxxxx',
+                'secure_key' => 'xxxxx',
+                'authenticating_organization_id' => 'xxxxx',
+                'sandbox' => false,
+                'base_uri' => null,
+                'debug' => false,
+            ],
+        ],
+        'override_sub_resource_environments' => [
+            'address' => 'livetest',
+            'application' => 'livetest',
+            'customer' => 'livetest',
+            'dispute' => 'livetest',
+            'document' => 'livetest',
+            'funding' => 'livetest',
+            'pay_method' => 'livetest',
+            'schedule_item' => 'livetest',
+            'settlement' => 'livetest',
+            'transaction' => null,
+        ],
+    ];
 }
