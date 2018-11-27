@@ -11,7 +11,7 @@ use Rentpost\ForteApi\Test\UserSettings;
 
 class ApplicationsTest extends AbstractIntegrationTest
 {
-    
+
     /**
      * Tests creating an Application
      */
@@ -27,6 +27,7 @@ class ApplicationsTest extends AbstractIntegrationTest
         $owner1 = new Model\Owner();
         $owner1
             ->setPercentage(70.0)
+            ->setTitle('president')
             ->setFirstName('Bill')
             ->setLastName('Gates (test)')
             ->setStreetAddress1('10 Smith Street')
@@ -43,6 +44,7 @@ class ApplicationsTest extends AbstractIntegrationTest
         $owner2 = new Model\Owner();
         $owner2
             ->setPercentage(30.0)
+            ->setTitle('other')
             ->setFirstName('Steve')
             ->setLastName('Jobs (test)')
             ->setStreetAddress1('10 Apple Walk')

@@ -24,6 +24,23 @@ class Owner extends AbstractModel
     /**
      * @var string
      * @Assert\NotBlank()
+     * @Assert\Choice({
+     *     "ceo",
+     *     "cfo",
+     *     "coo",
+     *     "managing_member",
+     *     "general_partner",
+     *     "president",
+     *     "vice_president",
+     *     "treasurer",
+     *     "other"
+     * })
+     */
+    protected $title;
+
+    /**
+     * @var string
+     * @Assert\NotBlank()
      */
     protected $firstName;
 
@@ -108,9 +125,23 @@ class Owner extends AbstractModel
     }
 
 
-    public function setPercentage(float $value): self
+    public function setPercentage(float $percentage): self
     {
-        $this->percentage = $value;
+        $this->percentage = $percentage;
+
+        return $this;
+    }
+
+
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
 
         return $this;
     }
