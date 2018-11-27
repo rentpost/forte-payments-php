@@ -1,17 +1,17 @@
 {
     "name": "rentpost/forte-payments-php",
     "type": "library",
-    "description": "PHP Wrapper for Forte API v3 https://restdocs.forte.net/",
+    "description": "PHP API wrapper client for Forte's API v3 https://restdocs.forte.net/",
     "homepage": "https://github.com/rentpost/forte-payments-php",
     "license": "MIT",
     "authors": [
         {
-            "name": "Samual Anthony",
-            "email": "sam@expertcoder.io"
-        },
-        {
             "name": "Jacob Thomason",
             "email": "jacob@rentpost.com"
+        },
+        {
+            "name": "Samual Anthony",
+            "email": "sam@expertcoder.io"
         }
     ],
     "require": {
