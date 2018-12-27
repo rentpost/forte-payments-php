@@ -14,10 +14,6 @@ use Rentpost\ForteApi\Model;
 class TransactionException extends AbstractRequestException
 {
 
-    /** @var Model\AbstractModel */
-    protected $model;
-
-
     /**
      * Constructor
      *
@@ -40,14 +36,5 @@ class TransactionException extends AbstractRequestException
         }
 
         parent::__construct($response, $model, $message);
-    }
-
-
-    /**
-     * Get's the associated Model
-     */
-    public function getModel(): Model\AbstractModel
-    {
-        return $this->model;
     }
 }
