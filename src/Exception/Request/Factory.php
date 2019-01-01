@@ -7,12 +7,12 @@ namespace Rentpost\ForteApi\Exception\Request;
 use Rentpost\ForteApi\Model;
 
 /**
- * When Forte returns a bad HTTP code, eg 4xx or 5xx  level response codes
+ * When Forte returns a bad HTTP code, eg 4xx or 5xx level response codes
  * then we will try to throw a more specific exception if possible
  *
  * For example, if a Transaction fails because payment details are invalid, then we should
  * return an exception specific to that. But if a request fails for other unknown reasons,
- * such as showhow malfomred JSON was sent to forte or other unknown problem, when just throw
+ * such as somehow malfomred JSON was sent to Forte or another unknown problem, when just throw
  * a more generic Request Exception.
  *
  * This factory will attempt to return the most suitable exception
