@@ -7,7 +7,8 @@ namespace Rentpost\ForteApi\Exception\Request;
 use Rentpost\ForteApi\Model;
 
 /**
- * Exception for Forte transactions
+ * Exception for Forte transactions that are actual payment issues, these are all U** response code
+ * transactions, like a "U10 Duplicate Transaction" response code.
  *
  * @author Jacob Thomason <jacob@rentpost.com>
  */
