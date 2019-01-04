@@ -107,6 +107,7 @@ class Owner extends AbstractModel
     protected $mobilePhone;
 
     /**
+     * @var string
      * @Assert\NotBlank()
      * @Assert\Length(min=4, max=4)
      */
@@ -287,13 +288,13 @@ class Owner extends AbstractModel
     }
 
 
-    public function getLast4Ssn()
+    public function getLast4Ssn(): string
     {
         return $this->last4Ssn;
     }
 
 
-    public function setLast4Ssn($last4Ssn): self
+    public function setLast4Ssn(string $last4Ssn): self
     {
         $this->last4Ssn = $last4Ssn;
 

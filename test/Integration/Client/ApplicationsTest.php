@@ -38,7 +38,7 @@ class ApplicationsTest extends AbstractIntegrationTest
             ->setCitizenship('USA')
             ->setEmailAddress(UserSettings::getApplicationOwnerEmail())
             ->setMobilePhone(new Attribute\Phone('1234567890'))
-            ->setLast4Ssn(1234)
+            ->setLast4Ssn('1234')
             ->setDateOfBirth(new Attribute\Date('1993-03-22'));
 
         $owner2 = new Model\Owner();
@@ -55,7 +55,7 @@ class ApplicationsTest extends AbstractIntegrationTest
             ->setCitizenship('USA')
             ->setEmailAddress(UserSettings::getApplicationOwnerEmail())
             ->setMobilePhone(new Attribute\Phone('1234567890'))
-            ->setLast4Ssn(1234)
+            ->setLast4Ssn('1234')
             ->setDateOfBirth(new Attribute\Date('1990-01-25'));
 
         $applicantOrganization = new Model\ApplicantOrganization;
