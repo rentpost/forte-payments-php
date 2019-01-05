@@ -285,7 +285,4 @@ class SettlementFilter extends AbstractFilter
 
         return $this;
     }
-
-
-    
 }

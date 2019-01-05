@@ -107,5 +107,4 @@ class PaginationData implements ValidatableSerializableInterface
 
         return $this;
     }
-
 }
