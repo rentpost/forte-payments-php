@@ -9,10 +9,12 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-abstract class AbstractAttribute
-implements
-    NormalizableInterface,
-    DenormalizableInterface
+/**
+ * Abstract Attribute class
+ *
+ * @author Jacob Thomason <jacob@rentpost.com>
+ */
+abstract class AbstractAttribute implements NormalizableInterface, DenormalizableInterface
 {
 
     protected const VALUE_OMMITED = '__VALUE_OMMITED__';
@@ -71,13 +73,13 @@ implements
 
 
     /**
-     * @return null|string
+     * Gets the raw value of the attribute. Use this to get the real deal
      */
     public function getValue(): ?string
     {
         return $this->deinternalize($this->internalizedValue);
     }
-    
+
 
     /**
      * @internal this is invoked by the serializer (NormalizableInterface)

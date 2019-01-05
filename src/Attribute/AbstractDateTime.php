@@ -4,11 +4,16 @@ declare(strict_types = 1);
 
 namespace Rentpost\ForteApi\Attribute;
 
-
 use Rentpost\ForteApi\Exception\ValidationException;
 
+/**
+ * Abstract DateTime class
+ *
+ * @author Jacob Thomason <jacob@rentpost.com>
+ */
 abstract class AbstractDateTime extends AbstractAttribute
 {
+
     /**
      * Valid PHP DateTime format specifier
      * http://php.net/manual/en/datetime.createfromformat.php
@@ -17,7 +22,9 @@ abstract class AbstractDateTime extends AbstractAttribute
      */
     abstract protected function getOutputFormat(): string;
 
+
     abstract protected function handleStringInput(string $string): \DateTime;
+
 
     /**
      * @inheritDoc
@@ -43,10 +50,8 @@ abstract class AbstractDateTime extends AbstractAttribute
     {
         if ($internalizedValue) {
             return $internalizedValue->format($this->getOutputFormat());
-        } else {
-            return null;
         }
-
+        
+        return null;
     }
-
 }

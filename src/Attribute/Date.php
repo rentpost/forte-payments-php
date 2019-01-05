@@ -7,6 +7,11 @@ namespace Rentpost\ForteApi\Attribute;
 use Rentpost\ForteApi\DateParser;
 use Rentpost\ForteApi\Exception\ValidationException;
 
+/**
+ * Abstract Date class
+ *
+ * @author Jacob Thomason <jacob@rentpost.com>
+ */
 class Date extends AbstractDateTime
 {
 
