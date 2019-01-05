@@ -9,83 +9,59 @@ use Symfony\Component\Validator\Constraints;
 
 /**
  * This entire model is "read only" from the API. Hence the validation has been kept simple
+ *
+ * @author Sam Anthony <sam@rentpost.com>
+ * @author Jacob Thomason <jacob@rentpost.com>
  */
 class Settlement extends AbstractModel
 {
 
-    /**
-     * @var Attribute\Id\OrganizationId
-     */
+    /** @var Attribute\Id\OrganizationId */
     protected $organizationId;
 
-    /**
-     * @var Attribute\Id\LocationId
-     */
+    /** @var Attribute\Id\LocationId */
     protected $locationId;
 
-    /**
-     * @var Attribute\Id\CustomerToken
-     */
+    /** @var Attribute\Id\CustomerToken */
     protected $customerToken;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $customerId;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $orderNumber;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $referenceId;
 
-    /**
-     * @var Attribute\Id\SettlementId
-     */
+    /** @var Attribute\Id\SettlementId */
     protected $settleId;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $transactionId;
 
-    /**
-     * @var string
-     */
+    /** @var string|null */
     protected $settleBatchId;
 
-    /**
-     * @var Attribute\DateTime
-     */
+    /** @var Attribute\DateTime */
     protected $settleDate;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $settleType;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $settleResponseCode;
 
-    /**
-     * @var Attribute\Decimal
-     */
+    /** @var Attribute\Decimal */
     protected $settleAmount;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $method;
 
 
     /**
-     * @return Attribute\Id\OrganizationId
+     * The identification number of the associated organization.
+     * For example, org_5551236.
      */
     public function getOrganizationId(): Attribute\Id\OrganizationId
     {
@@ -97,8 +73,6 @@ class Settlement extends AbstractModel
      * @internal api read only field
      *
      * @param Attribute\Id\OrganizationId $organizationId
-     *
-     * @return self
      */
     public function setOrganizationId(Attribute\Id\OrganizationId $organizationId): self
     {
@@ -109,7 +83,8 @@ class Settlement extends AbstractModel
 
 
     /**
-     * @return Attribute\Id\LocationId
+     * The identification number of the associated location.
+     * For example, loc_1234568.
      */
     public function getLocationId(): Attribute\Id\LocationId
     {
@@ -121,8 +96,6 @@ class Settlement extends AbstractModel
      * @internal api read only field
      *
      * @param Attribute\Id\LocationId $locationId
-     *
-     * @return self
      */
     public function setLocationId(Attribute\Id\LocationId $locationId): self
     {
@@ -133,7 +106,8 @@ class Settlement extends AbstractModel
 
 
     /**
-     * @return Attribute\Id\CustomerToken
+     * A unique string used to represent a customer.
+     * For example, cst_SoGUG6mcLUS1nVzYBIbk3g. [max length = 26]
      */
     public function getCustomerToken(): Attribute\Id\CustomerToken
     {
@@ -145,8 +119,6 @@ class Settlement extends AbstractModel
      * @internal api read only field
      *
      * @param Attribute\Id\CustomerToken $customerToken
-     *
-     * @return self
      */
     public function setCustomerToken(Attribute\Id\CustomerToken $customerToken): self
     {
@@ -157,7 +129,8 @@ class Settlement extends AbstractModel
 
 
     /**
-     * @return string
+     * A merchant-defined string created at the customer level to identify the customer.
+     * [max length = 15]
      */
     public function getCustomerId(): string
     {
@@ -169,8 +142,6 @@ class Settlement extends AbstractModel
      * @internal api read only field
      *
      * @param string $customerId
-     *
-     * @return self
      */
     public function setCustomerId(string $customerId): self
     {
@@ -181,7 +152,7 @@ class Settlement extends AbstractModel
 
 
     /**
-     * @return string|null
+     * A merchant-defined string. [max length = 50]
      */
     public function getOrderNumber(): ?string
     {
@@ -205,7 +176,8 @@ class Settlement extends AbstractModel
 
 
     /**
-     * @return string
+     * A merchant-defined string that identifies the transaction.
+     * [max length = 50]
      */
     public function getReferenceId(): string
     {
@@ -217,8 +189,6 @@ class Settlement extends AbstractModel
      * @internal api read only field
      *
      * @param string $referenceId
-     *
-     * @return self
      */
     public function setReferenceId(string $referenceId): self
     {
@@ -229,7 +199,8 @@ class Settlement extends AbstractModel
 
 
     /**
-     * @return Attribute\Id\SettlementId
+     * The settlement ID of the settled transaction
+     * (e.g., stl_51cf4633-1767-484f-8784-be76a4076791). [max length = 40]
      */
     public function getSettleId(): Attribute\Id\SettlementId
     {
@@ -241,8 +212,6 @@ class Settlement extends AbstractModel
      * @internal api read only field
      *
      * @param Attribute\Id\SettlementId $settleId
-     *
-     * @return self
      */
     public function setSettleId(Attribute\Id\SettlementId $settleId): self
     {
@@ -253,7 +222,7 @@ class Settlement extends AbstractModel
 
 
     /**
-     * @return Attribute\Id\TransactionId
+     * A 36-character code that uniquely identifies the transaction.
      */
     public function getTransactionId(): Attribute\Id\TransactionId
     {
@@ -265,8 +234,6 @@ class Settlement extends AbstractModel
      * @internal api read only field
      *
      * @param Attribute\Id\TransactionId $transactionId
-     *
-     * @return self
      */
     public function setTransactionId(Attribute\Id\TransactionId $transactionId): self
     {
@@ -277,9 +244,10 @@ class Settlement extends AbstractModel
 
 
     /**
-     * @return string
+     * The ID of the credit card settlement batch, which the merchant can use to reconcile
+     * credit card bank deposits. This parameter is view-only and only for credit card transactions.
      */
-    public function getSettleBatchId(): string
+    public function getSettleBatchId(): ?string
     {
         return $this->settleBatchId;
     }
@@ -288,11 +256,9 @@ class Settlement extends AbstractModel
     /**
      * @internal api read only field
      *
-     * @param string $settleBatchId
-     *
-     * @return self
+     * @param string|null $settleBatchId
      */
-    public function setSettleBatchId(string $settleBatchId): self
+    public function setSettleBatchId(?string $settleBatchId): self
     {
         $this->settleBatchId = $settleBatchId;
 
@@ -301,7 +267,7 @@ class Settlement extends AbstractModel
 
 
     /**
-     * @return Attribute\DateTime
+     * The date when the transaction was settled. This parameter is return only.
      */
     public function getSettleDate(): Attribute\DateTime
     {
@@ -325,7 +291,14 @@ class Settlement extends AbstractModel
 
 
     /**
-     * @return string
+     * The type of settlement. Supported settlement types include the following values.
+     * For echeck transactions:
+     *      deposit
+     *      reject
+     *      withdrawal
+     * For credit card transactions:
+     *      deposit
+     *      withdrawal
      */
     public function getSettleType(): string
     {
@@ -349,7 +322,11 @@ class Settlement extends AbstractModel
 
 
     /**
-     * @return string|null
+     * See the Response Codes table for more information. This parameter is return only.
+     *
+     * @see http://www.forte.net/devdocs/reference/response_codes.htm
+     *
+     * @note credit card transactions that do not return a settle response can be considered settled.
      */
     public function getSettleResponseCode(): ?string
     {
@@ -373,7 +350,7 @@ class Settlement extends AbstractModel
 
 
     /**
-     * @return Attribute\Decimal
+     * The amount the transaction settled for. This parameter is return only.
      */
     public function getSettleAmount(): Attribute\Decimal
     {
@@ -397,7 +374,10 @@ class Settlement extends AbstractModel
 
 
     /**
-     * @return string
+     * The payment method. This parameter is return only.
+     * The supported payment methods include the following values:
+     *      echeck
+     *      cc
      */
     public function getMethod(): string
     {
@@ -418,6 +398,4 @@ class Settlement extends AbstractModel
 
         return $this;
     }
-    
-    
 }
