@@ -8,7 +8,7 @@ use Rentpost\ForteApi\ValidatingSerializer\ValidatableSerializableInterface;
 
 abstract class AbstractModel implements ValidatableSerializableInterface
 {
-    
+
     /** @var Response|null */
     protected $response;
 
@@ -27,8 +27,10 @@ abstract class AbstractModel implements ValidatableSerializableInterface
      *
      * @param Response $response
      */
-    public function setResponse(Response $response): void
+    public function setResponse(Response $response): self
     {
         $this->response = $response;
+
+        return $this;
     }
 }
