@@ -19,7 +19,7 @@ abstract class AbstractResultCollection extends AbstractModel
 {
 
     /** @var Model\AbstractModel[] */
-    protected $results;
+    protected $results = [];
 
     /** @var int */
     protected $numberResults;
