@@ -11,37 +11,29 @@ use Symfony\Component\Validator\Constraints as Assert;
  * #forte-api-quirk January 2018 - if values are not provided for start_settle_date or
  *                  end_settle_date the Forte will assume values. This can be a little
  *                  deceptive hence these filters are required in this library.
+ *
+ * @author Sam Anthony <sam@rentpost.com>
+ * @author Jacob Thomason <jacob@rentpost.com>
  */
 class SettlementFilter extends AbstractFilter
 {
-    /**
-     * @var Attribute\Id\LocationId
-     */
+
+    /** @var Attribute\Id\LocationId */
     protected $locationId;
 
-    /**
-     * @var Attribute\Id\CustomerToken
-     */
+    /** @var Attribute\Id\CustomerToken */
     protected $customerToken;
 
-    /**
-     * @var Attribute\Id\TransactionId
-     */
+    /** @var Attribute\Id\TransactionId */
     protected $transactionId;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $customerId;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $orderNumber;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $referenceId;
 
     /**
@@ -56,14 +48,10 @@ class SettlementFilter extends AbstractFilter
      */
     protected $endSettleDate;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $settleResponseCode;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $method;
 
 

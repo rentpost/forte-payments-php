@@ -9,6 +9,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * https://www.forte.net/devdocs/api_resources/forte_api_v3.htm#filters
+ *
+ * @author Sam Anthony <sam@rentpost.com>
+ * @author Jacob Thomason <jacob@rentpost.com>
  */
 class PaginationData implements ValidatableSerializableInterface
 {
@@ -19,9 +22,7 @@ class PaginationData implements ValidatableSerializableInterface
      */
     protected $order_direction;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $order_field;
 
     /**
@@ -49,13 +50,20 @@ class PaginationData implements ValidatableSerializableInterface
             if ($this->order_direction) {
                 $orderby .= ' ' . $this->order_direction;
             }
+
             return $orderby;
-        } else {
-            return null;
         }
+
+        return null;
     }
 
 
+    /**
+     * Sets the order by details
+     *
+     * @param string $field
+     * @param string $direction
+     */
     public function setOrderby(string $field, string $direction): self
     {
         $this->order_field = $field;
@@ -66,7 +74,7 @@ class PaginationData implements ValidatableSerializableInterface
 
 
     /**
-     * @return int|null
+     * Gets the page size
      */
     public function getPageSize(): ?int
     {
@@ -75,9 +83,9 @@ class PaginationData implements ValidatableSerializableInterface
 
 
     /**
-     * @param int $page_size
+     * Sets the page size
      *
-     * @return self
+     * @param int $page_size
      */
     public function setPageSize(int $page_size): self
     {
@@ -88,7 +96,7 @@ class PaginationData implements ValidatableSerializableInterface
 
 
     /**
-     * @return int|null
+     * Gets the page index
      */
     public function getPageIndex(): ?int
     {
@@ -97,9 +105,9 @@ class PaginationData implements ValidatableSerializableInterface
 
 
     /**
+     * Sets the page index
+     * 
      * @param int $page_index
-     *
-     * @return self
      */
     public function setPageIndex(int $page_index): self
     {
