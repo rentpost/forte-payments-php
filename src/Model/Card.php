@@ -53,7 +53,7 @@ class Card extends AbstractModel
     protected $expireYear;
 
     /**
-     * @var int
+     * @var string
      * @Assert\Length(max="5")
      */
     protected $cardVerificationValue;
@@ -222,7 +222,7 @@ class Card extends AbstractModel
     /**
      * Gets the credit card verification value
      */
-    public function getCardVerificationValue(): ?int
+    public function getCardVerificationValue(): ?string
     {
         return $this->cardVerificationValue;
     }
