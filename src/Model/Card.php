@@ -231,9 +231,9 @@ class Card extends AbstractModel
     /**
      * Sets the credit card verification value
      *
-     * @param int|null $cardVerificationValue
+     * @param string|null $cardVerificationValue
      */
-    public function setCardVerificationValue(?int $cardVerificationValue): self
+    public function setCardVerificationValue(?string $cardVerificationValue): self
     {
         $this->cardVerificationValue = $cardVerificationValue;
 
