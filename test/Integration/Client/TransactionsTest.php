@@ -103,8 +103,8 @@ class TransactionsTest extends AbstractIntegrationTest
 
         $eCheck = new Model\Echeck();
         $eCheck->setAccountType('Checking')
-            ->setRoutingNumber(new Attribute\BankRoutingNumber('021000021'))
-            ->setAccountNumber(new Attribute\BankAccountNumber('123456'))
+            ->setRoutingNumber(new Attribute\BankRoutingNumber('245242953'))
+            ->setAccountNumber(new Attribute\BankAccountNumber('245242953'))
             ->setAccountHolder('John Smith');
             // ->setSecCode('WEB')
 
