@@ -12,6 +12,7 @@ use Rentpost\ForteApi\Filter\TransactionFilter;
 use Rentpost\ForteApi\Model;
 use Rentpost\ForteApi\UriBuilder\PaginationData;
 use Rentpost\ForteApi\UriBuilder\UriBuilder;
+use Symfony\Component\Serializer\Exception\NotEncodableValueException;
 
 /**
  * Methods for transactions
@@ -34,9 +35,20 @@ class TransactionSubResource extends AbstractSubResource
         Model\Transaction $transaction
     ): Model\Transaction
     {
-        $uri = UriBuilder::build('organizations/%s/locations/%s/transactions/', [$organizationId->getValue(), $locationId->getValue()]);
+        $uri = UriBuilder::build(
+            'organizations/%s/locations/%s/transactions/',
+            [
+                $organizationId->getValue(),
+                $locationId->getValue(),
+            ]
+        );
 
-        return $this->getHttpClient()->makeModelRequest('post', $uri, Model\Transaction::class, $transaction);
+        return $this->getHttpClient()->makeModelRequest(
+            'post',
+            $uri,
+            Model\Transaction::class,
+            $transaction
+        );
     }
 
 
@@ -92,11 +104,18 @@ class TransactionSubResource extends AbstractSubResource
                     $locationId,
                     $transactionId
                 );
-            } catch (AbstractRequestException $e) {
+            } catch (AbstractRequestException | NotEncodableValueException $e) {
                 // Ignore the exception the first 10 times because we are waiting for it to become available
+                // It seems we're getting back an HTML response with a 403 error in some cases.  This
+                // appears to be some kind of Forte issue.  The specific transaction in question which
+                // is returning a 403, is reachable and discoverable after the fact, so it appears to
+                // possibly be timing related and a race condition.
                 if ($attempt === 10) {
                     throw new TimeoutException(
-                        "Retried 10 times. Either the transaction id, '{$transactionId->getValue()}', is invalid or not yet available."
+                        "Retried 10 times. Either the transaction id, '{$transactionId->getValue()}',
+                        is invalid or not yet available.  Or possibly we're getting a response that
+                        cannot be properly decoded as JSON.",
+                        $e
                     );
                 }
             }
@@ -108,6 +127,7 @@ class TransactionSubResource extends AbstractSubResource
             sleep(2);
             $attempt++;
         }
+
         // Execution will never reach here
     }
 

@@ -19,11 +19,13 @@ class TimeoutException extends AbstractException
      * Constructor
      *
      * @param string $error
+     * @param \Throwable $previousException
      */
-    public function __construct(string $error)
+    public function __construct(string $error, ?\Throwable $previousException)
     {
         $message = "Request timed out with: {$error}";
+        $code = $previousException->getCode() ?: 0;
 
-        parent::__construct($message);
+        parent::__construct($message, $code, $previousException);
     }
 }
