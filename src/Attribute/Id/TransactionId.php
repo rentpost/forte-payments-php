@@ -6,8 +6,15 @@ namespace Rentpost\ForteApi\Attribute\Id;
 
 use Rentpost\ForteApi\Exception\ValidationException;
 
+
+/**
+ * TransactionId attribute
+ *
+ * @author Sam Anthony <sam@rentpost.com>
+ */
 class TransactionId extends AbstractId
 {
+
     protected function getIdPrefix(): string
     {
         return 'trn';
@@ -22,5 +29,4 @@ class TransactionId extends AbstractId
 
         return parent::internalize($value);
     }
-
 }

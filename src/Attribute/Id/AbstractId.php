@@ -9,7 +9,9 @@ use Rentpost\ForteApi\Exception\ValidationException;
 
 abstract class AbstractId extends AbstractAttribute
 {
+
     abstract protected function getIdPrefix(): string;
+
 
     protected function internalize($value): string
     {
@@ -33,6 +35,7 @@ abstract class AbstractId extends AbstractAttribute
         return $value;
     }
 
+    
     protected function getExceptionMessage($value)
     {
         return 'Forte identifier invalid. Expected format `' .
