@@ -63,7 +63,7 @@ class HttpClient
         $json = $response->getBody()->__toString();
 
         $model = $this->validatingSerializer->deserialize($json, $responseModelFqns);
-       
+
         if ($response->getStatusCode() < 200
             || $response->getStatusCode() >= 300
         ) {
@@ -108,7 +108,13 @@ class HttpClient
             $httpMethod,
             $uri,
             $responseModelFqns,
-            ['body' => $body]
+            [
+                'headers' => [
+                    'User-Agent' => 'forte-payments-php/1.0',
+                    'Accept' => 'application/json',
+                ],
+                'body' => $body
+            ]
         );
 
         $json = $response->getBody()->__toString();
