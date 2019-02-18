@@ -35,13 +35,10 @@ class TransactionSubResource extends AbstractSubResource
         Model\Transaction $transaction
     ): Model\Transaction
     {
-        $uri = UriBuilder::build(
-            'organizations/%s/locations/%s/transactions/',
-            [
-                $organizationId->getValue(),
-                $locationId->getValue(),
-            ]
-        );
+        $uri = UriBuilder::build('organizations/%s/locations/%s/transactions/', [
+            $organizationId->getValue(),
+            $locationId->getValue(),
+        ]);
 
         return $this->getHttpClient()->makeModelRequest(
             'post',
