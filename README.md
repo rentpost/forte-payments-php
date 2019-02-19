@@ -14,19 +14,191 @@ Run the following command to include this library within your project
 composer require rentpost/forte-payments-php
 ```
 
-## Authors and Maintainers
+## Configuration
 
-- Jacob Thomason <jacob@rentpost.com>
-- Sam Anthony <sam@expertcoder.io>
+You'll first want to create a configuration file that defines your environments and their respective
+configuration settings.  As an example, we're showing a Symfony service container config.  However,
+this is just passing an array in the following format:
 
-## Issues / Bugs / Questions
+```php
+[
+  'environments' => [
+    'sandbox' => [
+      'access_id' => 'xxxxxxxx',
+      'secure_key' => 'xxxxxxxx',
+      ...
+    ]
+  ],
+  'override_sub_resource_environments' => [
+    'address' => 'env_name',
+    'application' => 'env_name',
+    ...
+  ]
+]
+```
 
-Please feel free to raise an issue against this repository if you have any questions or problems
+*It's important to note that Forte's sandbox is quite limited for many resources.  Therefore, it's
+possible to override which environment is used for certain "sub resources"
+(API resources/endpoints)*
 
-## Contributing
+### Development
 
-New contributors to this project are welcome. If you are interested in contributing please
-send a courtesy email to dev@rentpost.com
+An example Symfony service container yaml configuration for a development environment, using a
+"livetest" environemnt with specific sub resource overrides.
+
+```yaml
+parameters:
+  forte_api_client_settings:
+    environments:
+      sandbox:
+        access_id: "%forte_api_default_access_id%"
+        secure_key: "%forte_api_default_secure_key%"
+        authenticating_organization_id: "%forte_api_default_authenticating_organization_id%"
+        sandbox: "%forte_api_default_sandbox%"
+        base_uri: ~
+        debug: false
+      livetest:
+        access_id: "%forte_api_livetest_access_id%"
+        secure_key: "%forte_api_livetest_secure_key%"
+        authenticating_organization_id: "%forte_api_livetest_authenticating_organization_id%"
+        sandbox: "%forte_api_livetest_sandbox%"
+        base_uri: ~
+        debug: false
+
+    override_sub_resource_environments:
+      address: livetest
+      application: livetest
+      customer: livetest
+      dispute: livetest
+      document: livetest
+      funding: livetest
+      pay_method: livetest
+      schedule_item: livetest
+      settlement: livetest
+      transaction: ~
+```
+
+### Production
+
+A simple Symfony service container configuration for a production environemtn without any
+necessary overrides.
+
+```yaml
+parameters:
+  forte_api_client_settings:
+    environments:
+      live:
+        access_id: "%forte_api_default_access_id%"
+        secure_key: "%forte_api_default_secure_key%"
+        authenticating_organization_id: "%forte_api_default_authenticating_organization_id%"
+        sandbox: "%forte_api_default_sandbox%"
+        base_uri: ~
+        debug: false
+
+    override_sub_resource_environments: ~
+```
+
+## Usage
+
+Here is an example credit card 'sale' transaction.
+
+### PSR Logger
+
+We first create a dummy logger.  Feel free to use any PSR compliant logger.  This is used when
+debugging is enabled in the configuration.  Otherwise, all Exceptions will surface and must be caught.
+
+```php
+use Psr\Log\LoggerInterface;
+
+namespace Acme\File;
+
+class Logger implements LoggerInterface
+{
+
+  public function log($level, $message, array $context = []) {
+    // Handle logging
+  }
+
+  // Other interface methods
+}
+```
+
+### Create Transaction
+
+To use, you'll want to call the `Rentpost\ForteApi\Client\Factory::make` method which will give you
+a `Rentpost\ForteApi\Client\ForteClient` object.  The `ForteClient` object provides access to all
+"sub resources" (Forte API endpoint/resources).
+
+The library makes use of `Model` and `Attribute` objects which assist with validation and
+serialization.  Any complex values will make use of an `Attribute`.  A `Model` is an object
+representation of a Forte API resource and all required and optional parameters.
+
+```php
+use Acme\File\Logger as FileLogger;
+use Rentpost\ForteApi\Attribute;
+use Rentpost\ForteApi\Client\Factory as ForteApiClientFactory;
+use Rentpost\ForteApi\Exception\Request\AbstractRequestException;
+use Rentpost\ForteApi\Model;
+
+// The first parameter is our settings array.  See the "Configuration" section
+$settings = [
+  'environments' => [
+    'sandbox' => [
+      'access_id' => 'xxxxxxxx',
+      'secure_key' => 'xxxxxxxx',
+      ...
+    ]
+  ],
+  'override_sub_resource_environments' => [
+    'address' => 'env_name',
+    'application' => 'env_name',
+    ...
+  ]
+];
+
+$logger = new FileLogger();
+
+$forteClient = new ForteApiClientFactory($settings, $logger);
+
+$organizationId = new Attribute\Id\OrganizationId('org_123456');
+$locationId = new Attribute\Id\LocationId('loc_123456');
+
+$card = new Model\Card();
+$card->setCardType('visa')
+  ->setNameOnCard('John Doe')
+  ->setAccountNumber('1234567890')
+  ->setExpireMonth('01')
+  ->setExpireYear('2019')
+  ->setCardVerificationValue('123');
+
+$address = new Model\PhysicalAddress();
+  ->setStreetLine1('123 Foo St.')
+  ->setStreetLine2('Apt. 123')
+  ->setLocality('New York') // City/town/village
+  ->setRegion('NY') // State or province
+  ->setPostalCode(new Attribute\PostalCode('12345'));
+
+$transaction = new Model\Transaction();
+$transaction->setAction('sale')
+  ->setCard($card) // Or setEcheck for ACH
+  ->setBillingAddress($address)
+  ->setOrderNumber('PO-12345')
+  ->setAuthorizationAmount(new Attribute\Money('100.00'))
+  ->setCustomerIpAddress(new Attribute\IpAddress('192.168.0.1'));
+
+try {
+  $forteClient->useTransactions()->create(
+    $organizationId,
+    $locationId,
+    $transaction
+  );
+} catch (AbstractRequestException $e) {
+  $logger->log($e->getModel()->getResponse()->getResponseDesc());
+
+  throw $e;
+}
+
+```
 
 ## Testing
 
@@ -60,6 +232,20 @@ installed via `Composer`.  To do so, run `make init` first.  Then you can run te
 ```
 make test
 ```
+
+## Issues / Bugs / Questions
+
+Please feel free to raise an issue against this repository if you have any questions or problems
+
+## Contributing
+
+New contributors to this project are welcome. If you are interested in contributing please
+send a courtesy email to dev@rentpost.com
+
+## Authors and Maintainers
+
+- Jacob Thomason <jacob@rentpost.com>
+- Sam Anthony <sam@expertcoder.io>
 
 ## License
 
