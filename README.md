@@ -41,7 +41,7 @@ this is just passing an array in the following format:
 possible to override which environment is used for certain "sub resources"
 (API resources/endpoints)*
 
-### Development
+### Development Environments
 
 An example Symfony service container yaml configuration for a development environment, using a
 "livetest" environemnt with specific sub resource overrides.
@@ -78,7 +78,7 @@ parameters:
       transaction: ~
 ```
 
-### Production
+### Production Environments
 
 A simple Symfony service container configuration for a production environemtn without any
 necessary overrides.
