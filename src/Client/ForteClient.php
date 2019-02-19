@@ -9,28 +9,37 @@ use Rentpost\ForteApi\Exception\LibraryGenericException;
 use Rentpost\ForteApi\ForteEnvironment;
 use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
 
+
+/**
+ * This is the main entry class/client for accessing this library
+ *
+ * @author Sam Anthony <sam@rentpost.com>
+ * @author Jacob Thomason <jacob@rentpost.com>
+ */
 class ForteClient
 {
 
     protected const DEFAULT_ENVIRONMENT_NAME = '_default_';
 
-    /**
-     * @var AbstractSubResource[]
-     */
+    /** @var AbstractSubResource[] */
     protected $subResources;
 
-    /**
-     * @var ForteEnvironment[]
-     */
+    /** @var ForteEnvironment[] */
     protected $environments;
 
 
+    /**
+     * Constructor
+     *
+     * @param ForteEnvironment $defaultEnvironment
+     * @param array $alternativeEnvironments
+     * @param array $overrideSubResourceEnvironments
+     */
     public function __construct(
         ForteEnvironment $defaultEnvironment,
         array $alternativeEnvironments = [],
         array $overrideSubResourceEnvironments = []
-    )
-    {
+    ) {
         $this->addForteEnvironment(self::DEFAULT_ENVIRONMENT_NAME, $defaultEnvironment);
 
         foreach ($alternativeEnvironments as $name => $environment) {
@@ -41,13 +50,24 @@ class ForteClient
     }
 
 
-    private function addForteEnvironment(string $name, ForteEnvironment $environment)
+    /**
+     * Adds an environment to support
+     *
+     * @param string $name
+     * @param ForteEnvironment $environment
+     */
+    private function addForteEnvironment(string $name, ForteEnvironment $environment): void
     {
         $this->environments[$name] = $environment;
     }
 
 
-    protected function getForteEnvironment($name): ForteEnvironment
+    /**
+     * Gets a given environment by name
+     *
+     * @param string $name
+     */
+    protected function getForteEnvironment(string $name): ForteEnvironment
     {
         if (!isset($this->environments[$name])) {
             throw new LibraryGenericException('Cannot find forte environment with name `' . $name . '`');
@@ -57,20 +77,34 @@ class ForteClient
     }
 
 
+    /**
+     * Generates the risk session id
+     *
+     * @see https://www.forte.net/devdocs/api_resources/forte_api_v3.htm#application (risk_session_id)
+     */
     public function generateRiskSessionId(): string
     {
-        // see: https://www.forte.net/devdocs/api_resources/forte_api_v3.htm#application   (risk_session_id)
-        return preg_replace('~[^a-zA-Z0-9]~', '', uniqid('rsi', true) );
+        return preg_replace('~[^a-zA-Z0-9]~', '', uniqid('rsi', true));
     }
 
 
+    /**
+     * Gets the URL for the risk session id
+     *
+     * @param string $riskSessionId
+     */
     public function getRiskSessionJavascriptUrl(string $riskSessionId): string
     {
         return 'https://img3.forte.net/fp/tags.js?org_id=xdzpgyj7&session_id=' . $riskSessionId . 'pageid=1';
     }
 
 
-    protected function initSubResources(array $overrideSubResourceEnvironments)
+    /**
+     * Initializes all the necessary sub resources
+     *
+     * @param array $overrideSubResourceEnvironments
+     */
+    protected function initSubResources(array $overrideSubResourceEnvironments): void
     {
         $subResourceList = [
             'address',
@@ -105,6 +139,11 @@ class ForteClient
     }
 
 
+    /**
+     * Determines the sub resource FQCN
+     *
+     * @param string $subResource
+     */
     protected function inferSubResourceClassName(string $subResource): string
     {
         $converter = new CamelCaseToSnakeCaseNameConverter(null, false);
@@ -115,7 +154,7 @@ class ForteClient
 
 
     /**
-     * @return SubResource\TransactionSubResource
+     * Uses the transactions sub resource
      */
     public function useTransactions(): SubResource\TransactionSubResource
     {
@@ -124,7 +163,7 @@ class ForteClient
 
 
     /**
-     * @return SubResource\ScheduleSubResource
+     * Uses the schedule sub resource
      */
     public function useSchedules(): SubResource\ScheduleSubResource
     {
@@ -133,7 +172,7 @@ class ForteClient
 
 
     /**
-     * @return SubResource\ScheduleItemSubResource
+     * Uses the schedule item sub resource
      */
     public function useSchedualItems(): SubResource\ScheduleItemSubResource
     {
@@ -142,7 +181,7 @@ class ForteClient
 
 
     /**
-     * @return SubResource\SettlementSubResource
+     * Uses the settlement sub resource
      */
     public function useSettlements(): SubResource\SettlementSubResource
     {
@@ -151,7 +190,7 @@ class ForteClient
 
 
     /**
-     * @return SubResource\FundingSubResource
+     * Uses the funding sub resource
      */
     public function useFundings(): SubResource\FundingSubResource
     {
@@ -160,7 +199,7 @@ class ForteClient
 
 
     /**
-     * @return SubResource\CustomerSubResource
+     * Uses the customer sub resource
      */
     public function useCustomers(): SubResource\CustomerSubResource
     {
@@ -169,7 +208,7 @@ class ForteClient
 
 
     /**
-     * @return SubResource\AddressSubResource
+     * Uses the address sub resource
      */
     public function useAddresses(): SubResource\AddressSubResource
     {
@@ -178,7 +217,7 @@ class ForteClient
 
 
     /**
-     * @return SubResource\PayMethodSubResource
+     * Uses the pay method sub resource
      */
     public function usePayMethods(): SubResource\PayMethodSubResource
     {
@@ -187,7 +226,7 @@ class ForteClient
 
 
     /**
-     * @return SubResource\DisputeSubResource
+     * Uses the dispute sub resource
      */
     public function useDisputes(): SubResource\DisputeSubResource
     {
@@ -196,7 +235,7 @@ class ForteClient
 
 
     /**
-     * @return SubResource\ApplicationSubResource
+     * Uses the application sub resource
      */
     public function useApplications(): SubResource\ApplicationSubResource
     {
@@ -205,7 +244,7 @@ class ForteClient
 
 
     /**
-     * @return SubResource\DocumentSubResource
+     * Uses the document sub resource
      */
     public function useDocuments(): SubResource\DocumentSubResource
     {

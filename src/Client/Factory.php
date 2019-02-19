@@ -13,11 +13,14 @@ use Rentpost\ForteApi\ForteEnvironment;
  * Forte Client Factory
  *
  * @author Sam Anthony <sam@rentpost.com>
+ * @author Jacob Thomason <jacob@rentpost.com>
  */
 class Factory
 {
 
     /**
+     * Builds out the ForteClient
+     *
      * @param array $settings Nested associative array, see `settings.php.dist`
      * @param LoggerInterface $logger
      */
