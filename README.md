@@ -237,6 +237,10 @@ make test
 
 Please feel free to raise an issue against this repository if you have any questions or problems
 
+## Todo
+
+There are still a few "sub resource" classes (read: Forte endpoints/resources)that haven't been completed/aren't supported yet.  This is simply because we aren't using these.  Feel free to submit these as a pull request, or issue ticket if necessary.
+
 ## Contributing
 
 New contributors to this project are welcome. If you are interested in contributing please
