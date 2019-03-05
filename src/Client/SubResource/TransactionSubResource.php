@@ -40,12 +40,8 @@ class TransactionSubResource extends AbstractSubResource
             $locationId->getValue(),
         ]);
 
-        return $this->getHttpClient()->makeModelRequest(
-            'post',
-            $uri,
-            Model\Transaction::class,
-            $transaction
-        );
+        return $this->getHttpClient()
+            ->makeModelRequest('post', $uri, Model\Transaction::class, $transaction);
     }
 
 
@@ -62,14 +58,11 @@ class TransactionSubResource extends AbstractSubResource
         Attribute\Id\TransactionId $transactionId
     ): Model\Transaction
     {
-        $uri = UriBuilder::build(
-            'organizations/%s/locations/%s/transactions/%s',
-            [
-                $organizationId->getValue(),
-                $locationId->getValue(),
-                $transactionId->getValue(),
-            ]
-        );
+        $uri = UriBuilder::build('organizations/%s/locations/%s/transactions/%s', [
+            $organizationId->getValue(),
+            $locationId->getValue(),
+            $transactionId->getValue(),
+        ]);
 
         return $this->getHttpClient()->makeModelRequest('get', $uri, Model\Transaction::class);
     }
@@ -154,11 +147,7 @@ class TransactionSubResource extends AbstractSubResource
             $pagination
         );
 
-        return $this->getHttpClient()->makeModelRequest(
-            'get',
-            $uri,
-            Model\TransactionCollection::class
-        );
+        return $this->getHttpClient()->makeModelRequest('get', $uri, Model\TransactionCollection::class);
     }
 
 
@@ -168,7 +157,7 @@ class TransactionSubResource extends AbstractSubResource
      * relating to the authenticated Organization.
      *
      * @param TransactionFilter $filter
-     * @param null|PaginationData $pagination
+     * @param PaginationData|null $pagination
      *
      * @return Model\TransactionCollection
      */
@@ -177,26 +166,17 @@ class TransactionSubResource extends AbstractSubResource
         ?PaginationData $pagination = null
     ): Model\TransactionCollection
     {
-        $uri = UriBuilder::build(
-            'transactions/',
-            [],
-            $filter,
-            $pagination
-        );
+        $uri = UriBuilder::build('transactions/', [], $filter, $pagination);
 
-        return $this->getHttpClient()->makeModelRequest(
-            'get',
-            $uri,
-            Model\TransactionCollection::class
-        );
+        return $this->getHttpClient()->makeModelRequest('get', $uri, Model\TransactionCollection::class);
     }
 
 
     /**
      * @param Attribute\Id\OrganizationId $organizationId
      * @param Attribute\Id\LocationId $locationId
-     * @param Model\Transaction $transactionBeenVoided Note, only the transactionId and
-     *                                                 authorizationCode need to be set for voiding
+     * @param Model\Transaction $transactionBeenVoided      Note, only the transactionId and
+     *                                                      authorizationCode need to be set for voiding
      *
      * @return Model\Transaction
      */
@@ -225,21 +205,14 @@ class TransactionSubResource extends AbstractSubResource
             ->setAuthorizationCode($transactionBeenVoided->getAuthorizationCode())
             ->setAction('void');
 
-        $uri = UriBuilder::build(
-            'organizations/%s/locations/%s/transactions/%s',
-            [
-                $organizationId->getValue(),
-                $locationId->getValue(),
-                $transactionCopy->getTransactionId()->getValue(),
-            ]
-        );
+        $uri = UriBuilder::build('organizations/%s/locations/%s/transactions/%s', [
+            $organizationId->getValue(),
+            $locationId->getValue(),
+            $transactionCopy->getTransactionId()->getValue(),
+        ]);
 
-        return $this->getHttpClient()->makeModelRequest(
-            'put',
-            $uri,
-            Model\Transaction::class,
-            $transactionCopy
-        );
+        return $this->getHttpClient()
+            ->makeModelRequest('put', $uri, Model\Transaction::class, $transactionCopy);
     }
 
 
