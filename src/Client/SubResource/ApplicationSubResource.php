@@ -26,7 +26,7 @@ class ApplicationSubResource extends AbstractSubResource
      */
     public function create(Model\Application $application): Model\Application
     {
-        $uri = UriBuilder::build('organizations/%s/applications', [$this->getAuthOrgId()]);
+        $uri = UriBuilder::build('organizations/%s/applications', [$this->getAuthOrgId()->getValue()]);
 
         return $this->getHttpClient()->makeModelRequest('post', $uri, Model\Application::class, $application);
     }
@@ -39,7 +39,7 @@ class ApplicationSubResource extends AbstractSubResource
      */
     public function findOne(Attribute\Id\ApplicationId $applicationId): Model\Application
     {
-        $uri = UriBuilder::build('organizations/%s/applications/%s', [$this->getAuthOrgId(), $applicationId->getValue()]);
+        $uri = UriBuilder::build('organizations/%s/applications/%s', [$this->getAuthOrgId()->getValue(), $applicationId->getValue()]);
 
         return $this->getHttpClient()->makeModelRequest('get', $uri, Model\Application::class, null);
     }
@@ -56,7 +56,7 @@ class ApplicationSubResource extends AbstractSubResource
         ?PaginationData $paginationData = null
     ): Model\ApplicationCollection
     {
-        $uri = UriBuilder::build('organizations/%s/applications', [$this->getAuthOrgId()], $filter, $paginationData);
+        $uri = UriBuilder::build('organizations/%s/applications', [$this->getAuthOrgId()->getValue()], $filter, $paginationData);
 
         return $this->getHttpClient()->makeModelRequest('get', $uri, Model\ApplicationCollection::class, null);
     }

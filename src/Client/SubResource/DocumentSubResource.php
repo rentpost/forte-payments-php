@@ -20,7 +20,7 @@ class DocumentSubResource extends AbstractSubResource
      */
     public function create(Model\Document $document, Model\Attachment $attachment): Model\Document
     {
-        $uri = UriBuilder::build('organizations/%s/documents', [$this->getAuthOrgId()]);
+        $uri = UriBuilder::build('organizations/%s/documents', [$this->getAuthOrgId()->getValue()]);
 
         $returnedDocument = $this->getHttpClient()->makeModelRequestWithAttachment(
             'post',
@@ -42,7 +42,10 @@ class DocumentSubResource extends AbstractSubResource
      */
     public function findOne(Attribute\Id\DocumentId $documentId): Model\Document
     {
-        $uri = UriBuilder::build('organizations/%s/documents/%s', [$this->getAuthOrgId(), $documentId->getValue()]);
+        $uri = UriBuilder::build('organizations/%s/documents/%s', [
+            $this->getAuthOrgId()->getValue(),
+            $documentId->getValue(),
+        ]);
 
         $document = $this->getHttpClient()->makeModelRequest(
             'get',

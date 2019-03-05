@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Rentpost\ForteApi\Client\SubResource;
 
+use Rentpost\ForteApi\Attribute;
 use Rentpost\ForteApi\ForteEnvironment;
 use Rentpost\ForteApi\HttpClient\HttpClient;
 
@@ -51,8 +52,8 @@ abstract class AbstractSubResource
     /**
      * Gets the Organization ID
      */
-    protected function getAuthOrgId(): string
+    public function getAuthOrgId(): Attribute\Id\OrganizationId
     {
-        return $this->getForteEnvironment()->getAuthenticatingOrganizationId()->getValue();
+        return $this->getForteEnvironment()->getAuthenticatingOrganizationId();
     }
 }
