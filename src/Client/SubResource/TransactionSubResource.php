@@ -156,13 +156,13 @@ class TransactionSubResource extends AbstractSubResource
      * This is not a documented endpoint. It appears to return all transactions
      * relating to the authenticated Organization.
      *
-     * @param TransactionFilter $filter
+     * @param TransactionFilter $filter         Unlike most other find() methods, this one requires filter
      * @param PaginationData|null $pagination
      *
      * @return Model\TransactionCollection
      */
     public function findForEntireOrganization(
-        TransactionFilter $filter, // Unlike most other find() methods, this one requires filter.
+        TransactionFilter $filter,
         ?PaginationData $pagination = null
     ): Model\TransactionCollection
     {

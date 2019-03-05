@@ -8,9 +8,13 @@ use Rentpost\ForteApi\Attribute;
 use Rentpost\ForteApi\Model;
 use Rentpost\ForteApi\UriBuilder\UriBuilder;
 
+/**
+ * DocumentSubResource
+ *
+ * @author Jacob Thomason <jacob@rentpost.com>
+ */
 class DocumentSubResource extends AbstractSubResource
 {
-
 
     /**
      * https://www.forte.net/devdocs/api_resources/forte_api_v3.htm#documents
@@ -22,15 +26,8 @@ class DocumentSubResource extends AbstractSubResource
     {
         $uri = UriBuilder::build('organizations/%s/documents', [$this->getAuthOrgId()->getValue()]);
 
-        $returnedDocument = $this->getHttpClient()->makeModelRequestWithAttachment(
-            'post',
-            $uri,
-            Model\Document::class,
-            $document,
-            $attachment
-        );
-
-        return $returnedDocument;
+        return $this->getHttpClient()
+            ->makeModelRequestWithAttachment('post', $uri, Model\Document::class, $document, $attachment);
     }
 
 
@@ -38,6 +35,7 @@ class DocumentSubResource extends AbstractSubResource
      * @param Attribute\Id\DocumentId $documentId
      *
      * @return Model\Document
+     *
      * @throws \Rentpost\ForteApi\Exception\LibraryFaultException
      */
     public function findOne(Attribute\Id\DocumentId $documentId): Model\Document
@@ -47,13 +45,9 @@ class DocumentSubResource extends AbstractSubResource
             $documentId->getValue(),
         ]);
 
-        $document = $this->getHttpClient()->makeModelRequest(
-            'get',
-            $uri,
-            Model\Document::class
-        );
+        $document = $this->getHttpClient()
+            ->makeModelRequest('get', $uri, Model\Document::class);
 
         return $document;
     }
-
 }

@@ -9,5 +9,4 @@ use Rentpost\ForteApi\Attribute;
 
 class CustomerSubResource extends AbstractSubResource
 {
-
 }
