@@ -25,7 +25,7 @@ class TransactionSubResource extends AbstractSubResource
     /**
      * Creates a new transaction
      *
-     * @param Attribute\Id\OrganizationId $organizationId
+     * @param Attribute\Id\OrganizationId $organizationId       Use reseller org id if reseller
      * @param Attribute\Id\LocationId $locationId
      * @param Model\Transaction $transaction
      */
@@ -48,7 +48,7 @@ class TransactionSubResource extends AbstractSubResource
     /**
      * Finds a single transaction
      *
-     * @param Attribute\Id\OrganizationId $organizationId
+     * @param Attribute\Id\OrganizationId $organizationId       Use reseller org id if reseller
      * @param Attribute\Id\LocationId $locationId
      * @param Attribute\Id\TransactionId $transactionId
      */
@@ -72,7 +72,7 @@ class TransactionSubResource extends AbstractSubResource
      * When anything is just inserted (POST) into Forte, it can take several
      * seconds to become available. This will wait and retry a few times until it becomes available
      *
-     * @param Attribute\Id\OrganizationId $organizationId
+     * @param Attribute\Id\OrganizationId $organizationId       Use reseller org id if reseller
      * @param Attribute\Id\LocationId $locationId
      * @param Attribute\Id\TransactionId $transactionId
      */
@@ -125,7 +125,7 @@ class TransactionSubResource extends AbstractSubResource
     /**
      * Finds all transactions
      *
-     * @param Attribute\Id\OrganizationId $organizationId
+     * @param Attribute\Id\OrganizationId $organizationId       Use reseller org id if reseller
      * @param Attribute\Id\LocationId $locationId
      * @param TransactionFilter $filter
      * @param PaginationData|null $pagination
@@ -173,7 +173,7 @@ class TransactionSubResource extends AbstractSubResource
 
 
     /**
-     * @param Attribute\Id\OrganizationId $organizationId
+     * @param Attribute\Id\OrganizationId $organizationId   Use reseller org id if reseller
      * @param Attribute\Id\LocationId $locationId
      * @param Model\Transaction $transactionBeenVoided      Note, only the transactionId and
      *                                                      authorizationCode need to be set for voiding
@@ -222,7 +222,7 @@ class TransactionSubResource extends AbstractSubResource
      * It first first make a call to the API to get the authorization_code and
      * then make another call to void.
      *
-     * @param Attribute\Id\OrganizationId $organizationId
+     * @param Attribute\Id\OrganizationId $organizationId           Use reseller org id if reseller
      * @param Attribute\Id\LocationId $locationId
      * @param Attribute\Id\TransactionId $transactionIdBeenVoided
      *

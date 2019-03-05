@@ -21,7 +21,7 @@ class FundingSubResource extends AbstractSubResource
     /**
      * Finds a funding
      *
-     * @param Attribute\Id\OrganizationId $organizationId
+     * @param Attribute\Id\OrganizationId $organizationId       Use reseller org id if reseller
      * @param Attribute\Id\FundingId $fundingId
      */
     public function findOne(
@@ -41,7 +41,7 @@ class FundingSubResource extends AbstractSubResource
     /**
      * Finds a collection of fundings
      *
-     * @param Attribute\Id\OrganizationId $organizationId
+     * @param Attribute\Id\OrganizationId $organizationId       Use reseller org id if reseller
      * @param FundingFilter $filter                             Filter required for this method
      * @param PaginationData|null $pagination
      */

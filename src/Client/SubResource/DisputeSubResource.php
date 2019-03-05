@@ -20,7 +20,7 @@ class DisputeSubResource extends AbstractSubResource
     /**
      * Finds a dispute
      *
-     * @param Attribute\Id\OrganizationId $organizationId
+     * @param Attribute\Id\OrganizationId $organizationId       Use reseller org id if reseller
      * @param Attribute\Id\DisputeId $disputeId
      */
     public function findOne(
@@ -40,7 +40,7 @@ class DisputeSubResource extends AbstractSubResource
     /**
      * Finds a collection of disputes
      *
-     * @param Attribute\Id\OrganizationId $organizationId
+     * @param Attribute\Id\OrganizationId $organizationId       Use reseller org id if reseller
      * @param DisputeFilter|null $filter
      * @param PaginationData|null $pagination
      */

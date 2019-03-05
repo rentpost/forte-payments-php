@@ -29,12 +29,7 @@ class SettlementSubResource extends AbstractSubResource
         ?PaginationData $pagination = null
     ): Model\SettlementCollection
     {
-        $uri = UriBuilder::build(
-            'settlements/',
-            [],
-            $filter,
-            $pagination
-        );
+        $uri = UriBuilder::build('settlements/', [], $filter, $pagination);
 
         return $this->getHttpClient()->makeModelRequest('get', $uri, Model\SettlementCollection::class);
     }

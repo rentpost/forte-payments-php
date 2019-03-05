@@ -17,7 +17,11 @@ class DocumentSubResource extends AbstractSubResource
 {
 
     /**
-     * https://www.forte.net/devdocs/api_resources/forte_api_v3.htm#documents
+     * Creates/adds a document
+     *
+     * @note we use the reseller org id here since only resellers need to add documents
+     *
+     * @see https://www.forte.net/devdocs/api_resources/forte_api_v3.htm#documents
      *
      * @param Model\Document $document
      * @param Model\Attachment $attachment
@@ -32,9 +36,11 @@ class DocumentSubResource extends AbstractSubResource
 
 
     /**
-     * @param Attribute\Id\DocumentId $documentId
+     * Finds a document
      *
-     * @return Model\Document
+     * @note we use the reseller org id here since only resellers use documents
+     *
+     * @param Attribute\Id\DocumentId $documentId
      *
      * @throws \Rentpost\ForteApi\Exception\LibraryFaultException
      */
@@ -45,9 +51,7 @@ class DocumentSubResource extends AbstractSubResource
             $documentId->getValue(),
         ]);
 
-        $document = $this->getHttpClient()
+        return $this->getHttpClient()
             ->makeModelRequest('get', $uri, Model\Document::class);
-
-        return $document;
     }
 }
