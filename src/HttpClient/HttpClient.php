@@ -8,8 +8,6 @@ use GuzzleHttp\Client as GuzzleClient;
 use Rentpost\ForteApi\Exception\Request\Factory as ExceptionRequestFactory;
 use Rentpost\ForteApi\Model\AbstractModel;
 use Rentpost\ForteApi\Model\Attachment;
-use Symfony\Component\Serializer\Exception\NotEncodableValueException;
-use Rentpost\ForteApi\ValidatingSerializer\ValidatableSerializableInterface;
 
 /**
  * @author Sam Anthony <sam@rentpost.com>
@@ -54,25 +52,25 @@ class HttpClient
         string $uri,
         string $responseModelFqns,
         array $options = []
-    ): ValidatableSerializableInterface
+    ): AbstractModel
     {
         if ($overrideJson = RequestOverrideHack::getOverrideJson()) {
             return $this->validatingSerializer->deserialize($overrideJson, $responseModelFqns);
         }
 
         $response = $this->guzzleClient->request($httpMethod, $uri, $options);
+
         $json = $response->getBody()->__toString();
 
-        try {
-            $model = $this->validatingSerializer->deserialize($json, $responseModelFqns);
-        } catch (NotEncodableValueException $e) {
-            $model = null;
-        }
+        $model = $this->validatingSerializer->deserialize($json, $responseModelFqns);
 
         if ($response->getStatusCode() < 200
             || $response->getStatusCode() >= 300
         ) {
-            throw ExceptionRequestFactory::make($response, $model);
+            throw ExceptionRequestFactory::make(
+                $response,
+                $model
+            );
         }
 
         return $model;
@@ -106,13 +104,18 @@ class HttpClient
             $body = null;
         }
 
-        return $this->doRequest($httpMethod, $uri, $responseModelFqns, [
-            'headers' => [
-                'User-Agent' => 'forte-payments-php/1.0',
-                'Accept' => 'application/json',
-            ],
-            'body' => $body,
-        ]);
+        return $this->doRequest(
+            $httpMethod,
+            $uri,
+            $responseModelFqns,
+            [
+                'headers' => [
+                    'User-Agent' => 'forte-payments-php/1.0',
+                    'Accept' => 'application/json',
+                ],
+                'body' => $body
+            ]
+        );
 
         $json = $response->getBody()->__toString();
 
@@ -157,6 +160,11 @@ class HttpClient
             ],
         ];
 
-        return $this->doRequest($httpMethod, $uri, $responseModelFqns, $options);
+        return $this->doRequest(
+            $httpMethod,
+            $uri,
+            $responseModelFqns,
+            $options
+        );
     }
 }

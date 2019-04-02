@@ -27,12 +27,12 @@ abstract class AbstractRequestException extends AbstractException
      * Constructor
      *
      * @param ResponseInterface $response
-     * @param AbstractModel|null $model
+     * @param AbstractModel $model
      * @param string $message
      */
     public function __construct(
         ResponseInterface $response,
-        ?AbstractModel $model,
+        AbstractModel $model,
         string $message
     ) {
         parent::__construct($message);
@@ -54,7 +54,7 @@ abstract class AbstractRequestException extends AbstractException
     /**
      * Gets the associated Model
      */
-    public function getModel(): ?AbstractModel
+    public function getModel(): AbstractModel
     {
         return $this->model;
     }
