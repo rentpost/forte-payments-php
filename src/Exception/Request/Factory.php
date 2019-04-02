@@ -26,23 +26,23 @@ class Factory
      * Factory make
      *
      * @param \Psr\Http\Message\ResponseInterface $response
-     * @param Model\AbstractModel $model
+     * @param Model\AbstractModel|null $model
      */
     public static function make(
         \Psr\Http\Message\ResponseInterface $response,
-        Model\AbstractModel $model
+        ?Model\AbstractModel $model
     ): AbstractRequestException
     {
+        $responseObject = $model ? $model->getResponse() : null;
+        if (!$responseObject) {
+            return new UnknownException($response, $model);
+        }
+
         switch (true) {
-            case ($response->getStatusCode() >= 400 && $response->getStatusCode() < 500):
+            case $response->getStatusCode() >= 400 && $response->getStatusCode() < 500:
                 return new TransactionException($response, $model);
             case $response->getStatusCode() >= 500:
                 return new ServerErrorException($response, $model);
-        }
-
-        $responseObject = $model->getResponse();
-        if (!$responseObject) {
-            return new UnknownException($response, $model);
         }
 
         if ($model instanceof Model\Transaction) {
