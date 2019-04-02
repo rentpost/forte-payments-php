@@ -34,7 +34,7 @@ class Factory
     ): AbstractRequestException
     {
         switch (true) {
-            case ($response->getStatusCode() >= 400 && $response->getStatusCode() < 500):
+            case $response->getStatusCode() >= 400 && $response->getStatusCode() < 500:
                 return new TransactionException($response, $model);
             case $response->getStatusCode() >= 500:
                 return new ServerErrorException($response, $model);

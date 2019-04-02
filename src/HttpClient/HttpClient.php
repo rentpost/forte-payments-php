@@ -67,10 +67,7 @@ class HttpClient
         if ($response->getStatusCode() < 200
             || $response->getStatusCode() >= 300
         ) {
-            throw ExceptionRequestFactory::make(
-                $response,
-                $model
-            );
+            throw ExceptionRequestFactory::make($response, $model);
         }
 
         return $model;
