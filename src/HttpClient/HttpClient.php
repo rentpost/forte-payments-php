@@ -8,6 +8,7 @@ use GuzzleHttp\Client as GuzzleClient;
 use Rentpost\ForteApi\Exception\Request\Factory as ExceptionRequestFactory;
 use Rentpost\ForteApi\Model\AbstractModel;
 use Rentpost\ForteApi\Model\Attachment;
+use Symfony\Component\Serializer\Exception\NotEncodableValueException;
 
 /**
  * @author Sam Anthony <sam@rentpost.com>
@@ -51,18 +52,26 @@ class HttpClient
         string $httpMethod,
         string $uri,
         string $responseModelFqns,
-        array $options = []
+        array $options = [],
+        int $retryAttempts = 3
     ): AbstractModel
     {
         if ($overrideJson = RequestOverrideHack::getOverrideJson()) {
             return $this->validatingSerializer->deserialize($overrideJson, $responseModelFqns);
         }
 
-        $response = $this->guzzleClient->request($httpMethod, $uri, $options);
+        try {
+            $response = $this->guzzleClient->request($httpMethod, $uri, $options);
+            $json = $response->getBody()->__toString();
+            $model = $this->validatingSerializer->deserialize($json, $responseModelFqns);
+        } catch (NotEncodableValueException $e) {
+            if ($retryAttempts > 0) {
+                $retryAttempts--; // Decrement attempts to retry the request
+                $this->doRequest($httpMethod, $uri, $responseModelFqns, $options, $retryAttempts);
+            }
 
-        $json = $response->getBody()->__toString();
-
-        $model = $this->validatingSerializer->deserialize($json, $responseModelFqns);
+            throw $e;
+        }
 
         if ($response->getStatusCode() < 200
             || $response->getStatusCode() >= 300
