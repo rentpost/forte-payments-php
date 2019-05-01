@@ -17,6 +17,7 @@ use Symfony\Component\Serializer\Exception\NotEncodableValueException;
 /**
  * Methods for transactions
  *
+ * @author Jacob Thomason <jacob@rentpost.com>
  * @author Sam Anthony <sam@rentpost.com>
  */
 class TransactionSubResource extends AbstractSubResource
@@ -83,7 +84,7 @@ class TransactionSubResource extends AbstractSubResource
     ): ?Model\Transaction
     {
         $transaction = null;
-        // If the  transaction we are attempting to get was only just inserted
+        // If the transaction we are attempting to get was only just POSTed
         // It seems to take a few seconds for it to become available.
         // repeatly attempt to get it for a few seconds
         $attempt = 1;
@@ -114,7 +115,7 @@ class TransactionSubResource extends AbstractSubResource
                 return $transaction;
             }
 
-            sleep(2);
+            sleep(3);
             $attempt++;
         }
 
