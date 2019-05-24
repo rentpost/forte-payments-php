@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Rentpost\ForteApi\Attribute;
 
+use Rentpost\ForteApi\Exception\ValidationException;
 use Rentpost\ForteApi\Sanitizer;
 
 /**
