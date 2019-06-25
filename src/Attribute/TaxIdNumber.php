@@ -22,7 +22,7 @@ class TaxIdNumber extends AbstractAttribute
      */
     protected function internalize($value): string
     {
-        if (! is_string($value)) {
+        if (!is_string($value)) {
             throw new ValidationException('must be a string');
         }
 
@@ -33,6 +33,6 @@ class TaxIdNumber extends AbstractAttribute
             return $taxIdNumber;
         }
 
-        throw new ValidationException("Tax id number. '$taxIdNumber', is invalid");
+        throw new ValidationException("Tax id number, '$taxIdNumber', is invalid - must be 9 digits in length.");
     }
 }
