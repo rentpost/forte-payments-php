@@ -3,7 +3,7 @@
 SHELL:=/bin/bash
 
 .PHONY: help init start stop clean test test-only test-forte test-only-forte clear-cache
-		update-database migrate-database install-vendor update-vendor update-autoload update-model
+		update-database migrate-database install-vendors update-vendors update-autoload update-model
 		update-secrets follow-debug follow-errors
 
 
@@ -27,7 +27,7 @@ help:
 
 init:                     ## Initializes the project and all dependencies
 	$(call checkExecutables, composer)
-	@make install-vendor
+	@make install-vendors
 
 
 test:                     ## Runs all tests.
@@ -40,12 +40,12 @@ test-only:                ## Only runs tests with 'test-only' group annotation
 	@vendor/bin/phpunit --configuration test/phpunit.xml --group test-only
 
 
-install-vendor:           ## Installs all the vendor lib dependencies.
+install-vendors:           ## Installs all the vendor lib dependencies.
 	$(call checkExecutables, docker)
 	@composer install
 
 
-update-vendor:            ## Updates all the vendor lib dependencies.
+update-vendors:            ## Updates all the vendor lib dependencies.
 	$(call checkExecutables, docker)
 	@composer update
 
