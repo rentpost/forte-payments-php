@@ -22,6 +22,9 @@ class Application extends AbstractModel
     /** @var string */
     protected $status;
 
+    /** @var string */
+    protected $declineReason;
+
     /**
      * @var mixed
      * @Assert\NotBlank()
@@ -160,6 +163,20 @@ class Application extends AbstractModel
     public function setStatus(?string $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+
+    public function getDeclineReason(): ?string
+    {
+        return $this->declineReason;
+    }
+
+
+    public function setDeclineReason(?string $declineReason): self
+    {
+        $this->declineReason = $declineReason;
 
         return $this;
     }
