@@ -11,27 +11,38 @@ use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
- * @author Sam Anthony <sam@rentpost.com>
- *
  * Wraps/combines the Symfony serializer and Validator
+ *
+ * @author Sam Anthony <sam@rentpost.com>
  */
 class ValidatingSerializer
 {
-    
+
     /** @var Serializer */
     protected $internalSerializer;
 
     /** @var Validator */
     protected $internalValidator;
 
-    
+
+    /**
+     * Constructor
+     *
+     * @param Serializer $serializer
+     * @param ValidatorInterface $validator
+     */
     public function __construct(Serializer $serializer, ValidatorInterface $validator)
     {
         $this->internalSerializer = $serializer;
         $this->internalValidator = $validator;
     }
 
-    
+
+    /**
+     * Serializes an object
+     *
+     * @param ValidatableSerializableInterface $object
+     */
     public function serialize(ValidatableSerializableInterface $object): string
     {
         $this->validate($object);
@@ -40,12 +51,18 @@ class ValidatingSerializer
     }
 
 
+    /**
+     * Deserialized an object
+     *
+     * @param string $json
+     * @param string $responseFqns
+     */
     public function deserialize(string $json, string $responseFqns): ValidatableSerializableInterface
     {
         return $this->internalSerializer->deserialize($json, $responseFqns, 'json');
     }
 
-    
+
     /**
      * Validates the object, throws exception on validation error
      *
@@ -54,21 +71,27 @@ class ValidatingSerializer
     protected function validate(ValidatableSerializableInterface $object): void
     {
         $violations = $this->internalValidator->validate($object);
+        $violationCount = $violations->count();
 
-        if ($violations->count() === 0) {
+        if ($violationCount === 0) {
             return; // Every thing is ok
         }
 
-        $exceptionMessage = get_class($object) . '` failed to validate';
+        $exceptionMessage = 'Failed to validate.';
+        foreach ($violations as $violation) {
+            $exceptionMessage .= ' "' . $violation->getPropertyPath() . '" ' . $violation->getMessage();
 
-        foreach($violations as $violation) {
-            $exceptionMessage .= ' | `' . $violation->getPropertyPath() . '` ' . $violation->getMessage();
+            if ($violationCount > 1) {
+                $exceptionMessage .= ' |';
+            }
+
+            $violationCount--;
         }
 
         throw new ValidationException($exceptionMessage);
     }
 
-    
+
     /**
      * @inheritDoc
      */
@@ -78,6 +101,11 @@ class ValidatingSerializer
     }
 
 
+    /**
+     * Normalizes pagination
+     *
+     * @param PaginationData $paginationData
+     */
     public function normalizePagination(PaginationData $paginationData): array
     {
         $this->validate($paginationData);
@@ -86,6 +114,11 @@ class ValidatingSerializer
     }
 
 
+    /**
+     * Normalizes the filter
+     *
+     * @param AbstractFilter $filter
+     */
     public function normalizeFilter(AbstractFilter $filter): array
     {
         $this->validate($filter);
