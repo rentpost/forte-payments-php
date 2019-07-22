@@ -22,7 +22,7 @@ class Application extends AbstractModel
     /** @var string */
     protected $status;
 
-    /** @var string */
+    /** @var array */
     protected $declineReason;
 
     /**
@@ -168,13 +168,13 @@ class Application extends AbstractModel
     }
 
 
-    public function getDeclineReason(): ?string
+    public function getDeclineReason(): ?array
     {
         return $this->declineReason;
     }
 
 
-    public function setDeclineReason(?string $declineReason): self
+    public function setDeclineReason(?array $declineReason): self
     {
         $this->declineReason = $declineReason;
 
