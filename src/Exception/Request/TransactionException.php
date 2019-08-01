@@ -27,14 +27,12 @@ class TransactionException extends AbstractRequestException
     ) {
         $this->model = $model;
 
-        $message = 'Forte Transaction Problem (' . $response->getStatusCode() . ' HTTP Response)';
-
+        $message = '';
         if ($model->getResponse()) {
-            $message .= ': ';
-            $message .= $model->getResponse()->getResponseCode();
-            $message .= ' ';
             $message .= $model->getResponse()->getResponseDesc();
         }
+
+        $message .= ' (Forte ' . $response->getStatusCode() . ' HTTP Response)';
 
         parent::__construct($response, $model, $message);
     }
