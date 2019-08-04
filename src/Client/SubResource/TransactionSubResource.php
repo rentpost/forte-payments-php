@@ -90,11 +90,7 @@ class TransactionSubResource extends AbstractSubResource
         $attempt = 1;
         while (true) {
             try {
-                $transaction = $this->findOne(
-                    $organizationId,
-                    $locationId,
-                    $transactionId
-                );
+                $transaction = $this->findOne($organizationId, $locationId, $transactionId);
             } catch (AbstractRequestException | NotEncodableValueException $e) {
                 // Ignore the exception the first 10 times because we are waiting for it to become available
                 // It seems we're getting back an HTML response with a 403 error in some cases.  This
