@@ -83,6 +83,10 @@ class TransactionSubResource extends AbstractSubResource
         Attribute\Id\TransactionId $transactionId
     ): ?Model\Transaction
     {
+        // Make sure that PHP does not timeout during the execution of this function since we
+        // must continue making attempts due to persistance issues on Forte's end
+        \set_time_limit(210); // 3.5 minutes
+
         $transaction = null;
         // If the transaction we are attempting to get was only just POSTed
         // It seems to take a few seconds for it to become available.
@@ -92,14 +96,14 @@ class TransactionSubResource extends AbstractSubResource
             try {
                 $transaction = $this->findOne($organizationId, $locationId, $transactionId);
             } catch (AbstractRequestException | NotEncodableValueException $e) {
-                // Ignore the exception the first 10 times because we are waiting for it to become available
+                // Ignore the exception the first 30 times because we are waiting for it to become available
                 // It seems we're getting back an HTML response with a 403 error in some cases.  This
                 // appears to be some kind of Forte issue.  The specific transaction in question which
                 // is returning a 403, is reachable and discoverable after the fact, so it appears to
                 // possibly be timing related and a race condition.
-                if ($attempt === 10) {
+                if ($attempt === 30) {
                     throw new TimeoutException(
-                        "Retried 10 times. Either the transaction id, '{$transactionId->getValue()}',
+                        "Retried 30 times. Either the transaction id, '{$transactionId->getValue()}',
                         is invalid or not yet available.  Or possibly we're getting a response that
                         cannot be properly decoded as JSON.",
                         $e
@@ -111,7 +115,7 @@ class TransactionSubResource extends AbstractSubResource
                 return $transaction;
             }
 
-            sleep(3);
+            sleep(6);
             $attempt++;
         }
 
