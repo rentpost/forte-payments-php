@@ -10,9 +10,14 @@ use Rentpost\ForteApi\Test\UserSettings;
 use Rentpost\ForteApi\Model;
 use Rentpost\ForteApi\Attribute;
 
+/**
+ * FundingSubResource tests
+ *
+ * @author Sam Anthony <sam@rentpost.com>
+ */
 class FundingsTest extends AbstractIntegrationTest
 {
-    
+
     public function testFindAll()
     {
         $client = $this->getForteClient();

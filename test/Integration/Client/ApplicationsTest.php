@@ -9,6 +9,12 @@ use Rentpost\ForteApi\Attribute;
 use Rentpost\ForteApi\Test\Integration\AbstractIntegrationTest;
 use Rentpost\ForteApi\Test\UserSettings;
 
+
+/**
+ * ApplicationSubResournce tests
+ *
+ * @author Sam Anthony <sam@rentpost.com>
+ */
 class ApplicationsTest extends AbstractIntegrationTest
 {
 

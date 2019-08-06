@@ -10,14 +10,19 @@ use Rentpost\ForteApi\Test\UserSettings;
 use Rentpost\ForteApi\Model;
 use Rentpost\ForteApi\Attribute;
 
+/**
+ * DocumentSubResource tests
+ *
+ * @author Sam Anthony <sam@rentpost.com>
+ */
 class DocumentTest extends AbstractIntegrationTest
 {
-    
+
     protected function getTestDocumentPath(): string
     {
         return __DIR__ . '/../test-document.png';
     }
-    
+
 
     public function testCreate()
     {
@@ -77,7 +82,7 @@ class DocumentTest extends AbstractIntegrationTest
         $this->assertDocument($returnedDocument);
     }
 
-    
+
     protected function assertDocument($document)
     {
         $this->assertInstanceOf(Model\Document::class, $document);

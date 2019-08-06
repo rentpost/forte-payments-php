@@ -10,7 +10,11 @@ use Rentpost\ForteApi\Attribute;
 use Rentpost\ForteApi\Test\Integration\AbstractIntegrationTest;
 
 /**
+ * ApplicationSubResournce tests
+ *
  * @group skip
+ *
+ * @author Sam Anthony <sam@rentpost.com>
  */
 class SettlementsTest extends AbstractIntegrationTest
 {

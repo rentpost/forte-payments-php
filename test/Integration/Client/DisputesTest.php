@@ -9,6 +9,11 @@ use Rentpost\ForteApi\Attribute;
 use Rentpost\ForteApi\Test\Integration\AbstractIntegrationTest;
 use Rentpost\ForteApi\Test\UserSettings;
 
+/**
+ * DisputeSubResource tests
+ *
+ * @author Sam Anthony <sam@rentpost.com>
+ */
 class DisputesTest extends AbstractIntegrationTest
 {
     public function testFindListNoFilter()

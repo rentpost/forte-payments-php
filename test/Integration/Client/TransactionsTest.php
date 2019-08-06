@@ -13,6 +13,11 @@ use Rentpost\ForteApi\Filter\TransactionFilter;
 use Rentpost\ForteApi\Model;
 use Rentpost\ForteApi\Attribute;
 
+/**
+ * TransactionSubResource tests
+ *
+ * @author Sam Anthony <sam@rentpost.com>
+ */
 class TransactionsTest extends AbstractIntegrationTest
 {
 
@@ -235,7 +240,7 @@ class TransactionsTest extends AbstractIntegrationTest
         $this->assertGreaterThan(
             $countFilteredList,
             $countEntireList,
-            'This filtered list should have less results, as it should exclude the item we added just a few moments ago'
+            'This filtered list should have less results, as it should exclude the item we added just a few moments ago',
         );
     }
 
