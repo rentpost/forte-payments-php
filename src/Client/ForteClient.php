@@ -113,8 +113,10 @@ class ForteClient
             'dispute',
             'document',
             'funding',
+            'location',
             'pay_method',
             'schedule_item',
+            'schedule',
             'settlement',
             'transaction',
         ];
@@ -174,7 +176,7 @@ class ForteClient
     /**
      * Uses the schedule item sub resource
      */
-    public function useSchedualItems(): SubResource\ScheduleItemSubResource
+    public function useScheduleItems(): SubResource\ScheduleItemSubResource
     {
         return $this->subResources['schedule_item'];
     }
@@ -195,6 +197,15 @@ class ForteClient
     public function useFundings(): SubResource\FundingSubResource
     {
         return $this->subResources['funding'];
+    }
+
+
+    /**
+     * Uses the location sub resource
+     */
+    public function useLocations(): SubResource\LocationSubResource
+    {
+        return $this->subResources['location'];
     }
 
 

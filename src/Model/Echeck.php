@@ -7,8 +7,14 @@ namespace Rentpost\ForteApi\Model;
 use Rentpost\ForteApi\Attribute as Attribute;
 use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * Echeck model
+ * 
+ * @author Jacob Thomason <jacob@rentpost.com>
+ */
 class Echeck extends AbstractModel
 {
+
     /**
      * @var string
      */
