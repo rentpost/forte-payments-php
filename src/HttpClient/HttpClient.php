@@ -41,7 +41,7 @@ class HttpClient
      * WARNING: Please ensure that this remains the only method to make the actual HTTP request to Forte.
      *          Notice that an expcetion is thrown on anything other than a HTTP 2xx response. This is what
      *          we want, as the developer will be forced to handle the exception, or at least the uncaught exception
-     *          will bubble up thought the error/logging mechanism.
+     *          will bubble up through the error/logging mechanism.
      *
      * @param string $httpMethod
      * @param string $uri
@@ -66,8 +66,10 @@ class HttpClient
             $model = $this->validatingSerializer->deserialize($json, $responseModelFqns);
         } catch (NotEncodableValueException $e) {
             if ($retryAttempts > 0) {
-                $retryAttempts--; // Decrement attempts to retry the request
                 $this->doRequest($httpMethod, $uri, $responseModelFqns, $options, $retryAttempts);
+
+                sleep(2); // Wait a couple seconds before hitting the endpoint again
+                $retryAttempts--; // Decrement attempts to retry the request
             }
 
             throw $e;
@@ -120,7 +122,7 @@ class HttpClient
                     'Accept' => 'application/json',
                 ],
                 'body' => $body
-            ]
+            ],
         );
 
         $json = $response->getBody()->__toString();
@@ -170,7 +172,7 @@ class HttpClient
             $httpMethod,
             $uri,
             $responseModelFqns,
-            $options
+            $options,
         );
     }
 }

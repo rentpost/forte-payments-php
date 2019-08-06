@@ -85,7 +85,9 @@ class TransactionSubResource extends AbstractSubResource
     {
         // Make sure that PHP does not timeout during the execution of this function since we
         // must continue making attempts due to persistance issues on Forte's end
-        \set_time_limit(210); // 3.5 minutes
+        // Note that the request itself has a retry built into it as well which could end up taking
+        // a full 8-10 seconds to cycle through the 3 attempts
+        \set_time_limit(400); // 6 minutes should be enough time to fully cycle
 
         $transaction = null;
         // If the transaction we are attempting to get was only just POSTed
@@ -96,17 +98,17 @@ class TransactionSubResource extends AbstractSubResource
             try {
                 $transaction = $this->findOne($organizationId, $locationId, $transactionId);
             } catch (AbstractRequestException | NotEncodableValueException $e) {
-                // Ignore the exception the first 30 times because we are waiting for it to become available
+                // Ignore the exception the first 10 times because we are waiting for it to become available
                 // It seems we're getting back an HTML response with a 403 error in some cases.  This
                 // appears to be some kind of Forte issue.  The specific transaction in question which
                 // is returning a 403, is reachable and discoverable after the fact, so it appears to
                 // possibly be timing related and a race condition.
-                if ($attempt === 30) {
+                if ($attempt === 5) {
                     throw new TimeoutException(
-                        "Retried 30 times. Either the transaction id, '{$transactionId->getValue()}',
+                        "Retried 5 times. Either the transaction id, '{$transactionId->getValue()}',
                         is invalid or not yet available.  Or possibly we're getting a response that
                         cannot be properly decoded as JSON.",
-                        $e
+                        $e,
                     );
                 }
             }
@@ -115,7 +117,7 @@ class TransactionSubResource extends AbstractSubResource
                 return $transaction;
             }
 
-            sleep(6);
+            sleep(8);
             $attempt++;
         }
 
@@ -191,7 +193,7 @@ class TransactionSubResource extends AbstractSubResource
             || !$transactionBeenVoided->getAuthorizationCode()
         ) {
             throw new LibraryUsageException(
-                'To void a transaction, the transaction object needs to have a transactoinId and authoizationCode set'
+                'To void a transaction, the transaction object needs to have a transactoinId and authoizationCode set',
             );
         }
 
