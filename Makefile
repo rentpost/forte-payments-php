@@ -32,12 +32,12 @@ init:                     ## Initializes the project and all dependencies
 
 test:                     ## Runs all tests.
 	$(call checkExecutables, docker)
-	@vendor/bin/phpunit --configuration test/phpunit.xml
+	@vendor/bin/phpunit -d memory_limit=256M --configuration test/phpunit.xml
 
 
 test-only:                ## Only runs tests with 'test-only' group annotation
 	$(call checkExecutables, docker)
-	@vendor/bin/phpunit --configuration test/phpunit.xml --group test-only
+	@vendor/bin/phpunit -d memory_limit=256M --configuration test/phpunit.xml --group test-only
 
 
 install-vendors:           ## Installs all the vendor lib dependencies.
