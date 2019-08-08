@@ -17,8 +17,7 @@ class Contact extends AbstractModel
 {
 
     /**
-     * @var string
-     * @Assert\NotBlank()
+     * @var string|null
      * @Assert\Choice({
      *     "primary",
      *     "sales",
@@ -30,20 +29,20 @@ class Contact extends AbstractModel
     protected $type;
 
     /**
-     * @var string
+     * @var string|null
      * @Assert\NotBlank()
      */
     protected $fullName;
 
     /**
-     * @var string
+     * @var string|null
      * @Assert\NotBlank()
      * @Assert\Email()
      */
     protected $emailAddress;
 
     /**
-     * @var Attribute\Phone
+     * @var Attribute\Phone|null
      * @Assert\NotBlank()
      */
     protected $phone;
@@ -52,7 +51,7 @@ class Contact extends AbstractModel
     /**
      * Get type
      */
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }
@@ -74,7 +73,7 @@ class Contact extends AbstractModel
     /**
      * Get the value of fullName
      */
-    public function getFullName(): string
+    public function getFullName(): ?string
     {
         return $this->fullName;
     }
@@ -96,7 +95,7 @@ class Contact extends AbstractModel
     /**
      * Get the value of emailAddress
      */
-    public function getEmailAddress(): string
+    public function getEmailAddress(): ?string
     {
         return $this->emailAddress;
     }
@@ -118,7 +117,7 @@ class Contact extends AbstractModel
     /**
      * Get the value of phone
      */
-    public function getPhone(): Attribute\Phone
+    public function getPhone(): ?Attribute\Phone
     {
         return $this->phone;
     }
