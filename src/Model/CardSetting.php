@@ -58,7 +58,7 @@ class CardSetting extends AbstractModel
     protected $serviceFeeTiered;
 
     /**
-     * @var int|null
+     * @var float|null
      */
     protected $serviceFeeVisaTaxAmount;
 
@@ -305,7 +305,7 @@ class CardSetting extends AbstractModel
     /**
      * Get the value of serviceFeeVisaTaxAmount
      */
-    public function getServiceFeeVisaTaxAmount(): ?int
+    public function getServiceFeeVisaTaxAmount(): ?float
     {
         return $this->serviceFeeVisaTaxAmount;
     }
@@ -316,7 +316,7 @@ class CardSetting extends AbstractModel
      *
      * @param int|null $serviceFeeVisaTaxAmount
      */
-    public function setServiceFeeVisaTaxAmount(?int $serviceFeeVisaTaxAmount): self
+    public function setServiceFeeVisaTaxAmount(?float $serviceFeeVisaTaxAmount): self
     {
         $this->serviceFeeVisaTaxAmount = $serviceFeeVisaTaxAmount;
 
