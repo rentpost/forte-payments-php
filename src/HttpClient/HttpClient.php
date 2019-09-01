@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Rentpost\ForteApi\HttpClient;
 
 use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\Exception\ConnectException;
 use Rentpost\ForteApi\Exception\Request\Factory as ExceptionRequestFactory;
 use Rentpost\ForteApi\Model\AbstractModel;
 use Rentpost\ForteApi\Model\Attachment;
@@ -64,7 +65,7 @@ class HttpClient
             $response = $this->guzzleClient->request($httpMethod, $uri, $options);
             $json = $response->getBody()->__toString();
             $model = $this->validatingSerializer->deserialize($json, $responseModelFqns);
-        } catch (NotEncodableValueException $e) {
+        } catch (NotEncodableValueException | ConnectException $e) {
             if ($retryAttempts > 0) {
                 $this->doRequest($httpMethod, $uri, $responseModelFqns, $options, $retryAttempts);
 
