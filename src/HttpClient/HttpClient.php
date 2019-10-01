@@ -48,13 +48,14 @@ class HttpClient
      * @param string $uri
      * @param string $responseModelFqns
      * @param array $options
+     * @param int $retryAttempts
      */
     public function doRequest(
         string $httpMethod,
         string $uri,
         string $responseModelFqns,
         array $options = [],
-        int $retryAttempts = 5
+        int $retryAttempts = 3
     ): AbstractModel
     {
         if ($overrideJson = RequestOverrideHack::getOverrideJson()) {
@@ -65,11 +66,11 @@ class HttpClient
             $response = $this->guzzleClient->request($httpMethod, $uri, $options);
             $json = $response->getBody()->__toString();
             $model = $this->validatingSerializer->deserialize($json, $responseModelFqns);
-        } catch (NotEncodableValueException | ConnectException $e) {
+        } catch (ConnectException $e) {
             if ($retryAttempts > 0) {
                 $this->doRequest($httpMethod, $uri, $responseModelFqns, $options, $retryAttempts);
 
-                sleep(3); // Wait a few seconds before hitting the endpoint again
+                sleep(2); // Wait a few seconds before hitting the endpoint again
                 $retryAttempts--; // Decrement attempts to retry the request
             }
 
