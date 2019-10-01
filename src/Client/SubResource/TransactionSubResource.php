@@ -87,7 +87,7 @@ class TransactionSubResource extends AbstractSubResource
         // must continue making attempts due to persistance issues on Forte's end
         // Note that the request itself has a retry built into it as well which could end up taking
         // a full 8-10 seconds to cycle through the 3 attempts
-        \set_time_limit(400); // 6 minutes should be enough time to fully cycle
+        \set_time_limit(200); // 3 minutes should be enough time to fully cycle
 
         $transaction = null;
         // If the transaction we are attempting to get was only just POSTed
@@ -117,7 +117,7 @@ class TransactionSubResource extends AbstractSubResource
                 return $transaction;
             }
 
-            sleep(8);
+            sleep(12);
             $attempt++;
         }
 
