@@ -54,7 +54,7 @@ class HttpClient
         string $uri,
         string $responseModelFqns,
         array $options = [],
-        int $retryAttempts = 3
+        int $retryAttempts = 5
     ): AbstractModel
     {
         if ($overrideJson = RequestOverrideHack::getOverrideJson()) {
@@ -69,7 +69,7 @@ class HttpClient
             if ($retryAttempts > 0) {
                 $this->doRequest($httpMethod, $uri, $responseModelFqns, $options, $retryAttempts);
 
-                sleep(2); // Wait a couple seconds before hitting the endpoint again
+                sleep(3); // Wait a few seconds before hitting the endpoint again
                 $retryAttempts--; // Decrement attempts to retry the request
             }
 
