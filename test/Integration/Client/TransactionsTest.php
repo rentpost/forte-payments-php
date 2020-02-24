@@ -4,14 +4,15 @@ declare(strict_types = 1);
 
 namespace Rentpost\ForteApi\Test\Integration\Client;
 
+use Rentpost\ForteApi\Attribute;
 use Rentpost\ForteApi\Exception\Request\AbstractRequestException;
+use Rentpost\ForteApi\Exception\Request\TimeoutException;
 use Rentpost\ForteApi\Exception\ValidationException;
+use Rentpost\ForteApi\Filter\TransactionFilter;
+use Rentpost\ForteApi\Model;
 use Rentpost\ForteApi\Test\Integration\AbstractIntegrationTest;
 use Rentpost\ForteApi\Test\UserSettings;
 use Rentpost\ForteApi\UriBuilder\PaginationData;
-use Rentpost\ForteApi\Filter\TransactionFilter;
-use Rentpost\ForteApi\Model;
-use Rentpost\ForteApi\Attribute;
 
 /**
  * TransactionSubResource tests
@@ -143,11 +144,10 @@ class TransactionsTest extends AbstractIntegrationTest
     }
 
 
-    /**
-     * @expectedException \Rentpost\ForteApi\Exception\Request\TimeoutException
-     */
     public function testFindOneWaitFail()
     {
+        $this->expectException(TimeoutException::class);
+
         $client = $this->getForteClient();
 
         $organizationId = UserSettings::getSandboxMerchantOrganizationId();

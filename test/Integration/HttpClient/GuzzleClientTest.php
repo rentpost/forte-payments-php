@@ -8,7 +8,7 @@ use Rentpost\ForteApi\Test\Integration\AbstractIntegrationTest;
 
 class GuzzleClientTest extends AbstractIntegrationTest
 {
-    
+
     /**
      * Test guzzle/curl/php-curl
      */
@@ -21,14 +21,12 @@ class GuzzleClientTest extends AbstractIntegrationTest
 
         $data = \GuzzleHttp\json_decode($response->getBody()->__toString(), true);
 
-        $this->assertEquals(
-            'TLS 1.2',
-            $data['tls_version']
-        ); // Forte requires minimum TLS 1.2
+        // Forte requires minimum TLS 1.2
+        $this->assertGreaterThanOrEqual('1.2', \str_replace('TLS', '', $data['tls_version']));
 
         $this->assertContains(
             'TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384',
-            $data['given_cipher_suites']
+            $data['given_cipher_suites'],
         ); // Forte Preferred cipher
     }
 }

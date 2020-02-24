@@ -7,27 +7,24 @@ namespace Rentpost\ForteApi\Serializer;
 use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
 
 /**
- * @author Sam Anthony <sam@rentpost.com>
- *
- * Thi extends the `CamelCaseToSnakeCaseNameConverter`, it allows for a few
+ * This extends the `CamelCaseToSnakeCaseNameConverter`, it allows for a few
  * amendments/exceptions to the conversion rules which can be specified via `addAmendment()`
+ *
+ * @author Sam Anthony <sam@rentpost.com>
+ * @author Jacob Thomason <jacob@rentpost.com>
  */
 class AmendableCamelCaseToSnakeCaseNameConverter extends CamelCaseToSnakeCaseNameConverter
 {
 
     /**
      * Array in the format $arr[ denormalized ] = normalized
-     *
-     * @var array
      */
-    protected $amendments;
+    protected array $amendments;
 
 
     /**
-     * @param string $denormalized camel case name (denormalized name).
-     * @param string $normalized underscored name (normalized name)
-     *
-     * @return self
+     * @param string $denormalized  Camel case name (denormalized name).
+     * @param string $normalized    Underscored name (normalized name)
      */
     public function addAmendment(string $denormalized, string $normalized): self
     {
@@ -40,11 +37,9 @@ class AmendableCamelCaseToSnakeCaseNameConverter extends CamelCaseToSnakeCaseNam
     /**
      * {@inheritdoc}
      *
-     * @param string $propertyName camel case name
-     *
-     * @return mixed|string
+     * @param string $propertyName  Camel case name
      */
-    public function normalize($propertyName)
+    public function normalize(string $propertyName): string
     {
         if (isset($this->amendments[$propertyName])) {
             return $this->amendments[$propertyName];
@@ -57,11 +52,9 @@ class AmendableCamelCaseToSnakeCaseNameConverter extends CamelCaseToSnakeCaseNam
     /**
      * {@inheritdoc}
      *
-     * @param string $propertyName underscored name
-     *
-     * @return mixed|string
+     * @param string $propertyName  Underscored name
      */
-    public function denormalize($propertyName)
+    public function denormalize(string $propertyName): string
     {
         $invertedAmendments = array_flip($this->amendments);
 
@@ -71,5 +64,4 @@ class AmendableCamelCaseToSnakeCaseNameConverter extends CamelCaseToSnakeCaseNam
 
         return parent::denormalize($propertyName);
     }
-
 }
