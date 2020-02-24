@@ -24,10 +24,10 @@ class Factory
      * @param array $settings Nested associative array, see `settings.php.dist`
      * @param LoggerInterface $logger
      */
-    public function make(array $settings, LoggerInterface $logger): ForteClient
+    public static function make(array $settings, LoggerInterface $logger): ForteClient
     {
         if (empty($settings['environments'])) {
-            $this->throwException('environments');
+            throw new LibraryGenericException('"environments" key missing from settings array');
         }
 
         /** @var ForteEnvironment[] $environments */
