@@ -127,7 +127,7 @@ class Document extends AbstractModel
 
 
     /**
-     * Gets the size
+     * Gets the size in bytes
      */
     public function getSize(): ?int
     {
@@ -136,7 +136,7 @@ class Document extends AbstractModel
 
 
     /**
-     * Sets the size
+     * Sets the size in bytes
      *
      * @param int $size
      */
