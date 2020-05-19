@@ -6,6 +6,7 @@ namespace Rentpost\ForteApi\ValidatingSerializer;
 
 use Rentpost\ForteApi\Exception\ValidationException;
 use Rentpost\ForteApi\Filter\AbstractFilter;
+use Rentpost\ForteApi\Model\AbstractModel;
 use Rentpost\ForteApi\UriBuilder\PaginationData;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -18,11 +19,8 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class ValidatingSerializer
 {
 
-    /** @var Serializer */
-    protected $internalSerializer;
-
-    /** @var Validator */
-    protected $internalValidator;
+    protected Serializer $internalSerializer;
+    protected ValidatorInterface $internalValidator;
 
 
     /**
