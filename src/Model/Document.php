@@ -33,6 +33,12 @@ class Document extends AbstractModel
      * @Assert\NotBlank()
      */
     protected string $description;
+
+    /**
+     * 10MB limit, using 1000 calculation instead of 1024 to be careful
+     *
+     * @Assert\LessThanOrEqual(10000000)
+     */
     protected int $size;
     protected Attribute\Date $receivedDate;
     protected string $file;
