@@ -9,19 +9,21 @@ use GuzzleHttp\Exception\ConnectException;
 use Rentpost\ForteApi\Exception\Request\Factory as ExceptionRequestFactory;
 use Rentpost\ForteApi\Model\AbstractModel;
 use Rentpost\ForteApi\Model\Attachment;
+use Rentpost\ForteApi\ValidatingSerializer\Factory as ValidatingSerializerFactory;
+use Rentpost\ForteApi\ValidatingSerializer\ValidatingSerializer;
 use Symfony\Component\Serializer\Exception\NotEncodableValueException;
 
 /**
+ * HttpClient
+ *
  * @author Sam Anthony <sam@rentpost.com>
+ * @author Jacob Thomason <jacob@rentpost.com>
  */
 class HttpClient
 {
 
-    /** @var \Rentpost\ForteApi\ValidatingSerializer\ValidatingSerializer */
-    protected $validatingSerializer;
-
-    /** @var GuzzleClient */
-    protected $guzzleClient;
+    protected ValidatingSerializer $validatingSerializer;
+    protected GuzzleClient $guzzleClient;
 
 
     /**
@@ -29,7 +31,7 @@ class HttpClient
      */
     public function __construct(GuzzleClient $guzzleClient)
     {
-        $this->validatingSerializer = (new \Rentpost\ForteApi\ValidatingSerializer\Factory())->make();
+        $this->validatingSerializer = (new ValidatingSerializerFactory())->make();
 
         $this->guzzleClient = $guzzleClient;
     }
@@ -77,9 +79,7 @@ class HttpClient
             throw $e;
         }
 
-        if ($response->getStatusCode() < 200
-            || $response->getStatusCode() >= 300
-        ) {
+        if ($response->getStatusCode() < 200 || $response->getStatusCode() >= 300) {
             throw ExceptionRequestFactory::make($response, $model);
         }
 
