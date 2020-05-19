@@ -4,52 +4,42 @@ declare(strict_types = 1);
 
 namespace Rentpost\ForteApi\Model;
 
-use Rentpost\ForteApi\Attribute as Attribute;
+use Rentpost\ForteApi\Attribute;
 use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * Document model
+ *
+ * @author Sam Anthony <sam@rentpost.com>
+ * @author Jacob Thomason <jacob@rentpost.com>
+ */
 class Document extends AbstractModel
 {
-    /**
-     * @var Attribute\Id\DocumentId
-     */
-    protected $documentId;
+
+    protected Attribute\Id\DocumentId $documentId;
 
     /**
-     * @var string
      * @Assert\NotBlank()
      * @Assert\Choice({"dispute", "application"})
      */
-    protected $resource;
+    protected string $resource;
 
     /**
-     * @var Attribute\Id\DocumentResourceId
      * @Assert\NotBlank()
      */
-    protected $resourceId;
+    protected Attribute\Id\DocumentResourceId $resourceId;
 
     /**
-     * @var string
      * @Assert\NotBlank()
      */
-    protected $description;
+    protected string $description;
+    protected int $size;
+    protected Attribute\Date $receivedDate;
+    protected string $file;
+
 
     /**
-     * @var int
-     */
-    protected $size;
-
-    /**
-     * @var Attribute\Date
-     */
-    protected $receivedDate;
-
-    /**
-     * @var string
-     */
-    protected $file;
-
-    /**
-     * @return null|Attribute\Id\DocumentId
+     * Gets the Document id
      */
     public function getDocumentId(): ?Attribute\Id\DocumentId
     {
@@ -58,9 +48,9 @@ class Document extends AbstractModel
 
 
     /**
-     * @param Attribute\Id\DocumentId $documentId
+     * Sets the Document id
      *
-     * @return self
+     * @param Attribute\Id\DocumentId $documentId
      */
     public function setDocumentId(Attribute\Id\DocumentId $documentId): self
     {
@@ -70,13 +60,21 @@ class Document extends AbstractModel
     }
 
 
+    /**
+     * Gets the resource
+     */
     public function getResource(): string
     {
         return $this->resource;
     }
 
 
-    public function setResource($resource): self
+    /**
+     * Sets the resource
+     *
+     * @param string $resource
+     */
+    public function setResource(string $resource): self
     {
         $this->resource = $resource;
 
@@ -84,12 +82,20 @@ class Document extends AbstractModel
     }
 
 
+    /**
+     * Gets the Resource id
+     */
     public function getResourceId(): Attribute\Id\DocumentResourceId
     {
         return $this->resourceId;
     }
 
 
+    /**
+     * Sets the Resource id
+     *
+     * @param Attribute\Id\DocumentResourceId $resourceId
+     */
     public function setResourceId(Attribute\Id\DocumentResourceId $resourceId): self
     {
         $this->resourceId = $resourceId;
@@ -98,12 +104,20 @@ class Document extends AbstractModel
     }
 
 
+    /**
+     * Gets the description
+     */
     public function getDescription(): string
     {
         return $this->description;
     }
 
 
+    /**
+     * Sets the description
+     *
+     * @param string $description
+     */
     public function setDescription(string $description): self
     {
         $this->description = $description;
@@ -113,7 +127,7 @@ class Document extends AbstractModel
 
 
     /**
-     * @return int|null
+     * Gets the size
      */
     public function getSize(): ?int
     {
@@ -122,9 +136,9 @@ class Document extends AbstractModel
 
 
     /**
-     * @param int $size
+     * Sets the size
      *
-     * @return self
+     * @param int $size
      */
     public function setSize(int $size): self
     {
@@ -135,7 +149,7 @@ class Document extends AbstractModel
 
 
     /**
-     * @return Attribute\Date|null
+     * Gets the date received
      */
     public function getReceivedDate(): ?Attribute\Date
     {
@@ -144,9 +158,9 @@ class Document extends AbstractModel
 
 
     /**
-     * @param Attribute\Date $receivedDate
+     * Sets the date received
      *
-     * @return self
+     * @param Attribute\Date $receivedDate
      */
     public function setReceivedDate(Attribute\Date $receivedDate): self
     {
@@ -157,7 +171,7 @@ class Document extends AbstractModel
 
 
     /**
-     * @return string|null
+     * Gets the file path
      */
     public function getFile(): ?string
     {
@@ -166,9 +180,9 @@ class Document extends AbstractModel
 
 
     /**
-     * @param string $file
+     * Sets the file path
      *
-     * @return self
+     * @param string $file
      */
     public function setFile(string $file): self
     {
@@ -178,9 +192,12 @@ class Document extends AbstractModel
     }
 
 
-
-
-    static public function getMimeTypes()
+    /**
+     * Gets the mime types that are allowed
+     *
+     * @return string[]
+     */
+    public static function getMimeTypes(): array
     {
         return [
             'image/jpeg',
