@@ -13,9 +13,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  * to help construct requests to the create document endpoint.
  *
  * Its unlikely anything will deserialize into this model
+ *
+ * @author Sam Anthony <sam@rentpost.com>
+ * @author Jacob Thomason <jacob@rentpost.com>
  */
 class Attachment extends AbstractModel
 {
+
     /**
      * Any value which can be accepted by `file_get_contents()`
      *

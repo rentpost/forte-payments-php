@@ -16,32 +16,32 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Document extends AbstractModel
 {
 
-    protected Attribute\Id\DocumentId $documentId;
+    protected ?Attribute\Id\DocumentId $documentId = null;
 
     /**
      * @Assert\NotBlank()
      * @Assert\Choice({"dispute", "application"})
      */
-    protected string $resource;
+    protected ?string $resource = null;
 
     /**
      * @Assert\NotBlank()
      */
-    protected Attribute\Id\DocumentResourceId $resourceId;
+    protected ?Attribute\Id\DocumentResourceId $resourceId = null;
 
     /**
      * @Assert\NotBlank()
      */
-    protected string $description;
+    protected ?string $description = null;
 
     /**
      * 10MB limit, using 1000 calculation instead of 1024 to be careful
      *
      * @Assert\LessThanOrEqual(10000000)
      */
-    protected int $size;
-    protected Attribute\Date $receivedDate;
-    protected string $file;
+    protected ?int $size = null;
+    protected ?Attribute\Date $receivedDate = null;
+    protected ?string $file = null;
 
 
     /**

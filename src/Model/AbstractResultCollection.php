@@ -4,9 +4,7 @@ declare(strict_types = 1);
 
 namespace Rentpost\ForteApi\Model;
 
-use Rentpost\ForteApi\Attribute as Attribute;
 use Rentpost\ForteApi\Model as Model;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Child classes should implement `addResult()` and use the correct PHP7 Typenits
@@ -18,15 +16,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 abstract class AbstractResultCollection extends AbstractModel
 {
 
-    /** @var Model\AbstractModel[] */
-    protected $results = [];
-
-    /** @var int */
-    protected $numberResults;
+    protected array $results = [];
+    protected ?int $numberResults = null;
 
 
     /**
      * Gets the array of results
+     *
+     * @return Model\AbstractModel[]
      */
     public function getResults(): array
     {
@@ -64,8 +61,6 @@ abstract class AbstractResultCollection extends AbstractModel
      * @internal api read only field
      *
      * @param int $numberResults
-     *
-     * @return self
      */
     public function setNumberResults(int $numberResults): self
     {

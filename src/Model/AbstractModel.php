@@ -6,15 +6,20 @@ namespace Rentpost\ForteApi\Model;
 
 use Rentpost\ForteApi\ValidatingSerializer\ValidatableSerializableInterface;
 
+/**
+ * Abstract Model
+ *
+ * @author Sam Anthony <sam@rentpost.com>
+ * @author Jacob Thomason <jacob@rentpost.com>
+ */
 abstract class AbstractModel implements ValidatableSerializableInterface
 {
 
-    /** @var Response|null */
-    protected $response;
+    protected ?Response $response = null;
 
 
     /**
-     * @return Response|null
+     * Gets the response
      */
     public function getResponse(): ?Response
     {
