@@ -123,7 +123,7 @@ class HttpClient
                     'User-Agent' => 'forte-payments-php/1.0',
                     'Accept' => 'application/json',
                 ],
-                'body' => $body
+                'body' => $body,
             ],
         );
 

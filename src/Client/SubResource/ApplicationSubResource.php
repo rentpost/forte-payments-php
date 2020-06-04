@@ -75,7 +75,7 @@ class ApplicationSubResource extends AbstractSubResource
             'organizations/%s/applications',
             [ $this->getAuthOrgId()->getValue() ],
             $filter,
-            $paginationData
+            $paginationData,
         );
 
         return $this->getHttpClient()->makeModelRequest('get', $uri, Model\ApplicationCollection::class, null);
