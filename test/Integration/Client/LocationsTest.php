@@ -4,15 +4,11 @@ declare(strict_types = 1);
 
 namespace Rentpost\ForteApi\Test\Integration\Client;
 
-use Rentpost\ForteApi\Exception\Request\AbstractRequestException;
-use Rentpost\ForteApi\Exception\ValidationException;
-use Rentpost\ForteApi\Test\Integration\AbstractIntegrationTest;
-use Rentpost\ForteApi\Test\UserSettings;
-use Rentpost\ForteApi\UriBuilder\PaginationData;
-use Rentpost\ForteApi\Filter\TransactionFilter;
-use Rentpost\ForteApi\Model;
 use Rentpost\ForteApi\Attribute;
 use Rentpost\ForteApi\Exception\Request\TransactionException;
+use Rentpost\ForteApi\Model;
+use Rentpost\ForteApi\Test\Integration\AbstractIntegrationTest;
+use Rentpost\ForteApi\Test\UserSettings;
 
 /**
  * Tests the LocationSubResource
@@ -24,8 +20,6 @@ class LocationsTest extends AbstractIntegrationTest
 
     /**
      * Assert that the response has expected values
-     *
-     * @param Model\Location $returnedLocation
      */
     protected function assertTransactionModel(Model\Location $returnedLocation): void
     {
@@ -80,10 +74,6 @@ class LocationsTest extends AbstractIntegrationTest
         $locationCollection = $client->useLocations()->find($organizationId);
 
         $this->assertInstanceOf(Model\LocationCollection::class, $locationCollection);
-
-        foreach ($locationCollection->getResults() as $location) {
-            $this->assertInstanceOf(Model\Location::class, $location);
-        }
 
         // Only one location in the Sandbox
         $this->assertEquals(1, $locationCollection->getNumberResults());

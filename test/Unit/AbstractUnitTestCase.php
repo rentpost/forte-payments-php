@@ -9,7 +9,7 @@ use Rentpost\ForteApi\Test\AbstractTestCase;
 
 abstract class AbstractUnitTestCase extends AbstractTestCase
 {
-    
+
     /**
      * Assert that the provided Attrbute/Value combination throws appropriate exception
      *
@@ -28,15 +28,10 @@ abstract class AbstractUnitTestCase extends AbstractTestCase
         $attributeFqnsGlobal = $attributeFqcn;
         $attributeValueGlobal = $attributeValue;
 
+        $this->expectException(ValidationException::class);
 
-        $this->assertException(
-            function()
-            {
-                // Just instantiating the attribute is enough to cause the exception
-                global $attributeFqnsGlobal, $attributeValueGlobal;
-                $a = new $attributeFqnsGlobal($attributeValueGlobal);
-            },
-            ValidationException::class
-        );
+        // Just instantiating the attribute is enough to cause the exception
+        global $attributeFqnsGlobal, $attributeValueGlobal;
+        $a = new $attributeFqnsGlobal($attributeValueGlobal);
     }
 }

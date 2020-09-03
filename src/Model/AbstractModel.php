@@ -29,8 +29,6 @@ abstract class AbstractModel implements ValidatableSerializableInterface
 
     /**
      * @internal here to keep deserializer happy
-     *
-     * @param Response $response
      */
     public function setResponse(Response $response): self
     {

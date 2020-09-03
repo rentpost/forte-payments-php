@@ -11,7 +11,6 @@ use Rentpost\ForteApi\Model\AbstractModel;
 use Rentpost\ForteApi\Model\Attachment;
 use Rentpost\ForteApi\ValidatingSerializer\Factory as ValidatingSerializerFactory;
 use Rentpost\ForteApi\ValidatingSerializer\ValidatingSerializer;
-use Symfony\Component\Serializer\Exception\NotEncodableValueException;
 
 /**
  * HttpClient
@@ -45,12 +44,6 @@ class HttpClient
      *          Notice that an expcetion is thrown on anything other than a HTTP 2xx response. This is what
      *          we want, as the developer will be forced to handle the exception, or at least the uncaught exception
      *          will bubble up through the error/logging mechanism.
-     *
-     * @param string $httpMethod
-     * @param string $uri
-     * @param string $responseModelFqns
-     * @param array $options
-     * @param int $retryAttempts
      */
     public function doRequest(
         string $httpMethod,
@@ -98,8 +91,6 @@ class HttpClient
      * @param string $uri Request uri.
      * @param string $responseModelFqns The class model which will be constructed from the response JSON data.
      * @param AbstractModel|null $requestDataModel Object used to generate the request JSON.
-     *
-     * @return AbstractModel
      */
     public function makeModelRequest(
         string $httpMethod,
@@ -135,12 +126,6 @@ class HttpClient
 
     /**
      * @internal called internally by subclasses of `AbstractSubResource`
-     *
-     * @param string $httpMethod
-     * @param string $uri
-     * @param string $responseModelFqns
-     * @param AbstractModel $requestDataModel
-     * @param Attachment $attachment
      */
     public function makeModelRequestWithAttachment(
         string $httpMethod,

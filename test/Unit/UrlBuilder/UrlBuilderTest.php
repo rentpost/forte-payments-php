@@ -15,7 +15,7 @@ use Rentpost\ForteApi\Attribute;
 
 class UrlBuilderTest extends AbstractUnitTestCase
 {
-    
+
     public function testFormatterValid()
     {
         $str = Formatter::format('this is a plain and boring string', []);
@@ -29,7 +29,7 @@ class UrlBuilderTest extends AbstractUnitTestCase
 //        $this->assertEquals('Your share is %75, your friends share is %25', $str);
     }
 
-    
+
     public function testPaginationDataValid()
     {
         $paginationData = new PaginationData();
@@ -50,55 +50,50 @@ class UrlBuilderTest extends AbstractUnitTestCase
             ->setOrderby('my_sortable_field', 'DESC');
         $uri = UriBuilder::build('', [], null, $paginationData);
         $this->assertEquals('/?orderby=my_sortable_field+desc&page_index=50', $uri);
-
     }
 
-    
+
     public function testPaginationDataInvalid()
     {
-        $this->assertException(
-            function() 
-            {
-                $paginationData = new PaginationData();
-                $paginationData
-                    ->setPageIndex(-10);
+        $this->expectException(ValidationException::class);
 
-                UriBuilder::build('', [], null, $paginationData);
-            },
-            ValidationException::class
-        );
+        $paginationData = new PaginationData();
+        $paginationData
+            ->setPageIndex(-10);
 
-        $this->assertException(
-            function()
-            {
-                $paginationData = new PaginationData();
-                $paginationData
-                    ->setOrderby('my_field_name', 'invalid direction');
+        UriBuilder::build('', [], null, $paginationData);
+    }
 
-                UriBuilder::build('', [], null, $paginationData);
-            },
-            ValidationException::class
-        );
 
-        $this->assertException(
-            function()
-            {
-                $paginationData = new PaginationData();
-                $paginationData
-                    ->setPageSize(1001);
+    public function testPaginationDataInvalidTwo()
+    {
+        $this->expectException(ValidationException::class);
 
-                UriBuilder::build('', [], null, $paginationData);
-            },
-            ValidationException::class
-        );
+        $paginationData = new PaginationData();
+        $paginationData
+            ->setOrderby('my_field_name', 'invalid direction');
 
-        $this->assertException(
-            function()
-            {
-                UriBuilder::build('/we-dont-like-this-slash-at-the-start', []);
-            },
-            LibraryFaultException::class
-        );
+        UriBuilder::build('', [], null, $paginationData);
+    }
+
+
+    public function testPaginationDataInvalidThree()
+    {
+        $this->expectException(ValidationException::class);
+
+        $paginationData = new PaginationData();
+        $paginationData
+            ->setPageSize(1001);
+
+        UriBuilder::build('', [], null, $paginationData);
+    }
+
+
+    public function testPaginationDataInvalidFour()
+    {
+        $this->expectException(LibraryFaultException::class);
+
+        UriBuilder::build('/we-dont-like-this-slash-at-the-start', []);
     }
 
 

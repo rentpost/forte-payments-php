@@ -15,7 +15,7 @@ use Rentpost\ForteApi\Test\Unit\AbstractUnitTestCase;
  */
 class DateParserTest extends AbstractUnitTestCase
 {
-    
+
     public function testValid()
     {
         // "Any"
@@ -30,25 +30,44 @@ class DateParserTest extends AbstractUnitTestCase
 
         // "Date time only"
         $this->assertDateParserDateTime('2017-03-06T06:52:18', '2017-03-06T06:52:18');
-
     }
 
-    
+
     public function testInvalid()
     {
-        // "Any"
-        $this->assertException( function() { DateParser::parseAny('2017-03');}, ValidationException::class);
-        $this->assertException( function() { DateParser::parseAny('2017-10-11T09:12:10.5607107X');}, ValidationException::class);
-        $this->assertException( function() { DateParser::parseAny('2012-06-23T');}, ValidationException::class);
-
-        // "Date only"
-        $this->assertException( function() { DateParser::parseDate('2017-03-06T06:52:18');}, ValidationException::class);
-
-        // "Date time only"
-        $this->assertException( function() { DateParser::parseDateTime('2017-03-06');}, ValidationException::class);
+        $this->expectException(ValidationException::class);
+        DateParser::parseAny('2017-03');
     }
 
-    
+
+    public function testInvalidTwo()
+    {
+        $this->expectException(ValidationException::class);
+        DateParser::parseAny('2017-10-11T09:12:10.5607107X');
+    }
+
+
+    public function testInvalidThree()
+    {
+        $this->expectException(ValidationException::class);
+        DateParser::parseAny('2012-06-23T');
+    }
+
+
+    public function testInvalidFour()
+    {
+        $this->expectException(ValidationException::class);
+        DateParser::parseDate('2017-03-06T06:52:18');
+    }
+
+
+    public function testInvalidFive()
+    {
+        $this->expectException(ValidationException::class);
+        DateParser::parseDateTime('2017-03-06');
+    }
+
+
     protected function assertDateParserAny(string $expected, string $input)
     {
         $dateTime = DateParser::parseAny($input);
@@ -57,7 +76,7 @@ class DateParserTest extends AbstractUnitTestCase
         $this->assertEquals($expected, $dateTime->format(DateParser::DATE_TIME_FORMAT));
     }
 
-    
+
     protected function assertDateParserDate(string $expected, string $input)
     {
         $dateTime = DateParser::parseDate($input);
@@ -66,7 +85,7 @@ class DateParserTest extends AbstractUnitTestCase
         $this->assertEquals($expected, $dateTime->format(DateParser::DATE_FORMAT));
     }
 
-    
+
     protected function assertDateParserDateTime(string $expected, string $input)
     {
         $dateTime = DateParser::parseDateTime($input);
