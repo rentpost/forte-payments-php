@@ -9,3 +9,6 @@ vendor/*
 # Configs
 test/settings.php
 test/UserSettings.php
+
+# Tests
+.phpunit.result.cache
