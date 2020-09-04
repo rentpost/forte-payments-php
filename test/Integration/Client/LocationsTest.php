@@ -75,6 +75,10 @@ class LocationsTest extends AbstractIntegrationTest
 
         $this->assertInstanceOf(Model\LocationCollection::class, $locationCollection);
 
+        foreach ($locationCollection->getResults() as $location) {
+            $this->assertInstanceOf(Model\Location::class, $location);
+        }
+
         // Only one location in the Sandbox
         $this->assertEquals(1, $locationCollection->getNumberResults());
     }

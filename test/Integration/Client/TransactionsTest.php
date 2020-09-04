@@ -200,6 +200,10 @@ class TransactionsTest extends AbstractIntegrationTest
 
         $this->assertInstanceOf(Model\TransactionCollection::class, $transactionCollection);
 
+        foreach ($transactionCollection->getResults() as $transaction) {
+            $this->assertInstanceOf(Model\Transaction::class, $transaction);
+        }
+
         return $transactionCollection->getNumberResults();
     }
 
