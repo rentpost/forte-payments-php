@@ -19,15 +19,14 @@ class Factory
 {
 
     /**
-     * @return NameConverterInterface
+     * Some of Forte parameter names could not be converted by the default `CamelCaseToSnakeCaseNameConverter`
+     * hence a few amendments/exceptions have been hard coded here. Also forte was not 100% consistent with attribute
+     * naming convention, eg `last4_ssn` and `last_4_account_number`
      */
     protected function makeNameConverter(): NameConverterInterface
     {
         $nameConverter = new AmendableCamelCaseToSnakeCaseNameConverter();
 
-        // Note: Some of Forte parameter names could not be converted by the default `CamelCaseToSnakeCaseNameConverter`
-        // hence a few amendments/exceptions have been hard coded here. Also forte was not 100% consistent with attribute
-        // naming convention, eg `last4_ssn` and `last_4_account_number`
         $nameConverter->addAmendment('last4AccountNumber', 'last_4_account_number');
         $nameConverter->addAmendment('owner1', 'owner');
         $nameConverter->addAmendment('owner2', 'owner_2');
@@ -44,8 +43,6 @@ class Factory
      * Make instance of Symfony serializer. The Serializer is setup
      * to read PHP7 type hints from `getters`, `setters`, `adders` etc
      * to determine which classes to deserialize JSON to.
-     *
-     * @return Serializer
      */
     public function make(): Serializer
     {
@@ -61,20 +58,18 @@ class Factory
             null,
             $nameConverter,
             null,
-            $extractor
+            $extractor,
         );
 
         $encoder = new JsonEncoder();
 
-        $serializer = new Serializer(
+        return new Serializer(
             [
+                $arrayDenormalizer,
                 $customNormalizer,
                 $objectNormalizer,
-                $arrayDenormalizer,
             ],
-            [$encoder]
+            [$encoder],
         );
-
-        return $serializer;
     }
 }

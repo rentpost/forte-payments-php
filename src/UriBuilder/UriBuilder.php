@@ -18,9 +18,6 @@ class UriBuilder
 
     /**
      * Gets a filtered string
-     *
-     * @param AbstractFilter $filter
-     * @param ValidatingSerializer $validatingSerializer
      */
     static private function getFilterString(
         AbstractFilter $filter,
@@ -49,9 +46,6 @@ class UriBuilder
 
     /**
      * Gets the pagination data
-     *
-     * @param PaginationData $paginationData
-     * @param ValidatingSerializer $validatingSerializer
      */
     static private function getPaginationData(
         PaginationData $paginationData,
@@ -67,8 +61,6 @@ class UriBuilder
      *
      * @param string $format                Formatted `vsprintf` (printf) compatiable string
      * @param array $args                   Substiutions args passed to `vsprintf`
-     * @param AbstractFilter|null $filter
-     * @param PaginationData|null $paginationData
      */
     static public function build(
         string $format,

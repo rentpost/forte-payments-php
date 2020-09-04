@@ -25,9 +25,6 @@ class ValidatingSerializer
 
     /**
      * Constructor
-     *
-     * @param Serializer $serializer
-     * @param ValidatorInterface $validator
      */
     public function __construct(Serializer $serializer, ValidatorInterface $validator)
     {
@@ -38,8 +35,6 @@ class ValidatingSerializer
 
     /**
      * Serializes an object
-     *
-     * @param ValidatableSerializableInterface $object
      */
     public function serialize(ValidatableSerializableInterface $object): string
     {
@@ -51,9 +46,6 @@ class ValidatingSerializer
 
     /**
      * Deserialized an object
-     *
-     * @param string $json
-     * @param string $responseFqns
      */
     public function deserialize(string $json, string $responseFqns): ValidatableSerializableInterface
     {
@@ -63,8 +55,6 @@ class ValidatingSerializer
 
     /**
      * Validates the object, throws exception on validation error
-     *
-     * @param ValidatableSerializableInterface $object
      */
     protected function validate(ValidatableSerializableInterface $object): void
     {
@@ -101,8 +91,6 @@ class ValidatingSerializer
 
     /**
      * Normalizes pagination
-     *
-     * @param PaginationData $paginationData
      */
     public function normalizePagination(PaginationData $paginationData): array
     {
@@ -114,8 +102,6 @@ class ValidatingSerializer
 
     /**
      * Normalizes the filter
-     *
-     * @param AbstractFilter $filter
      */
     public function normalizeFilter(AbstractFilter $filter): array
     {

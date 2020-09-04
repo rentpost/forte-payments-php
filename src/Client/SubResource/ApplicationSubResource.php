@@ -25,12 +25,10 @@ class ApplicationSubResource extends AbstractSubResource
      * @note we always use the reseller org id - only resllers can create applications
      *
      * @see https://www.forte.net/devdocs/api_resources/forte_api_v3.htm#application
-     *
-     * @param Model\Application $application
      */
     public function create(Model\Application $application): Model\Application
     {
-        $uri = UriBuilder::build('organizations/%s/applications', [ $this->getAuthOrgId()->getValue() ]);
+        $uri = UriBuilder::build('organizations/%s/applications', [$this->getAuthOrgId()->getValue()]);
 
         return $this->getHttpClient()->makeModelRequest('post', $uri, Model\Application::class, $application);
     }
@@ -42,8 +40,6 @@ class ApplicationSubResource extends AbstractSubResource
      * @note we always use the reseller org id - only resllers can create applications
      *
      * @see https://www.forte.net/devdocs/api_resources/forte_api_v3.htm#application
-     *
-     * @param Attribute\Id\ApplicationId $applicationId
      */
     public function findOne(Attribute\Id\ApplicationId $applicationId): ?Model\Application
     {
@@ -62,9 +58,6 @@ class ApplicationSubResource extends AbstractSubResource
      * @note we always use the reseller org id - only resllers can create applications
      *
      * @see https://www.forte.net/devdocs/api_resources/forte_api_v3.htm#application
-     *
-     * @param ApplicationFilter|null $filter
-     * @param PaginationData|null $paginationData
      */
     public function find(
         ?ApplicationFilter $filter = null,
@@ -73,7 +66,7 @@ class ApplicationSubResource extends AbstractSubResource
     {
         $uri = UriBuilder::build(
             'organizations/%s/applications',
-            [ $this->getAuthOrgId()->getValue() ],
+            [$this->getAuthOrgId()->getValue()],
             $filter,
             $paginationData,
         );

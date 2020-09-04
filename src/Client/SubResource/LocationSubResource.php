@@ -43,7 +43,6 @@ class LocationSubResource extends AbstractSubResource
      *
      * @param Attribute\Id\OrganizationId $organizationId       Use reseller org id if reseller
      * @param FundingFilter|null $filter                        Filter required for this method
-     * @param PaginationData|null $pagination
      */
     public function find(
         Attribute\Id\OrganizationId $organizationId,
@@ -53,7 +52,7 @@ class LocationSubResource extends AbstractSubResource
     {
         $uri = UriBuilder::build(
             'organizations/%s/locations',
-            [ $organizationId->getValue() ],
+            [$organizationId->getValue()],
             $filter,
             $pagination,
         );
@@ -64,11 +63,6 @@ class LocationSubResource extends AbstractSubResource
 
     /**
      * @param Attribute\Id\OrganizationId $organizationId   Use reseller org id if reseller
-     * @param Attribute\Id\LocationId $locationId
-     * @param Model\EcheckSetting $echeckSetting
-     * @param Model\CardSetting $cardSetting
-     *
-     * @return Model\Location
      */
     public function updateLimits(
         Attribute\Id\OrganizationId $organizationId,
