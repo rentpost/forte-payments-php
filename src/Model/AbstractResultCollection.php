@@ -4,8 +4,6 @@ declare(strict_types = 1);
 
 namespace Rentpost\ForteApi\Model;
 
-use Rentpost\ForteApi\Model as Model;
-
 /**
  * Child classes should implement `addResult()` and use the correct PHP7 Typenits
  * This method will never be called by the typehint is detected by the symfony serializer
@@ -23,7 +21,7 @@ abstract class AbstractResultCollection extends AbstractModel
     /**
      * Gets the array of results
      *
-     * @return Model\AbstractModel[]
+     * @return AbstractModel[]
      */
     public function getResults(): array
     {
@@ -36,7 +34,7 @@ abstract class AbstractResultCollection extends AbstractModel
      *
      * @internal api read only field
      *
-     * @param Model\AbstractModel[] $results
+     * @param AbstractModel[] $results
      */
     public function setResults(array $results): self
     {
@@ -59,8 +57,6 @@ abstract class AbstractResultCollection extends AbstractModel
      * Sets the number of results
      *
      * @internal api read only field
-     *
-     * @param int $numberResults
      */
     public function setNumberResults(int $numberResults): self
     {
