@@ -25,7 +25,7 @@ class ApplicantOrganization extends AbstractModel
     /**
      * @var string
      * @Assert\NotBlank()
-     * @Assert\Choice({"c_corporation", "government", "limited_liability_corporation", "other", "partnership_general_or_limited", "publicly_held_corporation", "s_corporation", "sole_proprietorship", "tax_exempt_or_non_profit_organization"})
+     * @Assert\Choice({"c_corporation", "government", "limited_liability_corporation", "partnership_general_or_limited", "publicly_held_corporation", "s_corporation", "sole_proprietorship", "tax_exempt_or_non_profit_organization"})
      */
     protected $legalStructure;
 
