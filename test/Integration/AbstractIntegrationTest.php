@@ -4,17 +4,20 @@ declare(strict_types = 1);
 
 namespace Rentpost\ForteApi\Test\Integration;
 
-use Rentpost\ForteApi\Attribute as Attribute;
+use Rentpost\ForteApi\Attribute;
 use Rentpost\ForteApi\Client\ForteClient;
-use Rentpost\ForteApi\Exception\LibraryGenericException;
+use Rentpost\ForteApi\File\Logger\Factory as FileLoggerFactory;
 use Rentpost\ForteApi\HttpClient\HttpClient;
 use Rentpost\ForteApi\Test\AbstractTestCase;
-use Rentpost\ForteApi\Void\Logger as VoidLogger;
-use Rentpost\ForteApi\File\Logger\Factory as FileLoggerFactory;
-use Symfony\Component\Yaml\Yaml;
 use Rentpost\ForteApi\Test\UserSettings;
-use Rentpost\Sprocket\Environment\Detective;
+use Rentpost\ForteApi\Void\Logger as VoidLogger;
 
+/**
+ * Base Integration Test Class
+ *
+ * @author Sam Anthony <sam@rentpost.com>
+ * @author Jacob Thomason <jacob@rentpost.com>
+ */
 abstract class AbstractIntegrationTest extends AbstractTestCase
 {
 
@@ -24,6 +27,9 @@ abstract class AbstractIntegrationTest extends AbstractTestCase
     }
 
 
+    /**
+     * Gets the ForteClient
+     */
     protected function getForteClient(): ForteClient
     {
         $logDir = UserSettings::getLogLocation();
@@ -31,9 +37,7 @@ abstract class AbstractIntegrationTest extends AbstractTestCase
 
         $allSettings = $this->getAllSettingsFromFile();
 
-        $forteClient = (new \Rentpost\ForteApi\Client\Factory())->make($allSettings, $logger);
-
-        return $forteClient;
+        return (new \Rentpost\ForteApi\Client\Factory())->make($allSettings, $logger, 'sandbox');
     }
 
 
@@ -53,7 +57,7 @@ abstract class AbstractIntegrationTest extends AbstractTestCase
             new Attribute\Id\OrganizationId($settings['authenticating_organization_id']),
             $baseUrl,
             new VoidLogger(),
-            $settings['debug']
+            $settings['debug'],
         );
     }
 }

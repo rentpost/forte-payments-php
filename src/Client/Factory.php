@@ -21,10 +21,13 @@ class Factory
     /**
      * Builds out the ForteClient
      *
-     * @param array $settings Nested associative array, see `settings.php.dist`
-     * @param LoggerInterface $logger
+     * @param array $settings   Nested associative array, see `settings.php.dist`
      */
-    public static function make(array $settings, LoggerInterface $logger): ForteClient
+    public static function make(
+        array $settings,
+        LoggerInterface $logger,
+        string $defaultEnvironmentKey
+    ): ForteClient
     {
         if (empty($settings['environments'])) {
             throw new LibraryGenericException('"environments" key missing from settings array');
@@ -67,14 +70,12 @@ class Factory
                 $envSettings['sandbox'],
                 $baseUri,
                 $logger,
-                $envSettings['debug']
+                $envSettings['debug'],
             );
         }
 
         $overrideSubResourceEnvironments = $settings['override_sub_resource_environments'] ?? [];
 
-        $defaultEnvironment = array_shift($environments);
-
-        return new ForteClient($defaultEnvironment, $environments, $overrideSubResourceEnvironments);
+        return new ForteClient($environments, $defaultEnvironmentKey, $overrideSubResourceEnvironments);
     }
 }

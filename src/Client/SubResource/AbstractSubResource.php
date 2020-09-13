@@ -12,18 +12,16 @@ use Rentpost\ForteApi\HttpClient\HttpClient;
  * Abstract class for SubResource(s)
  *
  * @author Sam Anthony <sam@rentpost.com>
+ * @author Jacob Thomason <jacob@rentpost.com>
  */
 abstract class AbstractSubResource
 {
 
-    /** @var ForteEnvironment */
-    private $forteEnvironment;
+    private ForteEnvironment $forteEnvironment;
 
 
     /**
      * Constructor
-     *
-     * @param ForteEnvironment $forteEnvironment
      */
     public function __construct(ForteEnvironment $forteEnvironment)
     {

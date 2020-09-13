@@ -19,42 +19,34 @@ use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter
 class ForteClient
 {
 
-    protected const DEFAULT_ENVIRONMENT_NAME = '_default_';
-
     /** @var AbstractSubResource[] */
-    protected $subResources;
+    protected array $subResources;
 
     /** @var ForteEnvironment[] */
-    protected $environments;
+    protected array $environments;
+
+    protected ?ForteEnvironment $currentEnvironment = null;
 
 
     /**
      * Constructor
-     *
-     * @param ForteEnvironment $defaultEnvironment
-     * @param array $alternativeEnvironments
-     * @param array $overrideSubResourceEnvironments
      */
     public function __construct(
-        ForteEnvironment $defaultEnvironment,
-        array $alternativeEnvironments = [],
+        array $environments,
+        string $defaultEnvironment,
         array $overrideSubResourceEnvironments = []
     ) {
-        $this->addForteEnvironment(self::DEFAULT_ENVIRONMENT_NAME, $defaultEnvironment);
-
-        foreach ($alternativeEnvironments as $name => $environment) {
+        foreach ($environments as $name => $environment) {
             $this->addForteEnvironment($name, $environment);
         }
 
+        $this->setCurrentForteEnvironment($defaultEnvironment);
         $this->initSubResources($overrideSubResourceEnvironments);
     }
 
 
     /**
      * Adds an environment to support
-     *
-     * @param string $name
-     * @param ForteEnvironment $environment
      */
     private function addForteEnvironment(string $name, ForteEnvironment $environment): void
     {
@@ -63,9 +55,7 @@ class ForteClient
 
 
     /**
-     * Gets a given environment by name
-     *
-     * @param string $name
+     * Gets a particular ForteEnvironment based on the key identifier
      */
     protected function getForteEnvironment(string $name): ForteEnvironment
     {
@@ -74,6 +64,34 @@ class ForteClient
         }
 
         return $this->environments[$name];
+    }
+
+
+    /**
+     * Sets the current environment to be used
+     */
+    protected function setCurrentForteEnvironment(string $name): self
+    {
+        if (!isset($this->environments[$name])) {
+            throw new LibraryGenericException('Cannot find forte environment with name `' . $name . '`');
+        }
+
+        $this->currentEnvironment = $this->environments[$name];
+
+        return $this;
+    }
+
+
+    /**
+     * Gets a given environment by name
+     */
+    protected function getCurrentForteEnvironment(): ForteEnvironment
+    {
+        if ($this->currentEnvironment === null) {
+            throw new LibraryGenericException('Current Forte environemnt has not been set');
+        }
+
+        return $this->currentEnvironment;
     }
 
 
@@ -90,8 +108,6 @@ class ForteClient
 
     /**
      * Gets the URL for the risk session id
-     *
-     * @param string $riskSessionId
      */
     public function getRiskSessionJavascriptUrl(string $riskSessionId): string
     {
@@ -102,7 +118,7 @@ class ForteClient
     /**
      * Initializes all the necessary sub resources
      *
-     * @param array $overrideSubResourceEnvironments
+     * @param string[] $overrideSubResourceEnvironments
      */
     protected function initSubResources(array $overrideSubResourceEnvironments): void
     {
@@ -133,7 +149,7 @@ class ForteClient
             if (!empty($overrideSubResourceEnvironments[$subResource])) {
                 $environment = $this->getForteEnvironment($overrideSubResourceEnvironments[$subResource]);
             } else {
-                $environment = $this->getForteEnvironment(self::DEFAULT_ENVIRONMENT_NAME);
+                $environment = $this->getCurrentForteEnvironment();
             }
 
             $this->subResources[$subResource] = new $subResourceFqns($environment);
@@ -143,8 +159,6 @@ class ForteClient
 
     /**
      * Determines the sub resource FQCN
-     *
-     * @param string $subResource
      */
     protected function inferSubResourceClassName(string $subResource): string
     {
