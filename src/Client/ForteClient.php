@@ -68,21 +68,6 @@ class ForteClient
 
 
     /**
-     * Sets the current environment to be used
-     */
-    protected function setCurrentForteEnvironment(string $name): self
-    {
-        if (!isset($this->environments[$name])) {
-            throw new LibraryGenericException('Cannot find forte environment with name `' . $name . '`');
-        }
-
-        $this->currentEnvironment = $this->environments[$name];
-
-        return $this;
-    }
-
-
-    /**
      * Gets a given environment by name
      */
     protected function getCurrentForteEnvironment(): ForteEnvironment
@@ -92,6 +77,21 @@ class ForteClient
         }
 
         return $this->currentEnvironment;
+    }
+
+
+    /**
+     * Sets the current environment to be used
+     */
+    public function setCurrentForteEnvironment(string $name): self
+    {
+        if (!isset($this->environments[$name])) {
+            throw new LibraryGenericException('Cannot find forte environment with name `' . $name . '`');
+        }
+
+        $this->currentEnvironment = $this->environments[$name];
+
+        return $this;
     }
 
 
