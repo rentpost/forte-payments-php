@@ -27,8 +27,6 @@ class TransactionSubResource extends AbstractSubResource
      * Creates a new transaction
      *
      * @param Attribute\Id\OrganizationId $organizationId       Use reseller org id if reseller
-     * @param Attribute\Id\LocationId $locationId
-     * @param Model\Transaction $transaction
      */
     public function create(
         Attribute\Id\OrganizationId $organizationId,
@@ -50,8 +48,6 @@ class TransactionSubResource extends AbstractSubResource
      * Finds a single transaction
      *
      * @param Attribute\Id\OrganizationId $organizationId       Use reseller org id if reseller
-     * @param Attribute\Id\LocationId $locationId
-     * @param Attribute\Id\TransactionId $transactionId
      */
     public function findOne(
         Attribute\Id\OrganizationId $organizationId,
@@ -74,8 +70,6 @@ class TransactionSubResource extends AbstractSubResource
      * seconds to become available. This will wait and retry a few times until it becomes available
      *
      * @param Attribute\Id\OrganizationId $organizationId       Use reseller org id if reseller
-     * @param Attribute\Id\LocationId $locationId
-     * @param Attribute\Id\TransactionId $transactionId
      */
     public function findOneWait(
         Attribute\Id\OrganizationId $organizationId,
@@ -129,9 +123,6 @@ class TransactionSubResource extends AbstractSubResource
      * Finds all transactions
      *
      * @param Attribute\Id\OrganizationId $organizationId       Use reseller org id if reseller
-     * @param Attribute\Id\LocationId $locationId
-     * @param TransactionFilter $filter
-     * @param PaginationData|null $pagination
      */
     public function find(
         Attribute\Id\OrganizationId $organizationId,
@@ -147,7 +138,7 @@ class TransactionSubResource extends AbstractSubResource
                 $locationId->getValue(),
             ],
             $filter,
-            $pagination
+            $pagination,
         );
 
         return $this->getHttpClient()->makeModelRequest('get', $uri, Model\TransactionCollection::class);
@@ -160,9 +151,6 @@ class TransactionSubResource extends AbstractSubResource
      * relating to the authenticated Organization.
      *
      * @param TransactionFilter $filter         Unlike most other find() methods, this one requires filter
-     * @param PaginationData|null $pagination
-     *
-     * @return Model\TransactionCollection
      */
     public function findForEntireOrganization(
         TransactionFilter $filter,
@@ -177,11 +165,8 @@ class TransactionSubResource extends AbstractSubResource
 
     /**
      * @param Attribute\Id\OrganizationId $organizationId   Use reseller org id if reseller
-     * @param Attribute\Id\LocationId $locationId
      * @param Model\Transaction $transactionBeenVoided      Note, only the transactionId and
      *                                                      authorizationCode need to be set for voiding
-     *
-     * @return Model\Transaction
      */
     public function void(
         Attribute\Id\OrganizationId $organizationId,
@@ -226,10 +211,6 @@ class TransactionSubResource extends AbstractSubResource
      * then make another call to void.
      *
      * @param Attribute\Id\OrganizationId $organizationId           Use reseller org id if reseller
-     * @param Attribute\Id\LocationId $locationId
-     * @param Attribute\Id\TransactionId $transactionIdBeenVoided
-     *
-     * @return Model\Transaction
      */
     public function voidFromTransactionId(
         Attribute\Id\OrganizationId $organizationId,
@@ -240,13 +221,13 @@ class TransactionSubResource extends AbstractSubResource
         $transaction = $this->findOne(
             $organizationId,
             $locationId,
-            $transactionIdBeenVoided
+            $transactionIdBeenVoided,
         );
 
         return $this->void(
             $organizationId,
             $locationId,
-            $transaction
+            $transaction,
         );
     }
 }

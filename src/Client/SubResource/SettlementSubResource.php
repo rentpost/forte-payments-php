@@ -22,7 +22,6 @@ class SettlementSubResource extends AbstractSubResource
      * Find for the organization which is authenticated
      *
      * @param SettlementFilter $filter          Unlike most other find() methods, this one requires filter
-     * @param PaginationData|null $pagination
      */
     public function findForEntireOrganization(
         SettlementFilter $filter,

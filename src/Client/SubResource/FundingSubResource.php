@@ -7,6 +7,7 @@ namespace Rentpost\ForteApi\Client\SubResource;
 use Rentpost\ForteApi\Attribute;
 use Rentpost\ForteApi\Filter\FundingFilter;
 use Rentpost\ForteApi\Model;
+use Rentpost\ForteApi\UriBuilder\PaginationData;
 use Rentpost\ForteApi\UriBuilder\UriBuilder;
 
 
@@ -22,7 +23,6 @@ class FundingSubResource extends AbstractSubResource
      * Finds a funding
      *
      * @param Attribute\Id\OrganizationId $organizationId       Use reseller org id if reseller
-     * @param Attribute\Id\FundingId $fundingId
      */
     public function findOne(
         Attribute\Id\OrganizationId $organizationId,
@@ -43,7 +43,6 @@ class FundingSubResource extends AbstractSubResource
      *
      * @param Attribute\Id\OrganizationId $organizationId       Use reseller org id if reseller
      * @param FundingFilter $filter                             Filter required for this method
-     * @param PaginationData|null $pagination
      */
     public function find(
         Attribute\Id\OrganizationId $organizationId,
@@ -53,9 +52,9 @@ class FundingSubResource extends AbstractSubResource
     {
         $uri = UriBuilder::build(
             'organizations/%s/fundings',
-            [ $organizationId->getValue() ],
+            [$organizationId->getValue()],
             $filter,
-            $pagination
+            $pagination,
         );
 
         return $this->getHttpClient()->makeModelRequest('get', $uri, Model\FundingCollection::class);

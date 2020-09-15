@@ -7,8 +7,9 @@ namespace Rentpost\ForteApi\Client\SubResource;
 use Rentpost\ForteApi\Attribute;
 use Rentpost\ForteApi\Filter\FundingFilter;
 use Rentpost\ForteApi\Model;
-use Rentpost\ForteApi\UriBuilder\UriBuilder;
 use Rentpost\ForteApi\Model\Location;
+use Rentpost\ForteApi\UriBuilder\PaginationData;
+use Rentpost\ForteApi\UriBuilder\UriBuilder;
 
 /**
  * LocationSubResource
@@ -22,7 +23,6 @@ class LocationSubResource extends AbstractSubResource
      * Finds a funding
      *
      * @param Attribute\Id\OrganizationId $organizationId       Use reseller org id if reseller
-     * @param Attribute\Id\LocationId $locationId
      */
     public function findOne(
         Attribute\Id\OrganizationId $organizationId,

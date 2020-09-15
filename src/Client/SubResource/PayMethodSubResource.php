@@ -4,9 +4,11 @@ declare(strict_types = 1);
 
 namespace Rentpost\ForteApi\Client\SubResource;
 
-use Rentpost\ForteApi\Model;
-use Rentpost\ForteApi\Attribute;
-
+/**
+ * PayMethods
+ *
+ * Not implemented - pull requests welcome
+ */
 class PayMethodSubResource extends AbstractSubResource
 {
 }

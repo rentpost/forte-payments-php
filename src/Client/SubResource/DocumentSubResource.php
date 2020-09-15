@@ -22,9 +22,6 @@ class DocumentSubResource extends AbstractSubResource
      * @note we use the reseller org id here since only resellers need to add documents
      *
      * @see https://www.forte.net/devdocs/api_resources/forte_api_v3.htm#documents
-     *
-     * @param Model\Document $document
-     * @param Model\Attachment $attachment
      */
     public function create(Model\Document $document, Model\Attachment $attachment): Model\Document
     {
@@ -39,10 +36,6 @@ class DocumentSubResource extends AbstractSubResource
      * Finds a document
      *
      * @note we use the reseller org id here since only resellers use documents
-     *
-     * @param Attribute\Id\DocumentId $documentId
-     *
-     * @throws \Rentpost\ForteApi\Exception\LibraryFaultException
      */
     public function findOne(Attribute\Id\DocumentId $documentId): Model\Document
     {

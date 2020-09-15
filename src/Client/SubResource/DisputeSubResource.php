@@ -7,6 +7,7 @@ namespace Rentpost\ForteApi\Client\SubResource;
 use Rentpost\ForteApi\Attribute;
 use Rentpost\ForteApi\Filter\DisputeFilter;
 use Rentpost\ForteApi\Model;
+use Rentpost\ForteApi\UriBuilder\PaginationData;
 use Rentpost\ForteApi\UriBuilder\UriBuilder;
 
 /**
@@ -21,7 +22,6 @@ class DisputeSubResource extends AbstractSubResource
      * Finds a dispute
      *
      * @param Attribute\Id\OrganizationId $organizationId       Use reseller org id if reseller
-     * @param Attribute\Id\DisputeId $disputeId
      */
     public function findOne(
         Attribute\Id\OrganizationId $organizationId,
@@ -41,8 +41,6 @@ class DisputeSubResource extends AbstractSubResource
      * Finds a collection of disputes
      *
      * @param Attribute\Id\OrganizationId $organizationId       Use reseller org id if reseller
-     * @param DisputeFilter|null $filter
-     * @param PaginationData|null $pagination
      */
     public function find(
         Attribute\Id\OrganizationId $organizationId,
@@ -52,9 +50,9 @@ class DisputeSubResource extends AbstractSubResource
     {
         $uri = UriBuilder::build(
             'organizations/%s/disputes/',
-            [ $organizationId->getValue() ],
+            [$organizationId->getValue()],
             $filter,
-            $pagination
+            $pagination,
         );
 
         return $this->getHttpClient()->makeModelRequest('get', $uri, Model\DisputeCollection::class);
