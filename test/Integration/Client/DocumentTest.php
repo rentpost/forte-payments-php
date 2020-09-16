@@ -42,7 +42,7 @@ class DocumentTest extends AbstractIntegrationTest
             ->setHttpFileName('test-document-' . rand() . '.png') // Note: if same file name is used to many times, forte API will complain
             ->setContentType('image/png');
 
-        $returnedDocument = $client->useDocuments()->create($document, $attachment);
+        $returnedDocument = $client->useDocuments('livetest')->create($document, $attachment);
 
         $this->assertDocument($returnedDocument);
 
@@ -57,7 +57,7 @@ class DocumentTest extends AbstractIntegrationTest
     {
         $client = $this->getForteClient();
 
-        $client->useDocuments()->findOne($documentId);
+        $client->useDocuments('livetest')->findOne($documentId);
 
 
         $returnedDocument = null;
@@ -66,7 +66,7 @@ class DocumentTest extends AbstractIntegrationTest
         // repeatly attempt to get it for a few seconds
         for ($attempt = 0; $attempt < 10; $attempt++) {
             try {
-                $returnedDocument = $client->useDocuments()->findOne($documentId);
+                $returnedDocument = $client->useDocuments('livetest')->findOne($documentId);
             } catch (AbstractRequestException $e) {
                 // Ignore this exception as we want to attempt to this a few times.
             }

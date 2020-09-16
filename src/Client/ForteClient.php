@@ -4,94 +4,70 @@ declare(strict_types = 1);
 
 namespace Rentpost\ForteApi\Client;
 
-use Rentpost\ForteApi\Client\SubResource\AbstractSubResource;
+use Rentpost\ForteApi\Client\SubResource\AddressSubResource;
+use Rentpost\ForteApi\Client\SubResource\ApplicationSubResource;
+use Rentpost\ForteApi\Client\SubResource\CustomerSubResource;
+use Rentpost\ForteApi\Client\SubResource\DisputeSubResource;
+use Rentpost\ForteApi\Client\SubResource\DocumentSubResource;
+use Rentpost\ForteApi\Client\SubResource\FundingSubResource;
+use Rentpost\ForteApi\Client\SubResource\LocationSubResource;
+use Rentpost\ForteApi\Client\SubResource\PayMethodSubResource;
+use Rentpost\ForteApi\Client\SubResource\ScheduleItemSubResource;
+use Rentpost\ForteApi\Client\SubResource\ScheduleSubResource;
+use Rentpost\ForteApi\Client\SubResource\SettlementSubResource;
+use Rentpost\ForteApi\Client\SubResource\TransactionSubResource;
 use Rentpost\ForteApi\Exception\LibraryGenericException;
 use Rentpost\ForteApi\ForteEnvironment;
-use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
 
 
 /**
  * This is the main entry class/client for accessing this library
  *
- * @author Sam Anthony <sam@rentpost.com>
  * @author Jacob Thomason <jacob@rentpost.com>
+ * @author Sam Anthony <sam@rentpost.com>
  */
 class ForteClient
 {
 
-    /** @var AbstractSubResource[] */
-    protected array $subResources;
-
     /** @var ForteEnvironment[] */
     protected array $environments;
-
-    protected ?ForteEnvironment $currentEnvironment = null;
 
 
     /**
      * Constructor
+     *
+     * @param ForteEnvironment[] $environments    List of environments by name/key identifiers
+     *                                            to make it easier to identify when using sub-resources
      */
-    public function __construct(
-        array $environments,
-        string $defaultEnvironment,
-        array $overrideSubResourceEnvironments = []
-    ) {
+    public function __construct(array $environments)
+    {
         foreach ($environments as $name => $environment) {
             $this->addForteEnvironment($name, $environment);
         }
-
-        $this->setCurrentForteEnvironment($defaultEnvironment);
-        $this->initSubResources($overrideSubResourceEnvironments);
     }
 
 
     /**
      * Adds an environment to support
      */
-    private function addForteEnvironment(string $name, ForteEnvironment $environment): void
+    protected function addForteEnvironment(string $name, ForteEnvironment $environment): void
     {
         $this->environments[$name] = $environment;
     }
 
 
     /**
-     * Gets a particular ForteEnvironment based on the key identifier
+     * Gets the ForteEnvironment
+     *
+     * @param string #env   The name/key/identifier passed in when instantiating the ForteClient
      */
-    protected function getForteEnvironment(string $name): ForteEnvironment
+    protected function getForteEnvironment(string $env): ForteEnvironment
     {
-        if (!isset($this->environments[$name])) {
-            throw new LibraryGenericException('Cannot find forte environment with name `' . $name . '`');
+        if (!isset($this->environments[$env])) {
+            throw new LibraryGenericException('Unable to locate a ForteEnvironment identified by: ' . $env);
         }
 
-        return $this->environments[$name];
-    }
-
-
-    /**
-     * Gets a given environment by name
-     */
-    protected function getCurrentForteEnvironment(): ForteEnvironment
-    {
-        if ($this->currentEnvironment === null) {
-            throw new LibraryGenericException('Current Forte environemnt has not been set');
-        }
-
-        return $this->currentEnvironment;
-    }
-
-
-    /**
-     * Sets the current environment to be used
-     */
-    public function setCurrentForteEnvironment(string $name): self
-    {
-        if (!isset($this->environments[$name])) {
-            throw new LibraryGenericException('Cannot find forte environment with name `' . $name . '`');
-        }
-
-        $this->currentEnvironment = $this->environments[$name];
-
-        return $this;
+        return $this->environments[$env];
     }
 
 
@@ -116,163 +92,133 @@ class ForteClient
 
 
     /**
-     * Initializes all the necessary sub resources
-     *
-     * @param string[] $overrideSubResourceEnvironments
-     */
-    protected function initSubResources(array $overrideSubResourceEnvironments): void
-    {
-        $subResourceList = [
-            'address',
-            'application',
-            'customer',
-            'dispute',
-            'document',
-            'funding',
-            'location',
-            'pay_method',
-            'schedule_item',
-            'schedule',
-            'settlement',
-            'transaction',
-        ];
-
-        foreach ($overrideSubResourceEnvironments as $subResource => $environment) {
-            if (!in_array($subResource, $subResourceList)) {
-                throw new LibraryGenericException('You have passed a sub resource which does not exist');
-            }
-        }
-
-        foreach ($subResourceList as $subResource) {
-            $subResourceFqns = $this->inferSubResourceClassName($subResource);
-
-            if (!empty($overrideSubResourceEnvironments[$subResource])) {
-                $environment = $this->getForteEnvironment($overrideSubResourceEnvironments[$subResource]);
-            } else {
-                $environment = $this->getCurrentForteEnvironment();
-            }
-
-            $this->subResources[$subResource] = new $subResourceFqns($environment);
-        }
-    }
-
-
-    /**
-     * Determines the sub resource FQCN
-     */
-    protected function inferSubResourceClassName(string $subResource): string
-    {
-        $converter = new CamelCaseToSnakeCaseNameConverter(null, false);
-        $part = $converter->denormalize($subResource);
-
-        return 'Rentpost\\ForteApi\\Client\\SubResource\\' . $part . 'SubResource';
-    }
-
-
-    /**
      * Uses the transactions sub resource
+     *
+     * @param string $env   ForteEnvironment name/key/identifier
      */
-    public function useTransactions(): SubResource\TransactionSubResource
+    public function useTransactions(string $env): TransactionSubResource
     {
-        return $this->subResources['transaction'];
+        return new TransactionSubResource($this->getForteEnvironment($env));
     }
 
 
     /**
      * Uses the schedule sub resource
+     *
+     * @param string $env   ForteEnvironment name/key/identifier
      */
-    public function useSchedules(): SubResource\ScheduleSubResource
+    public function useSchedules(string $env): ScheduleSubResource
     {
-        return $this->subResources['schedule'];
+        return new ScheduleSubResource($this->getForteEnvironment($env));
     }
 
 
     /**
      * Uses the schedule item sub resource
+     *
+     * @param string $env   ForteEnvironment name/key/identifier
      */
-    public function useScheduleItems(): SubResource\ScheduleItemSubResource
+    public function useScheduleItems(string $env): ScheduleItemSubResource
     {
-        return $this->subResources['schedule_item'];
+        return new ScheduleItemSubResource($this->getForteEnvironment($env));
     }
 
 
     /**
      * Uses the settlement sub resource
+     *
+     * @param string $env   ForteEnvironment name/key/identifier
      */
-    public function useSettlements(): SubResource\SettlementSubResource
+    public function useSettlements(string $env): SettlementSubResource
     {
-        return $this->subResources['settlement'];
+        return new SettlementSubResource($this->getForteEnvironment($env));
     }
 
 
     /**
      * Uses the funding sub resource
+     *
+     * @param string $env   ForteEnvironment name/key/identifier
      */
-    public function useFundings(): SubResource\FundingSubResource
+    public function useFundings(string $env): FundingSubResource
     {
-        return $this->subResources['funding'];
+        return new FundingSubResource($this->getForteEnvironment($env));
     }
 
 
     /**
      * Uses the location sub resource
+     *
+     * @param string $env   ForteEnvironment name/key/identifier
      */
-    public function useLocations(): SubResource\LocationSubResource
+    public function useLocations(string $env): LocationSubResource
     {
-        return $this->subResources['location'];
+        return new LocationSubResource($this->getForteEnvironment($env));
     }
 
 
     /**
      * Uses the customer sub resource
+     *
+     * @param string $env   ForteEnvironment name/key/identifier
      */
-    public function useCustomers(): SubResource\CustomerSubResource
+    public function useCustomers(string $env): CustomerSubResource
     {
-        return $this->subResources['customer'];
+        return new CustomerSubResource($this->getForteEnvironment($env));
     }
 
 
     /**
      * Uses the address sub resource
+     *
+     * @param string $env   ForteEnvironment name/key/identifier
      */
-    public function useAddresses(): SubResource\AddressSubResource
+    public function useAddresses(string $env): AddressSubResource
     {
-        return $this->subResources['address'];
+        return new AddressSubResource($this->getForteEnvironment($env));
     }
 
 
     /**
      * Uses the pay method sub resource
+     *
+     * @param string $env   ForteEnvironment name/key/identifier
      */
-    public function usePayMethods(): SubResource\PayMethodSubResource
+    public function usePayMethods(string $env): PayMethodSubResource
     {
-        return $this->subResources['pay_method'];
+        return new PayMethodSubResource($this->getForteEnvironment($env));
     }
 
 
     /**
      * Uses the dispute sub resource
+     *
+     * @param string $env   ForteEnvironment name/key/identifier
      */
-    public function useDisputes(): SubResource\DisputeSubResource
+    public function useDisputes(string $env): DisputeSubResource
     {
-        return $this->subResources['dispute'];
+        return new DisputeSubResource($this->getForteEnvironment($env));
     }
 
 
     /**
      * Uses the application sub resource
+     *
+     * @param string $env   ForteEnvironment name/key/identifier
      */
-    public function useApplications(): SubResource\ApplicationSubResource
+    public function useApplications(string $env): ApplicationSubResource
     {
-        return $this->subResources['application'];
+        return new ApplicationSubResource($this->getForteEnvironment($env));
     }
 
 
     /**
      * Uses the document sub resource
+     *
+     * @param string $env   ForteEnvironment name/key/identifier
      */
-    public function useDocuments(): SubResource\DocumentSubResource
+    public function useDocuments(string $env): DocumentSubResource
     {
-        return $this->subResources['document'];
+        return new DocumentSubResource($this->getForteEnvironment($env));
     }
 }

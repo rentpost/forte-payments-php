@@ -27,7 +27,7 @@ class FundingsTest extends AbstractIntegrationTest
             ->setStartEffectiveDate(new Attribute\Date('2017-09-01'))
             ->setEndEffectiveDate(new Attribute\Date('2018-01-01'));
 
-        $fundingsCollection = $client->useFundings()->find(UserSettings::getLivetestMerchantOrganizationId(), $filter);
+        $fundingsCollection = $client->useFundings('livetest')->find(UserSettings::getLivetestMerchantOrganizationId(), $filter);
 
         $this->assertInstanceOf(Model\FundingCollection::class, $fundingsCollection);
         $this->assertInstanceOf(Model\Response::class, $fundingsCollection->getResponse());

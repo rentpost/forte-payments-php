@@ -22,7 +22,7 @@ class DisputesTest extends AbstractIntegrationTest
 
         $organizationId = new Attribute\Id\OrganizationId(UserSettings::getLivetestAuthenticatingOrganizationId()); // WONTFIX hard coded
 
-        $disputeCollection = $client->useDisputes()->find($organizationId);
+        $disputeCollection = $client->useDisputes('livetest')->find($organizationId);
 
         $this->assertInstanceOf(Model\DisputeCollection::class, $disputeCollection);
         $this->assertInstanceOf(Model\Response::class, $disputeCollection->getResponse());

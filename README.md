@@ -27,13 +27,13 @@ this is just passing an array in the following format:
       'access_id' => 'xxxxxxxx',
       'secure_key' => 'xxxxxxxx',
       ...
-    ]
+    ],
+    'live' => [
+      'access_id' => 'xxxxxxxx',
+      'secure_key' => 'xxxxxxxx',
+      ...
+    ],
   ],
-  'override_sub_resource_environments' => [
-    'address' => 'env_name',
-    'application' => 'env_name',
-    ...
-  ]
 ]
 ```
 
@@ -64,18 +64,6 @@ parameters:
         sandbox: "%forte_api_livetest_sandbox%"
         base_uri: ~
         debug: false
-
-    override_sub_resource_environments:
-      address: livetest
-      application: livetest
-      customer: livetest
-      dispute: livetest
-      document: livetest
-      funding: livetest
-      pay_method: livetest
-      schedule_item: livetest
-      settlement: livetest
-      transaction: ~
 ```
 
 ### Production Environments
@@ -94,8 +82,6 @@ parameters:
         sandbox: "%forte_api_default_sandbox%"
         base_uri: ~
         debug: false
-
-    override_sub_resource_environments: ~
 ```
 
 ## Usage
@@ -147,13 +133,13 @@ $settings = [
       'access_id' => 'xxxxxxxx',
       'secure_key' => 'xxxxxxxx',
       ...
+    ],
+    'live' => [
+      'access_id' => 'xxxxxxxx',
+      'secure_key' => 'xxxxxxxx',
+      ...
     ]
   ],
-  'override_sub_resource_environments' => [
-    'address' => 'env_name',
-    'application' => 'env_name',
-    ...
-  ]
 ];
 
 $logger = new FileLogger();

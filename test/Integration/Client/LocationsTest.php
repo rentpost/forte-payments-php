@@ -54,7 +54,7 @@ class LocationsTest extends AbstractIntegrationTest
         $organizationId = UserSettings::getSandboxMerchantOrganizationId();
         $locationId = UserSettings::getSandboxMerchantLocationId();
 
-        $location = $client->useLocations()->findOne($organizationId, $locationId);
+        $location = $client->useLocations('sandbox')->findOne($organizationId, $locationId);
 
         $this->assertNotEmpty($location, 'Attmpting to find a Location resource');
 
@@ -71,7 +71,7 @@ class LocationsTest extends AbstractIntegrationTest
 
         $organizationId = UserSettings::getSandboxMerchantOrganizationId();
 
-        $locationCollection = $client->useLocations()->find($organizationId);
+        $locationCollection = $client->useLocations('sandbox')->find($organizationId);
 
         $this->assertInstanceOf(Model\LocationCollection::class, $locationCollection);
 
@@ -113,7 +113,7 @@ class LocationsTest extends AbstractIntegrationTest
             ->setPerTransDebit(5000)
             ->setPerTransCredit(5000);
 
-        $returnedLocation = $client->useLocations()->updateLimits(
+        $returnedLocation = $client->useLocations('sandbox')->updateLimits(
             $organizationId,
             $locationId,
             $echeckSetting,

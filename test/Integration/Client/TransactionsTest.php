@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace Rentpost\ForteApi\Test\Integration\Client;
 
 use Rentpost\ForteApi\Attribute;
-use Rentpost\ForteApi\Exception\Request\AbstractRequestException;
 use Rentpost\ForteApi\Exception\Request\TimeoutException;
 use Rentpost\ForteApi\Exception\ValidationException;
 use Rentpost\ForteApi\Filter\TransactionFilter;
@@ -27,7 +26,6 @@ class TransactionsTest extends AbstractIntegrationTest
 
     public function testModelValidation()
     {
-
         $this->expectException(ValidationException::class);
 
         $client = $this->getForteClient();
@@ -38,7 +36,7 @@ class TransactionsTest extends AbstractIntegrationTest
         $transaction = new Model\Transaction();
 
         // Expecting an exception
-        $client->useTransactions()->create($organizationId, $locationId, $transaction);
+        $client->useTransactions('sandbox')->create($organizationId, $locationId, $transaction);
     }
 
 
@@ -86,7 +84,7 @@ class TransactionsTest extends AbstractIntegrationTest
 
         $transaction->setAuthorizationAmount(new Attribute\Money('109.49'));
 
-        $returnedTransaction = $client->useTransactions()->create($organizationId, $locationId, $transaction);
+        $returnedTransaction = $client->useTransactions('sandbox')->create($organizationId, $locationId, $transaction);
 
         $this->assertTransactionModel($returnedTransaction, true);
 
@@ -136,7 +134,7 @@ class TransactionsTest extends AbstractIntegrationTest
 
         $transaction->setAuthorizationAmount(new Attribute\Money('00.01')); // Need to send at least 1 cent to verify (person will not be chargd this amount)
 
-        $returnedTransaction = $client->useTransactions()->create($organizationId, $locationId, $transaction);
+        $returnedTransaction = $client->useTransactions('sandbox')->create($organizationId, $locationId, $transaction);
 
         $this->assertInstanceOf('Rentpost\ForteApi\Attribute\Id\TransactionId', $returnedTransaction->getTransactionId());
 
@@ -154,7 +152,7 @@ class TransactionsTest extends AbstractIntegrationTest
         $locationId = UserSettings::getSandboxMerchantLocationId();
         $invalidTransactionId = new Attribute\Id\TransactionId('trn_aaaabbbb-aaaa-1111-86a9-aaaabbbbcccc');
 
-        $transaction = $client->useTransactions()->findOneWait($organizationId, $locationId, $invalidTransactionId);
+        $transaction = $client->useTransactions('sandbox')->findOneWait($organizationId, $locationId, $invalidTransactionId);
     }
 
 
@@ -168,7 +166,7 @@ class TransactionsTest extends AbstractIntegrationTest
         $organizationId = UserSettings::getSandboxMerchantOrganizationId();
         $locationId = UserSettings::getSandboxMerchantLocationId();
 
-        $transaction = $client->useTransactions()->findOneWait($organizationId, $locationId, $transactionId);
+        $transaction = $client->useTransactions('sandbox')->findOneWait($organizationId, $locationId, $transactionId);
 
         $this->assertNotEmpty($transaction, 'Attempted a few times to get transaction from API, it should have succeeded by now');
 
@@ -196,7 +194,7 @@ class TransactionsTest extends AbstractIntegrationTest
         $filter->setStartReceivedDate(new Attribute\Date(self::START_RECEIVED_DATE));
         $filter->setEndReceivedDate(new Attribute\Date($tomorrow));
 
-        $transactionCollection = $client->useTransactions()->find($organizationId, $locationId, $filter);
+        $transactionCollection = $client->useTransactions('sandbox')->find($organizationId, $locationId, $filter);
 
         $this->assertInstanceOf(Model\TransactionCollection::class, $transactionCollection);
 
@@ -231,7 +229,7 @@ class TransactionsTest extends AbstractIntegrationTest
         $filter->setStartReceivedDate(new Attribute\Date(self::START_RECEIVED_DATE));
         $filter->setEndReceivedDate(new Attribute\Date($yestarday));
 
-        $transactionCollection = $client->useTransactions()->find($organizationId, $locationId, $filter, $pagination);
+        $transactionCollection = $client->useTransactions('sandbox')->find($organizationId, $locationId, $filter, $pagination);
 
         $this->assertInstanceOf(Model\TransactionCollection::class, $transactionCollection);
 
@@ -257,10 +255,10 @@ class TransactionsTest extends AbstractIntegrationTest
         $organizationId = UserSettings::getSandboxMerchantOrganizationId();
         $locationId = UserSettings::getSandboxMerchantLocationId();
 
-        $returnedTransaction = $client->useTransactions()->void(
+        $returnedTransaction = $client->useTransactions('sandbox')->void(
             $organizationId,
             $locationId,
-            $transaction
+            $transaction,
         );
 
         $this->assertInstanceOf(Model\Transaction::class, $returnedTransaction);

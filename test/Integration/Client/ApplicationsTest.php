@@ -104,7 +104,7 @@ class ApplicationsTest extends AbstractIntegrationTest
 
         $client = $this->getForteClient();
 
-        $returnedApplication = $client->useApplications()->create($application);
+        $returnedApplication = $client->useApplications('livetest')->create($application);
 
         $this->assertInstanceOf(Model\Application::class, $returnedApplication);
         $this->assertInstanceOf(Attribute\Id\ApplicationId::class, $returnedApplication->getApplicationId());
@@ -122,7 +122,7 @@ class ApplicationsTest extends AbstractIntegrationTest
     {
         $client = $this->getForteClient();
 
-        $applications = $client->useApplications()->find();
+        $applications = $client->useApplications('livetest')->find();
 
         $this->assertInstanceOf(Model\ApplicationCollection::class, $applications);
 

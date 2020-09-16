@@ -26,17 +26,5 @@ function get_forte_settings(): array
                 'debug' => false,
             ],
         ],
-        'override_sub_resource_environments' => [
-            'address' => 'livetest',
-            'application' => 'livetest',
-            'customer' => 'livetest',
-            'dispute' => 'livetest',
-            'document' => 'livetest',
-            'funding' => 'livetest',
-            'pay_method' => 'livetest',
-            'schedule_item' => 'livetest',
-            'settlement' => 'livetest',
-            'transaction' => null,
-        ],
     ];
 }

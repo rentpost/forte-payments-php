@@ -37,7 +37,7 @@ abstract class AbstractIntegrationTest extends AbstractTestCase
 
         $allSettings = $this->getAllSettingsFromFile();
 
-        return (new \Rentpost\ForteApi\Client\Factory())->make($allSettings, $logger, 'sandbox');
+        return (new \Rentpost\ForteApi\Client\Factory())->make($allSettings, $logger);
     }
 
 

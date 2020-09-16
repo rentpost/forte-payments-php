@@ -18,6 +18,7 @@ use Rentpost\ForteApi\Test\Integration\AbstractIntegrationTest;
  */
 class SettlementsTest extends AbstractIntegrationTest
 {
+    
     public function testFindListNoFilter()
     {
         $client = $this->getForteClient();
@@ -27,7 +28,7 @@ class SettlementsTest extends AbstractIntegrationTest
             ->setStartSettleDate(new Attribute\Date('2010-01-01'))
             ->setEndSettleDate(new Attribute\Date('2018-02-01'));
 
-        $settlementCollection = $client->useSettlements()->findForEntireOrganization($filter);
+        $settlementCollection = $client->useSettlements('livetest')->findForEntireOrganization($filter);
 
         $this->assertInstanceOf(Model\SettlementCollection::class, $settlementCollection);
     }

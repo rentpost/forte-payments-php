@@ -25,8 +25,7 @@ class Factory
      */
     public static function make(
         array $settings,
-        LoggerInterface $logger,
-        string $defaultEnvironmentKey
+        LoggerInterface $logger
     ): ForteClient
     {
         if (empty($settings['environments'])) {
@@ -74,8 +73,6 @@ class Factory
             );
         }
 
-        $overrideSubResourceEnvironments = $settings['override_sub_resource_environments'] ?? [];
-
-        return new ForteClient($environments, $defaultEnvironmentKey, $overrideSubResourceEnvironments);
+        return new ForteClient($environments);
     }
 }
