@@ -16,35 +16,18 @@ use Rentpost\ForteApi\HttpClient\HttpClient;
 class ForteEnvironment
 {
 
-    /** @var string */
-    protected $apiAccessId;
-
-    /** @var string */
-    protected $apiSecureKey;
-
-    /** @var Attribute\Id\OrganizationId */
-    protected $authenticatingOrganizationId;
-
-    /** @var bool */
-    protected $sandbox;
-
-    /** @var LoggerInterface */
-    protected $logger;
-
-    /** @var HttpClient */
-    protected $httpClient;
+    protected string $apiAccessId;
+    protected string $apiSecureKey;
+    protected Attribute\Id\OrganizationId $authenticatingOrganizationId;
+    protected bool $sandbox;
+    protected LoggerInterface $logger;
+    protected HttpClient $httpClient;
 
 
     /**
      * ForteEnvironment constructor.
-     *
-     * @param string $apiAccessId
-     * @param string $apiSecureKey
-     * @param Attribute\Id\OrganizationId $authenticatingOrganizationId
-     * @param bool $sandbox
-     * @param string|null $baseUri Passing null the baseUri will be infered from the sandbox setting (recommended)
-     * @param LoggerInterface $logger
-     * @param bool $debug
+
+     * @param string|null $baseUri  Passing null the baseUri will be infered from the sandbox setting (recommended)
      */
     public function __construct(
         string $apiAccessId,
@@ -61,7 +44,7 @@ class ForteEnvironment
         $this->sandbox = $sandbox;
         $this->logger = $logger;
 
-        $baseUri = $baseUri ? $baseUri : $this->inferBaseUri($sandbox);
+        $baseUri = $baseUri ?: $this->inferBaseUri($sandbox);
 
         $this->httpClient = (new Factory())->make($apiAccessId, $apiSecureKey, $authenticatingOrganizationId, $baseUri, $logger, $debug);
     }
@@ -69,8 +52,6 @@ class ForteEnvironment
 
     /**
      * Determines the base URI
-     *
-     * @param bool $sandbox
      */
     protected function inferBaseUri(bool $sandbox): string
     {
