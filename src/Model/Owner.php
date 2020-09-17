@@ -82,14 +82,14 @@ class Owner extends AbstractModel
     /**
      * @var string
      * @Assert\NotBlank()
-     * @Assert\Length(min=3, max=3)
+     * @Assert\Length(min=2, max=3)
      */
     protected $country;
 
     /**
      * @var string
      * @Assert\NotBlank()
-     * @Assert\Length(min=3, max=3)
+     * @Assert\Length(min=2, max=3)
      */
     protected $citizenship;
 
