@@ -2,9 +2,7 @@
 
 SHELL:=/bin/bash
 
-.PHONY: help init start stop clean test test-only test-forte test-only-forte clear-cache
-		update-database migrate-database install-vendors update-vendors update-autoload update-model
-		update-secrets follow-debug follow-errors
+.PHONY: help init test test-only install-vendors update-vendors update-autoload
 
 
 # Test that we have the necessary binaries available
