@@ -64,7 +64,7 @@ class ApplicationsTest extends AbstractIntegrationTest
             ->setLast4Ssn('1234')
             ->setDateOfBirth(new Attribute\Date('1990-01-25'));
 
-        $applicantOrganization = new Model\ApplicantOrganization;
+        $applicantOrganization = new Model\ApplicantOrganization();
 
         $applicantOrganization
             ->setLegalName('Microsoft (test)')
@@ -75,6 +75,7 @@ class ApplicationsTest extends AbstractIntegrationTest
             ->setLocality('Boston')
             ->setRegion('Massachusetts')
             ->setPostalCode(new Attribute\PostalCode('54321'))
+            ->setCountry('USA')
             ->setCustomerServicePhone(new Attribute\CustomerServicePhone('1234567890'))
             ->setWebsite('www.microsoft.com')
             ->setBusinessType('A11900') // Real Estate Agents and Managers - Rentals

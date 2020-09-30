@@ -11,95 +11,80 @@ class ApplicantOrganization extends AbstractModel
 {
 
     /**
-     * @var string
      * @Assert\NotBlank()
      */
-    protected $legalName;
+    protected string $legalName;
 
     /**
-     * @var Attribute\TaxIdNumber
      * @Assert\NotBlank()
      */
-    protected $taxIdNumber;
+    protected Attribute\TaxIdNumber $taxIdNumber;
 
     /**
-     * @var string
      * @Assert\NotBlank()
      * @Assert\Choice({"c_corporation", "government", "limited_liability_corporation", "partnership_general_or_limited", "publicly_held_corporation", "s_corporation", "sole_proprietorship", "tax_exempt_or_non_profit_organization"})
      */
-    protected $legalStructure;
+    protected string $legalStructure;
 
     /**
-     * @var string
      * @Assert\NotBlank()
      */
-    protected $dbaName;
+    protected string $dbaName;
 
     /**
-     * @var string
      * @Assert\NotBlank()
      */
-    protected $streetAddress1;
+    protected string $streetAddress1;
 
     /**
-     * @var string
      * @Assert\NotBlank()
      */
-    protected $locality;
+    protected string $locality;
 
     /**
-     * @var string
      * @Assert\NotBlank()
      */
-    protected $region;
+    protected string $region;
+
+    protected Attribute\PostalCode $postalCode;
 
     /**
-     * @var Attribute\PostalCode
+     * Not documented, defauling to "USA" for BC reasons. Use "CAN" for Canada
+     *
+     * @Assert\NotBlank()
+     * @Assert\Length(max="3")
+     */
+    protected string $country = 'USA';
+
+    protected Attribute\CustomerServicePhone $customerServicePhone;
+
+    /**
      * @Assert\NotBlank()
      */
-    protected $postalCode;
+    protected string $website;
 
     /**
-     * @var Attribute\CustomerServicePhone
-     * @Assert\NotBlank()
-     */
-    protected $customerServicePhone;
-
-    /**
-     * @var string
-     * @Assert\NotBlank()
-     */
-    protected $website;
-
-    /**
-     * @var string
      * @Assert\NotBlank()
      * https://www.forte.net/devdocs/reference/forte's_business_classification_code.htm
      */
-    protected $businessType;
+    protected string $businessType;
 
     /**
-     * @var Attribute\BankRoutingNumber
      * @Assert\NotBlank()
      */
-    protected $bankRoutingNumber;
+    protected Attribute\BankRoutingNumber $bankRoutingNumber;
 
     /**
-     * @var Attribute\BankAccountNumber
      * @Assert\NotBlank()
      */
-    protected $bankAccountNumber;
+    protected Attribute\BankAccountNumber $bankAccountNumber;
 
     /**
-     * @var string
      * @Assert\Choice({"checking", "savings"})
      */
-    protected $bankAccountType;
+    protected string $bankAccountType;
 
-    /**
-     * @var Attribute\Id\OrganizationId
-     */
-    protected $organizationId;
+    protected ?Attribute\Id\OrganizationId $organizationId = null;
 
 
     public function getLegalName(): string
@@ -214,6 +199,20 @@ class ApplicantOrganization extends AbstractModel
     }
 
 
+    public function getCountry(): string
+    {
+        return $this->country;
+    }
+
+
+    public function setCountry(string $country): self
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+
     public function getCustomerServicePhone(): Attribute\CustomerServicePhone
     {
         return $this->customerServicePhone;
@@ -298,18 +297,16 @@ class ApplicantOrganization extends AbstractModel
     }
 
 
-    public function getOrganizationId(): ?Attribute\OrganizationId
+    public function getOrganizationId(): ?Attribute\Id\OrganizationId
     {
         return $this->organizationId;
     }
 
 
-    public function setOrganizationId(Attribute\OrganizationId $organizationId): self
+    public function setOrganizationId(Attribute\Id\OrganizationId $organizationId): self
     {
         $this->organizationId = $organizationId;
 
         return $this;
     }
-
-
 }
