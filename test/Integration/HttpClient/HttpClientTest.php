@@ -24,7 +24,7 @@ class HttpClientTest extends AbstractIntegrationTest
         $httpClient->doRequest(
             'get',
             '',
-            Transaction::class
+            Transaction::class,
         );
     }
 
@@ -41,7 +41,7 @@ class HttpClientTest extends AbstractIntegrationTest
         $httpClient->doRequest(
             'get',
             '',
-            Transaction::class
+            Transaction::class,
         );
     }
 
@@ -59,7 +59,7 @@ class HttpClientTest extends AbstractIntegrationTest
         $httpClient->doRequest(
             'get',
             '',
-            Transaction::class
+            Transaction::class,
         );
     }
 }
