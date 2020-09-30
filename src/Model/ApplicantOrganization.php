@@ -7,6 +7,12 @@ namespace Rentpost\ForteApi\Model;
 use Rentpost\ForteApi\Attribute as Attribute;
 use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * ApplicantOrganization Model
+ *
+ * @author Sam Anthony <sam@rentpost.com>
+ * @author Jacob Thomason <jacob@rentpost.com>
+ */
 class ApplicantOrganization extends AbstractModel
 {
 
