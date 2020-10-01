@@ -88,8 +88,7 @@ class BankRoutingNumber extends AbstractAttribute
     {
         $number = Sanitizer::stripWhitespaceAndDashes($value);
 
-        $match = preg_match('~^0[0-9]{8}$~', $number); // 9 digits, first one been 0
-
+        $match = preg_match('~^0?[0-9]{8}$~', $number); // 9 digits with leading 0, or 8 digits
         if ($match) {
             return $number;
         }
