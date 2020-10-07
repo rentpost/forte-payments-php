@@ -10,6 +10,7 @@ use Rentpost\ForteApi\Sanitizer;
 
 class PostalCode extends AbstractAttribute
 {
+    
     /**
      * Accepts either US or Canadian PostalCode
      *
@@ -31,21 +32,24 @@ class PostalCode extends AbstractAttribute
      */
     protected function internalize($value): string
     {
-        return $value; // FIXME for the moment skipping all this validation. There might be some endpoinds which are more strict and require a well formed US/CA postcode, in which case we can re-think this.
-
-
         if (!is_string($value)) {
-            throw new ValidationException('Postcode must be passed as a string');
+            throw new ValidationException('Postal codes must be passed as a string');
         }
 
-        $usPostalCode = $this->tryUsPostalCode($value);
+        if (\strlen($value) < 5) {
+            throw new ValidationException('Postal codes must be at least 5 characters in length');
+        }
 
+        // FIXME for the moment skipping country specific validation. There might be some endpoinds
+        // which are more strict and require a well formed US/CA postcode, in which case we can re-think this.
+        return $value;
+
+        $usPostalCode = $this->tryUsPostalCode($value);
         if ($usPostalCode) {
             return $usPostalCode;
         }
 
         $caPostalCode = $this->tryCaPostalCode($value);
-
         if ($caPostalCode) {
             return $caPostalCode;
         }
