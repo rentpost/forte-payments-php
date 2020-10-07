@@ -47,12 +47,7 @@ class PhysicalAddress extends AbstractModel
      */
     protected $region;
 
-    /**
-     * @var Attribute\PostalCode
-     * @Assert\NotBlank()
-     * @Assert\Length(max=15)
-     */
-    protected $postalCode;
+    protected Attribute\PostalCode $postalCode;
 
 
     /**
