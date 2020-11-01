@@ -42,7 +42,6 @@ class PhysicalAddress extends AbstractModel
      * State or province
      *
      * @var string
-     * @Assert\NotBlank()
      * @Assert\Length(max=2)
      */
     protected $region;
