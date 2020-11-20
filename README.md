@@ -142,9 +142,7 @@ $settings = [
   ],
 ];
 
-$logger = new FileLogger();
-
-$forteClient = new ForteApiClientFactory($settings, $logger);
+$forteClient = new ForteApiClientFactory::make($settings, new FileLogger());
 
 $organizationId = new Attribute\Id\OrganizationId('org_123456');
 $locationId = new Attribute\Id\LocationId('loc_123456');
