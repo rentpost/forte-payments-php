@@ -47,7 +47,7 @@ class Factory
             'base_uri' => $baseUri,
             'headers' => $headers, // Default headers
             'http_errors' => false,
-            'verify' => false, // FIXME - this was put here to ignore invalid tsl certificate problem
+            'verify' => false, // TODO - this was put here to ignore invalid tsl certificate problem
         ];
 
         $stackHandler = $this->getGuzzleStackHandler($logger, $debug);
@@ -65,11 +65,6 @@ class Factory
 
     /**
      * Creates a Guzzle stack handler with logger
-     *
-     * @param LoggerInterface $logger
-     * @param bool $debug
-     *
-     * @return HandlerStack|null
      */
     protected function getGuzzleStackHandler(LoggerInterface $logger, bool $debug): ?HandlerStack
     {

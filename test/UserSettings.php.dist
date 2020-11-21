@@ -11,13 +11,13 @@ use Rentpost\ForteApi\Attribute;
  * this library. These values are only used for the automated tests and no
  * where else.
  *
- * FIXME At the moment they are hard coded
+ * TODO  At the moment they are hard coded
  *       In future is needed we could come up with a better solution for this
  *       This is just a quick work around for the moment
  */
 class UserSettings
 {
-    
+
     /**
      * The standard log location where you'd like Integration tests to write output
      */
@@ -25,50 +25,50 @@ class UserSettings
     {
         return '/var/log/php';
     }
-    
-    
+
+
     public static function getSandboxMerchantOrganizationId(): Attribute\Id\OrganizationId
     {
         return new Attribute\Id\OrganizationId('org_1234');
     }
 
-    
+
     public static function getSandboxMerchantLocationId(): Attribute\Id\LocationId
     {
         return new Attribute\Id\LocationId('loc_1234');
     }
 
-    
+
     public static function getLivetestAuthenticatingOrganizationId(): string
     {
         return 'org_1234';
     }
 
-    
+
     public static function getLivetestMerchantOrganizationId(): Attribute\Id\OrganizationId
     {
         return new Attribute\Id\OrganizationId('org_1234');
     }
 
-    
+
     public static function getLivetestMerchantLocationId(): Attribute\Id\LocationId
     {
         return new Attribute\Id\LocationId('loc_1234');
     }
 
-    
+
     public static function getApplicationOwnerEmail(): string
     {
         return 'test@example.com';
     }
 
-    
+
     public static function getApplicationIdForDocumentCreate(): Attribute\Id\ApplicationId
     {
         return new Attribute\Id\ApplicationId('app_1234');
     }
 
-    
+
     public static function getApplicationFeeId(): int
     {
         return 1234; // "Live test"
