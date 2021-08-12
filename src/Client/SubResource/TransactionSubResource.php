@@ -45,6 +45,27 @@ class TransactionSubResource extends AbstractSubResource
 
 
     /**
+     * Updates an existing transaction
+     *
+     * @param Attribute\Id\OrganizationId $organizationId       Use reseller org id if reseller
+     */
+    public function update(
+        Attribute\Id\OrganizationId $organizationId,
+        Attribute\Id\LocationId $locationId,
+        Model\Transaction $transaction
+    ): Model\Transaction
+    {
+        $uri = UriBuilder::build('organizations/%s/locations/%s/transactions/', [
+            $organizationId->getValue(),
+            $locationId->getValue(),
+        ]);
+
+        return $this->getHttpClient()
+            ->makeModelRequest('put', $uri, Model\Transaction::class, $transaction);
+    }
+
+
+    /**
      * Finds a single transaction
      *
      * @param Attribute\Id\OrganizationId $organizationId       Use reseller org id if reseller
