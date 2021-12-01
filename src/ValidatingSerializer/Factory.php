@@ -28,7 +28,7 @@ class Factory
 
         AnnotationRegistry::registerLoader('class_exists');
 
-        $validator = $builder->enableAnnotationMapping()->getValidator();
+        $validator = $builder->enableAnnotationMapping(true)->getValidator();
 
         return $validator;
     }
