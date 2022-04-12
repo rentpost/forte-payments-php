@@ -83,7 +83,11 @@ class LineItems extends AbstractModel implements NormalizableInterface, PreProce
     }
 
 
-    public function normalize(NormalizerInterface $normalizer, $format = null, array $context = array())
+    public function normalize(
+        NormalizerInterface $normalizer,
+        ?string $format = null,
+        array $context = [],
+    ): array|string|int|float|bool
     {
         $arr['line_item_header'] = $normalizer->normalize($this->getLineItemHeader());
 
