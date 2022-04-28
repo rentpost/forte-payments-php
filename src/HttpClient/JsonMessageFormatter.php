@@ -22,10 +22,10 @@ class JsonMessageFormatter extends \GuzzleHttp\MessageFormatter
      */
     public function format(
         RequestInterface $request,
-        ResponseInterface $response = null,
-        \Exception $error = null
-    ) {
-
+        ?ResponseInterface $response = null,
+        ?\Throwable $error = null
+    ): string
+    {
         $requestHeaders = $this->getHeaders($request);
         $requestBody = $this->getBody($request);
 
