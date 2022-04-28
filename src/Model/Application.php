@@ -27,85 +27,85 @@ class Application extends AbstractModel
 
     /**
      * @var mixed
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected $feeId;
 
     /**
      * @var Attribute\IpAddress
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected $sourceIp;
 
     /**
      * @var Attribute\Money
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected $annualVolume;
 
     /**
      * @var Attribute\Money
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected $averageTransactionAmount;
 
     /**
      * @var string
-     * @Assert\NotBlank()
-     * @Assert\Choice({"internet", "phone", "mail", "point_of_sale"})
      */
+    #[Assert\NotBlank]
+    #[Assert\Choice(['internet', 'phone', 'mail', 'point_of_sale'])]
     protected $marketType;
 
     /**
      * @var string
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected $tAndCVersion;
 
     /**
      * @var Attribute\DateTime
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected $tAndCTimeStamp;
 
     /**
      * @var string
-     * @Assert\NotBlank()
-     * @Assert\Length(max=128)
-     * @Assert\Regex("/^[a-zA-Z0-9_-]*$/")
      */
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 128)]
+    #[Assert\Regex('/^[a-zA-Z0-9_-]*$/')]
     protected $riskSessionId;
 
     /**
      * @var Model\ApplicantOrganization
-     * @Assert\NotBlank()
-     * @Assert\Valid
      */
+    #[Assert\NotBlank]
+    #[Assert\Valid]
     protected $applicantOrganization;
 
     /**
      * @var Model\Owner
-     * @Assert\NotBlank()
-     * @Assert\Valid
      */
+    #[Assert\NotBlank]
+    #[Assert\Valid]
     protected $owner1;
 
     /**
      * @var Model\Owner
-     * @Assert\Valid
      */
+    #[Assert\Valid]
     protected $owner2;
 
     /**
      * @var Model\Owner
-     * @Assert\Valid
      */
+    #[Assert\Valid]
     protected $owner3;
 
     /**
      * @var Model\Owner
-     * @Assert\Valid
      */
+    #[Assert\Valid]
     protected $owner4;
 
     /**

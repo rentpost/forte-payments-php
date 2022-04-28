@@ -23,20 +23,20 @@ class Location extends AbstractModel
 
     /**
      * @var Attribute\Id\OrganizationId
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected $organizationId;
 
     /**
      * @var Attribute\Id\LocationId
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected $locationId;
 
     /**
      * @var string|null
-     * @Assert\Choice({"live", "pending", "closing", "on-hold", "deleted"})
      */
+    #[Assert\Choice(['live', 'pending', 'closing', 'on-hold', 'deleted'])]
     protected $status;
 
     /**
@@ -47,88 +47,88 @@ class Location extends AbstractModel
 
     /**
      * @var string|null
-     * @Assert\Length(max=255)
      */
+    #[Assert\Length(max: 255)]
     protected $dbaName;
 
     /**
      * @var string|null
-     * @Assert\Length(max=255)
      */
+    #[Assert\Length(max: 255)]
     protected $streetAddress1;
 
     /**
      * @var string|null
-     * @Assert\Length(max=255)
      */
+    #[Assert\Length(max: 255)]
     protected $streetAddress2;
 
     /**
      * @var string|null
-     * @Assert\Length(max=255)
      */
+    #[Assert\Length(max: 255)]
     protected $locality;
 
     /**
      * @var string|null
-     * @Assert\Length(max=255)
      */
+    #[Assert\Length(max: 255)]
     protected $region;
 
     /**
      * @var string|null
-     * @Assert\Length(max=255)
      */
+    #[Assert\Length(max: 255)]
     protected $postalCode;
 
     /**
      * @var string|null
-     * @Assert\Length(max=3)
      */
+    #[Assert\Length(max: 3)]
     protected $country;
 
     /**
      * @var string|null
-     * @Assert\Length(max=15)
      */
+    #[Assert\Length(max: 15)]
     protected $businessPhone;
 
     /**
      * @var string|null
-     * @Assert\Length(max=3)
      */
+    #[Assert\Length(max: 3)]
     protected $currency;
 
     /**
      * @var string|null
-     * @Assert\Length(max=2)
-     * @Assert\Choice({"PT", "MT", "CT", "ET"})
      */
+    #[Assert\Length(max: 2)]
+    #[Assert\Choice(['PT', 'MT', 'CT', 'ET'])]
     protected $timezone;
 
     /**
      * @var string|null
-     * @Assert\Length(max=20)
      */
+    #[Assert\Length(max: 20)]
     protected $businessType;
 
     /**
      * @var string|null
-     * @Assert\Length(max=50)
      */
+    #[Assert\Length(max: 50)]
     protected $organizationName;
 
     /**
      * @var Model\Contact|null
-     * @Assert\Valid
      */
+    #[Assert\Valid]
     protected $contacts;
 
     /**
      * @var Model\Service
-     * @Assert\NotBlank()
-     * @Assert\Valid
      */
+    #[Assert\NotBlank]
+    #[Assert\Valid]
     protected $services;
 
     /**

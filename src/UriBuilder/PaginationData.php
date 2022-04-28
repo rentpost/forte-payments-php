@@ -18,8 +18,8 @@ class PaginationData implements ValidatableSerializableInterface
 
     /**
      * @var string
-     * @Assert\Choice({"asc","desc"})
      */
+    #[Assert\Choice(['asc', 'desc'])]
     protected $order_direction;
 
     /** @var string */
@@ -27,14 +27,14 @@ class PaginationData implements ValidatableSerializableInterface
 
     /**
      * @var int
-     * @Assert\Range(min=50, max=1000)
      */
+    #[Assert\Range(min: 50, max: 1000)]
     protected $page_size;
 
     /**
      * @var int
-     * @Assert\Range(min=0)
      */
+    #[Assert\Range(min: 0)]
     protected $page_index;
 
 

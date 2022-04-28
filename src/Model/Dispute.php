@@ -17,96 +17,96 @@ class Dispute extends AbstractModel
 
     /**
      * @var Attribute\Id\DisputeId
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected $disputeId;
 
     /**
      * @var Attribute\Id\OrganizationId
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected $organizationId;
 
     /**
      * @var Attribute\Id\LocationId
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected $locationId;
 
     /**
      * @var string
-     * @Assert\NotBlank()
-     * @Assert\Choice({"documents needed", "reviewing", "pending", "won", "lost"})
      */
+    #[Assert\NotBlank]
+    #[Assert\Choice(['documents needed', 'reviewing', 'pending', 'won', 'lost'])]
     protected $status;
 
     /**
      * @var Attribute\Money
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected $disputeAmount;
 
     /**
      * @var Attribute\Money
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected $originalAmount;
 
     /**
      * @var string
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected $actionCode;
 
     /**
      * @var string
-     * @Assert\NotBlank()
-     * @Assert\Choice({"DRFT", "PNOT", "CHBK"})
      */
+    #[Assert\NotBlank]
+    #[Assert\Choice(['DRFT', 'PNOT', 'CHBK'])]
     protected $adjustmentType;
 
     /**
      * @var Attribute\DateTime
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected $receivedDate;
 
     /**
      * @var Attribute\DateTime
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected $dueDate;
 
     /**
      * @var Attribute\DateTime
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected $lastUpdateDate;
 
     /**
      * @var Attribute\DateTime
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected $lastFundingDate;
 
     /**
      * @var string
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected $commentFromIssuer;
 
     /**
      * @var Model\Reason
-     * @Assert\NotBlank()
-     * @Assert\Valid
      */
+    #[Assert\NotBlank]
+    #[Assert\Valid]
     protected $reason;
 
     /**
      * @var Model\Card
-     * @Assert\NotBlank()
-     * @Assert\Valid
      */
+    #[Assert\NotBlank]
+    #[Assert\Valid]
     protected $card;
 
     /**

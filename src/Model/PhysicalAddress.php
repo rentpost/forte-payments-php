@@ -18,32 +18,32 @@ class PhysicalAddress extends AbstractModel
 
     /**
      * @var string
-     * @Assert\NotBlank()
-     * @Assert\Length(max=35)
      */
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 35)]
     protected $streetLine1;
 
     /**
      * @var string
-     * @Assert\Length(max=35)
      */
+    #[Assert\Length(max: 35)]
     protected $streetLine2;
 
     /**
      * Town/village/city
      *
      * @var string
-     * @Assert\NotBlank()
-     * @Assert\Length(max=25)
      */
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 25)]
     protected $locality;
 
     /**
      * State or province
      *
      * @var string
-     * @Assert\Length(max=2)
      */
+    #[Assert\Length(max: 2)]
     protected $region;
 
     protected Attribute\PostalCode $postalCode;

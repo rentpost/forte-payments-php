@@ -17,49 +17,39 @@ class Owner extends AbstractModel
 
     /**
      * @var float
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected $percentage;
 
     /**
      * @var string
-     * @Assert\NotBlank()
-     * @Assert\Choice({
-     *     "ceo",
-     *     "cfo",
-     *     "coo",
-     *     "managing_member",
-     *     "general_partner",
-     *     "president",
-     *     "vice_president",
-     *     "treasurer",
-     *     "other"
-     * })
      */
+    #[Assert\NotBlank]
+    #[Assert\Choice(['ceo', 'cfo', 'coo', 'managing_member', 'general_partner', 'president', 'vice_president', 'treasurer', 'other'])]
     protected $title;
 
     /**
      * @var string
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected $firstName;
 
     /**
      * @var string
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected $lastName;
 
     /**
      * @var string
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected $streetAddress1;
 
     /**
      * @var string
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected $locality;
 
     /**
@@ -68,55 +58,55 @@ class Owner extends AbstractModel
      * the client library is forcing the two character state abbreviation.
      *
      * @var string
-     * @Assert\Length(min=2, max=2)
-     * @Assert\NotBlank()
      */
+    #[Assert\Length(min: 2, max: 2)]
+    #[Assert\NotBlank]
     protected $region;
 
     /**
      * @var Attribute\PostalCode
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected $postalCode;
 
     /**
      * @var string
-     * @Assert\NotBlank()
-     * @Assert\Length(min=2, max=3)
      */
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 2, max: 3)]
     protected $country;
 
     /**
      * @var string
-     * @Assert\NotBlank()
-     * @Assert\Length(min=2, max=3)
      */
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 2, max: 3)]
     protected $citizenship;
 
     /**
      * @var string
-     * @Assert\NotBlank()
-     * @Assert\Email()
      */
+    #[Assert\NotBlank]
+    #[Assert\Email]
     protected $emailAddress;
 
     /**
      * @var Attribute\Phone
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected $mobilePhone;
 
     /**
      * @var string
-     * @Assert\NotBlank()
-     * @Assert\Length(min=4, max=4)
      */
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 4, max: 4)]
     protected $last4Ssn;
 
     /**
      * @var Attribute\Date
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected $dateOfBirth;
 
 

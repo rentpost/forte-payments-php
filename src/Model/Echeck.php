@@ -38,8 +38,8 @@ class Echeck extends AbstractModel
 
     /**
      * @var string
-     * @Assert\Choice({"Checking", "Savings"})
      */
+    #[Assert\Choice(['Checking', 'Savings'])]
     protected $accountType;
 
     /**

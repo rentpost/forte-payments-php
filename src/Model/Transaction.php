@@ -23,9 +23,9 @@ class Transaction extends AbstractModel
 
     /**
      * @var string
-     * @Assert\NotBlank()
-     * @Assert\Choice({"sale", "authorize", "credit", "void", "capture", "inquiry", "verify", "force", "reverse"})
      */
+    #[Assert\NotBlank]
+    #[Assert\Choice(['sale', 'authorize', 'credit', 'void', 'capture', 'inquiry', 'verify', 'force', 'reverse'])]
     protected $action;
 
     /**
@@ -40,8 +40,8 @@ class Transaction extends AbstractModel
 
     /**
      * @var string
-     * @Assert\Length(max=15)
      */
+    #[Assert\Length(max: 15)]
     protected $customerId;
 
     /**
@@ -51,14 +51,14 @@ class Transaction extends AbstractModel
 
     /**
      * @var string
-     * @Assert\Length(max=15)
      */
+    #[Assert\Length(max: 15)]
     protected $referenceId;
 
     /**
      * @var string
-     * @Assert\Length(max=36)
      */
+    #[Assert\Length(max: 36)]
     protected $orderNumber;
 
     /**
@@ -78,8 +78,8 @@ class Transaction extends AbstractModel
 
     /**
      * @var string
-     * @Assert\Length(max=50)
      */
+    #[Assert\Length(max: 50)]
     protected $enteredBy;
 
     /**
@@ -122,44 +122,44 @@ class Transaction extends AbstractModel
 
     /**
      * @var string
-     * @Assert\Choice({"customer", "paymethod"})
      */
+    #[Assert\Choice(['customer', 'paymethod'])]
     protected $saveToken;
 
     /**
      * @var Model\Address
-     * @Assert\Valid
      */
+    #[Assert\Valid]
     protected $billingAddress;
 
     /**
      * @var Model\Address
-     * @Assert\Valid
      */
+    #[Assert\Valid]
     protected $shippingAddress;
 
     /**
      * @var Model\Card
-     * @Assert\Valid
      */
+    #[Assert\Valid]
     protected $card;
 
     /**
      * @var Model\Echeck
-     * @Assert\Valid
      */
+    #[Assert\Valid]
     protected $echeck;
 
     /**
      * @var Model\LineItems
-     * @Assert\Valid
      */
+    #[Assert\Valid]
     protected $lineItems;
 
     /**
      * @var Model\Xdata
-     * @Assert\Valid
      */
+    #[Assert\Valid]
     protected $xdata;
 
 

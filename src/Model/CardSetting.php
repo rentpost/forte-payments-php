@@ -23,8 +23,8 @@ class CardSetting extends AbstractModel
 
     /**
      * @var string|null
-     * @Assert\Choice({"internet", "phone", "mail", "point_of_sale"})
      */
+    #[Assert\Choice(['internet', 'phone', 'mail', 'point_of_sale'])]
     protected $marketType;
 
     /**
@@ -64,20 +64,20 @@ class CardSetting extends AbstractModel
 
     /**
      * @var array|null
-     * @Assert\Choice({"VISA", "AMEX", "MC", "JCB", "DISC"})
      */
+    #[Assert\Choice(['VISA', 'AMEX', 'MC', 'JCB', 'DISC'])]
     protected $cardTypes;
 
     /**
      * @var string|null
-     * @Assert\Choice({"enabled", "disabled"})
      */
+    #[Assert\Choice(['enabled', 'disabled'])]
     protected $accountUpdater;
 
     /**
      * @var bool|null
-     * @Assert\Choice({"true", "false"})
      */
+    #[Assert\Choice([true, false])]
     protected $gateway;
 
     /**

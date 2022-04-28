@@ -20,24 +20,25 @@ class TransactionFilter extends AbstractFilter
 {
     /**
      * @var Attribute\Date
-     * @Assert\NotBlank(message="start_received_date and end_received_date are both always required")
      */
+    #[Assert\NotBlank(message: 'start_received_date and end_received_date are both always required')]
     protected $startReceivedDate;
 
     /**
      * @var Attribute\Date
-     * @Assert\NotBlank(message="start_received_date and end_received_date are both always required")
      */
+    #[Assert\NotBlank(message: 'start_received_date and end_received_date are both always required')]
     protected $endReceivedDate;
 
 
     /**
      * @var Attribute\Date
-     * @Assert\Expression(
-     *      "(not this.getStartOriginationDate() and not this.getEndOriginationDate()) or (this.getStartOriginationDate() and this.getEndOriginationDate())",
-     *      message="you must set both start_origination_date and end_origination_date or neither"
-     * )
      */
+    #[Assert\Expression(
+        expression: '(not this.getStartOriginationDate() and not this.getEndOriginationDate())
+            or (this.getStartOriginationDate() and this.getEndOriginationDate())',
+        message: 'you must set both start_origination_date and end_origination_date or neither',
+    )]
     protected $startOriginationDate;
 
     /**

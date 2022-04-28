@@ -24,8 +24,8 @@ class Attachment extends AbstractModel
      * Any value which can be accepted by `file_get_contents()`
      *
      * @var string
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected $source;
 
     /**
@@ -34,16 +34,16 @@ class Attachment extends AbstractModel
      * the `contentType`
      *
      * @var string
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected $httpFileName;
 
     /**
      * Mime type of the upload, eg `image/jpeg`
      *
      * @var string
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected $contentType;
 
 

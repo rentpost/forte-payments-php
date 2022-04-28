@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace Rentpost\ForteApi\ValidatingSerializer;
 
-use Doctrine\Common\Annotations\AnnotationRegistry;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -25,9 +24,6 @@ class Factory
     protected function makeValidator(): ValidatorInterface
     {
         $builder = Validation::createValidatorBuilder();
-
-        AnnotationRegistry::registerLoader('class_exists');
-
         $validator = $builder->enableAnnotationMapping(true)->getValidator();
 
         return $validator;

@@ -18,27 +18,20 @@ class Document extends AbstractModel
 
     protected ?Attribute\Id\DocumentId $documentId = null;
 
-    /**
-     * @Assert\NotBlank()
-     * @Assert\Choice({"dispute", "application"})
-     */
+    #[Assert\NotBlank]
+    #[Assert\Choice(['dispute', 'application'])]
     protected ?string $resource = null;
 
-    /**
-     * @Assert\NotBlank()
-     */
+    #[Assert\NotBlank]
     protected ?Attribute\Id\DocumentResourceId $resourceId = null;
 
-    /**
-     * @Assert\NotBlank()
-     */
+    #[Assert\NotBlank]
     protected ?string $description = null;
 
     /**
      * 10MB limit, using 1000 calculation instead of 1024 to be careful
-     *
-     * @Assert\LessThanOrEqual(10000000)
      */
+    #[Assert\LessThanOrEqual(10000000)]
     protected ?int $size = null;
     protected ?Attribute\Date $receivedDate = null;
     protected ?string $file = null;

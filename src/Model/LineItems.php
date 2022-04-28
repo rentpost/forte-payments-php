@@ -15,14 +15,14 @@ class LineItems extends AbstractModel implements NormalizableInterface, PreProce
 {
     /**
      * @var Attribute\CommaList
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected $lineItemHeader;
 
     /**
      * @var Attribute\CommaList[]
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected $lineItems;
 
 

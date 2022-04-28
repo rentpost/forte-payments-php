@@ -17,9 +17,9 @@ class Card extends AbstractModel
 
     /**
      * @var string
-     * @Assert\NotBlank()
-     * @Assert\Choice({"mast", "visa", "amex", "disc", "dine", "jcb"})
      */
+    #[Assert\NotBlank]
+    #[Assert\Choice(['mast', 'visa', 'amex', 'disc', 'dine', 'jcb'])]
     protected $cardType;
 
     /**
@@ -30,32 +30,32 @@ class Card extends AbstractModel
 
     /**
      * @var string
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected $nameOnCard;
 
     /**
      * @var string Card number
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected $accountNumber;
 
     /**
      * @var int
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected $expireMonth;
 
     /**
      * @var int
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected $expireYear;
 
     /**
      * @var string
-     * @Assert\Length(max="5")
      */
+    #[Assert\Length(max: 5)]
     protected $cardVerificationValue;
 
     /**
@@ -65,8 +65,8 @@ class Card extends AbstractModel
 
     /**
      * @var string
-     * @Assert\Length(max="17")
      */
+    #[Assert\Length(max: 17)]
     protected $customerAccountingCode;
 
     /**
@@ -76,14 +76,14 @@ class Card extends AbstractModel
 
     /**
      * @var string  eight-digit value
-     * @Assert\Length(max="20")
      */
+    #[Assert\Length(max: 20)]
     protected $cardReader;
 
     /**
      * @var string
-     * @Assert\Length(max="1500")
      */
+    #[Assert\Length(max: 1500)]
     protected $cardData;
 
 

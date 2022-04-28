@@ -16,78 +16,52 @@ use Symfony\Component\Validator\Constraints as Assert;
 class ApplicantOrganization extends AbstractModel
 {
 
-    /**
-     * @Assert\NotBlank()
-     */
+    #[Assert\NotBlank]
     protected string $legalName;
 
-    /**
-     * @Assert\NotBlank()
-     */
+    #[Assert\NotBlank]
     protected Attribute\TaxIdNumber $taxIdNumber;
 
-    /**
-     * @Assert\NotBlank()
-     * @Assert\Choice({"c_corporation", "government", "limited_liability_corporation", "partnership_general_or_limited", "publicly_held_corporation", "s_corporation", "sole_proprietorship", "tax_exempt_or_non_profit_organization"})
-     */
+    #[Assert\NotBlank]
+    #[Assert\Choice(['c_corporation', 'government', 'limited_liability_corporation', 'partnership_general_or_limited', 'publicly_held_corporation', 's_corporation', 'sole_proprietorship', 'tax_exempt_or_non_profit_organization'])]
     protected string $legalStructure;
 
-    /**
-     * @Assert\NotBlank()
-     */
+    #[Assert\NotBlank]
     protected string $dbaName;
 
-    /**
-     * @Assert\NotBlank()
-     */
+    #[Assert\NotBlank]
     protected string $streetAddress1;
 
-    /**
-     * @Assert\NotBlank()
-     */
+    #[Assert\NotBlank]
     protected string $locality;
 
-    /**
-     * @Assert\NotBlank()
-     */
+    #[Assert\NotBlank]
     protected string $region;
 
     protected Attribute\PostalCode $postalCode;
 
     /**
      * Not documented, defauling to "USA" for BC reasons. Use "CAN" for Canada
-     *
-     * @Assert\NotBlank()
-     * @Assert\Length(max="3")
      */
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 3)]
     protected string $country = 'USA';
 
     protected Attribute\CustomerServicePhone $customerServicePhone;
 
-    /**
-     * @Assert\NotBlank()
-     */
+    #[Assert\NotBlank]
     protected string $website;
 
-    /**
-     * @Assert\NotBlank()
-     * https://www.forte.net/devdocs/reference/forte's_business_classification_code.htm
-     */
+    #[Assert\NotBlank]
     protected string $businessType;
 
-    /**
-     * @Assert\NotBlank()
-     */
+    #[Assert\NotBlank]
     protected Attribute\BankRoutingNumber $bankRoutingNumber;
 
-    /**
-     * @Assert\NotBlank()
-     */
+    #[Assert\NotBlank]
     protected Attribute\BankAccountNumber $bankAccountNumber;
 
-    /**
-     * @Assert\Choice({"checking", "savings"})
-     */
+    #[Assert\Choice(['checking', 'savings'])]
     protected string $bankAccountType;
 
     protected ?Attribute\Id\OrganizationId $organizationId = null;

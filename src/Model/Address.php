@@ -43,20 +43,20 @@ class Address extends AbstractModel
 
     /**
      * @var string
-     * @Assert\Length(max=50)
      */
+    #[Assert\Length(max: 50)]
     protected $firstName;
 
     /**
      * @var string
-     * @Assert\Length(max=50)
      */
+    #[Assert\Length(max: 50)]
     protected $lastName;
 
     /**
      * @var string
-     * @Assert\Length(max=50)
      */
+    #[Assert\Length(max: 50)]
     protected $companyName;
 
     /**
@@ -66,33 +66,33 @@ class Address extends AbstractModel
 
     /**
      * @var string
-     * @Assert\Email()
-     * @Assert\Length(max=50)
      */
+    #[Assert\Email]
+    #[Assert\Length(max: 50)]
     protected $email;
 
     /**
      * @var string
-     * @Assert\Length(max=50)
      */
+    #[Assert\Length(max: 50)]
     protected $label;
 
     /**
      * @var string
-     * @Assert\Choice({"default_billing", "none", "both"})
      */
+    #[Assert\Choice(['default_billing', 'none', 'both'])]
     protected $addressType;
 
     /**
      * @var string
-     * @Assert\Choice({"residential", "commercial"})
      */
+    #[Assert\Choice(['residential', 'commercial'])]
     protected $shippingAddressType;
 
     /**
      * @var Model\PhysicalAddress
-     * @Assert\Valid
      */
+    #[Assert\Valid]
     protected $physicalAddress;
 
 

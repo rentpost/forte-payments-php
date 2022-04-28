@@ -18,16 +18,16 @@ class Service extends AbstractModel
 
     /**
      * @var Model\EcheckSetting
-     * @Assert\NotBlank()
-     * @Assert\Valid
      */
+    #[Assert\NotBlank]
+    #[Assert\Valid]
     protected $echeck;
 
     /**
      * @var Model\CardSetting
-     * @Assert\NotBlank()
-     * @Assert\Valid
      */
+    #[Assert\NotBlank]
+    #[Assert\Valid]
     protected $card;
 
 

@@ -18,33 +18,27 @@ class Contact extends AbstractModel
 
     /**
      * @var string|null
-     * @Assert\Choice({
-     *     "primary",
-     *     "sales",
-     *     "billing",
-     *     "support",
-     *     "technical"
-     * })
      */
+    #[Assert\Choice(['primary', 'sales', 'billing', 'support', 'technical'])]
     protected $type;
 
     /**
      * @var string|null
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected $fullName;
 
     /**
      * @var string|null
-     * @Assert\NotBlank()
-     * @Assert\Email()
      */
+    #[Assert\NotBlank]
+    #[Assert\Email]
     protected $emailAddress;
 
     /**
      * @var Attribute\Phone|null
-     * @Assert\NotBlank()
      */
+    #[Assert\NotBlank]
     protected $phone;
 
 
