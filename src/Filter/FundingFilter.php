@@ -22,14 +22,14 @@ class FundingFilter extends AbstractFilter
 
     /**
      * @var Attribute\Date
-     * @Assert\NotBlank(message="start_effective_date and end_effective_date are both always required")
      */
+    #[Assert\NotBlank(message: 'start_effective_date and end_effective_date are both always required')]
     protected $startEffectiveDate;
-    
+
     /**
      * @var Attribute\Date
-     * @Assert\NotBlank(message="start_effective_date and end_effective_date are both always required")
      */
+    #[Assert\NotBlank(message: 'start_effective_date and end_effective_date are both always required')]
     protected $endEffectiveDate;
 
     /**
@@ -313,6 +313,6 @@ class FundingFilter extends AbstractFilter
 
         return $this;
     }
-    
-    
+
+
 }

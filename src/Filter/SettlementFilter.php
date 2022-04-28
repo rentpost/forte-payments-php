@@ -38,14 +38,14 @@ class SettlementFilter extends AbstractFilter
 
     /**
      * @var Attribute\Date
-     * @Assert\NotBlank(message="start_settle_date and end_settle_date are both always required")
      */
+    #[Assert\NotBlank(message: 'start_settle_date and end_settle_date are both always required')]
     protected $startSettleDate;
 
     /**
      * @var Attribute\Date
-     * @Assert\NotBlank(message="start_settle_date and end_settle_date are both always required")
      */
+    #[Assert\NotBlank(message: 'start_settle_date and end_settle_date are both always required')]
     protected $endSettleDate;
 
     /** @var string */
