@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace Rentpost\ForteApi\Model;
 
 use Rentpost\ForteApi\Attribute;
-use Rentpost\ForteApi\Model as Model;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -16,30 +15,18 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Contact extends AbstractModel
 {
 
-    /**
-     * @var string|null
-     */
     #[Assert\Choice(['primary', 'sales', 'billing', 'support', 'technical'])]
-    protected $type;
+    protected ?string $type;
 
-    /**
-     * @var string|null
-     */
     #[Assert\NotBlank]
-    protected $fullName;
+    protected ?string $fullName;
 
-    /**
-     * @var string|null
-     */
     #[Assert\NotBlank]
     #[Assert\Email]
-    protected $emailAddress;
+    protected ?string $emailAddress;
 
-    /**
-     * @var Attribute\Phone|null
-     */
     #[Assert\NotBlank]
-    protected $phone;
+    protected ?Attribute\Phone $phone;
 
 
     /**
@@ -53,8 +40,6 @@ class Contact extends AbstractModel
 
     /**
      * Set type
-     *
-     * @param string $type
      */
     public function setType(string $type): self
     {
@@ -75,8 +60,6 @@ class Contact extends AbstractModel
 
     /**
      * Set the value of fullName
-     *
-     * @param string $fullName
      */
     public function setFullName(string $fullName): self
     {
@@ -97,8 +80,6 @@ class Contact extends AbstractModel
 
     /**
      * Set the value of emailAddress
-     *
-     * @param string $emailAddress
      */
     public function setEmailAddress(string $emailAddress): self
     {
@@ -119,8 +100,6 @@ class Contact extends AbstractModel
 
     /**
      * Set the value of phone
-     *
-     * @param Attribute\Phone $phone
      */
     public function setPhone(Attribute\Phone $phone): self
     {
