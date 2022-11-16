@@ -5,12 +5,15 @@ declare(strict_types = 1);
 namespace Rentpost\ForteApi\HttpClient;
 
 use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Exception\ConnectException;
+use GuzzleHttp\Psr7\MultipartStream;
 use Rentpost\ForteApi\Exception\Request\Factory as ExceptionRequestFactory;
 use Rentpost\ForteApi\Model\AbstractModel;
 use Rentpost\ForteApi\Model\Attachment;
 use Rentpost\ForteApi\ValidatingSerializer\Factory as ValidatingSerializerFactory;
 use Rentpost\ForteApi\ValidatingSerializer\ValidatingSerializer;
+use Symfony\Component\Serializer\Exception\NotEncodableValueException;
 
 /**
  * HttpClient
@@ -59,8 +62,6 @@ class HttpClient
 
         try {
             $response = $this->guzzleClient->request($httpMethod, $uri, $options);
-            $json = $response->getBody()->__toString();
-            $model = $this->validatingSerializer->deserialize($json, $responseModelFqns);
         } catch (ConnectException $e) {
             if ($retryAttempts > 0) {
                 $this->doRequest($httpMethod, $uri, $responseModelFqns, $options, $retryAttempts);
@@ -70,7 +71,23 @@ class HttpClient
             }
 
             throw $e;
+        } catch (BadResponseException|NotEncodableValueException $e) {
+            $response = $e->getResponse();
+            // These response codes are generally tempoorary and can be retried
+            if (in_array($response->getStatusCode(), [502, 503, 504])) {
+                if ($retryAttempts > 0) {
+                    $this->doRequest($httpMethod, $uri, $responseModelFqns, $options, $retryAttempts);
+
+                    sleep(2); // Wait a few seconds before hitting the endpoint again
+                    $retryAttempts--; // Decrement attempts to retry the request
+                }
+            }
+
+            throw $e;
         }
+
+        $json = $response->getBody()->__toString();
+        $model = $this->validatingSerializer->deserialize($json, $responseModelFqns);
 
         if ($response->getStatusCode() < 200 || $response->getStatusCode() >= 300) {
             throw ExceptionRequestFactory::make($response, $model);
@@ -135,24 +152,30 @@ class HttpClient
         Attachment $attachment
     ): AbstractModel
     {
-        $options = [
-            'multipart' => [
-                [
-                    'name' => 'document',
-                    'contents' => $this->validatingSerializer->serialize($requestDataModel),
-                    'headers' => [
-                        'Content-Type' => 'application/json',
-                    ],
-                ],
-                [
-                    'name' => 'file',
-                    'contents' => file_get_contents($attachment->getSource()),
-                    'filename' => $attachment->getHttpFileName(),
-                    'headers' => [
-                        'Content-Type' => $attachment->getContentType(),
-                    ],
+        $boundary = uniqid('rp', true);
+        $multipart = [
+            [
+                'name' => 'document',
+                'contents' => $this->validatingSerializer->serialize($requestDataModel),
+                'headers' => [
+                    'Content-Type' => 'application/json',
                 ],
             ],
+            [
+                'name' => 'file',
+                'contents' => file_get_contents($attachment->getSource()),
+                'filename' => $attachment->getHttpFileName(),
+                'headers' => [
+                    'Content-Type' => $attachment->getContentType(),
+                ],
+            ],
+        ];
+        $options = [
+            'headers' => [
+                'Connection' => 'close',
+                'Content-Type' => 'multipart/form-data; boundary=' . $boundary,
+            ],
+            'body' => new MultipartStream($multipart, $boundary),
         ];
 
         return $this->doRequest(
