@@ -78,7 +78,7 @@ class HttpClient
                 if ($retryAttempts > 0) {
                     $this->doRequest($httpMethod, $uri, $responseModelFqns, $options, $retryAttempts);
 
-                    sleep(2); // Wait a few seconds before hitting the endpoint again
+                    sleep(3); // Wait a few seconds before hitting the endpoint again
                     $retryAttempts--; // Decrement attempts to retry the request
                 }
             }
