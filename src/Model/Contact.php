@@ -16,17 +16,17 @@ class Contact extends AbstractModel
 {
 
     #[Assert\Choice(['primary', 'sales', 'billing', 'support', 'technical'])]
-    protected ?string $type;
+    protected ?string $type = null;
 
     #[Assert\NotBlank]
-    protected ?string $fullName;
+    protected ?string $fullName = null;
 
     #[Assert\NotBlank]
     #[Assert\Email]
-    protected ?string $emailAddress;
+    protected ?string $emailAddress = null;
 
     #[Assert\NotBlank]
-    protected ?Attribute\Phone $phone;
+    protected ?Attribute\Phone $phone = null;
 
 
     /**
