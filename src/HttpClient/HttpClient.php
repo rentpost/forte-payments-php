@@ -62,6 +62,9 @@ class HttpClient
 
         try {
             $response = $this->guzzleClient->request($httpMethod, $uri, $options);
+
+            $json = $response->getBody()->__toString();
+            $model = $this->validatingSerializer->deserialize($json, $responseModelFqns);
         } catch (ConnectException $e) {
             if ($retryAttempts > 0) {
                 $this->doRequest($httpMethod, $uri, $responseModelFqns, $options, $retryAttempts);
@@ -85,9 +88,6 @@ class HttpClient
 
             throw $e;
         }
-
-        $json = $response->getBody()->__toString();
-        $model = $this->validatingSerializer->deserialize($json, $responseModelFqns);
 
         if ($response->getStatusCode() < 200 || $response->getStatusCode() >= 300) {
             throw ExceptionRequestFactory::make($response, $model);
