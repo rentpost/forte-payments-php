@@ -62,7 +62,6 @@ class HttpClient
 
         try {
             $response = $this->guzzleClient->request($httpMethod, $uri, $options);
-
             $json = $response->getBody()->__toString();
             $model = $this->validatingSerializer->deserialize($json, $responseModelFqns);
         } catch (ConnectException $e) {
@@ -75,7 +74,10 @@ class HttpClient
 
             throw $e;
         } catch (BadResponseException|NotEncodableValueException $e) {
-            $response = $e->getResponse();
+            // A BadResponseException is going to be thrown before $response is set
+            // NotEncodableValueException is thrown when parsing the response body, so $response is set
+            $response = $e instanceof BadResponseException ? $e->getResponse() : $response;
+
             // These response codes are generally tempoorary and can be retried
             if (in_array($response->getStatusCode(), [502, 503, 504])) {
                 if ($retryAttempts > 0) {
@@ -88,6 +90,7 @@ class HttpClient
 
             throw $e;
         }
+
 
         if ($response->getStatusCode() < 200 || $response->getStatusCode() >= 300) {
             throw ExceptionRequestFactory::make($response, $model);
