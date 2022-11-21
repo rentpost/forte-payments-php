@@ -4,7 +4,7 @@
     bootstrap="bootstrap.php"
     verbose="true"
     colors="true"
-    stopOnFailure="true"
+    stopOnFailure="false"
     convertErrorsToExceptions="true"
     convertNoticesToExceptions="true"
     convertWarningsToExceptions="true"
