@@ -15,10 +15,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class FundingFilter extends AbstractFilter
 {
-    /**
-     * @var Attribute\Id\OrganizationId
-     */
-//    protected $organizationId;
 
     /**
      * @var Attribute\Date
@@ -71,28 +67,6 @@ class FundingFilter extends AbstractFilter
      * @var string
      */
     protected $status;
-
-
-    /**
-     * @return Attribute\Id\OrganizationId
-     */
-//    public function getOrganizationId(): Attribute\Id\OrganizationId
-//    {
-//        return $this->organizationId;
-//    }
-
-
-    /**
-     * @param Attribute\Id\OrganizationId $organizationId
-     *
-     * @return self
-     */
-//    public function setOrganizationId(Attribute\Id\OrganizationId $organizationId): self
-//    {
-//        $this->organizationId = $organizationId;
-//
-//        return $this;
-//    }
 
 
     /**
@@ -313,6 +287,4 @@ class FundingFilter extends AbstractFilter
 
         return $this;
     }
-
-
 }

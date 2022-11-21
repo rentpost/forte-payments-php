@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace Rentpost\ForteApi\Client\SubResource;
 
 use Rentpost\ForteApi\Attribute;
-use Rentpost\ForteApi\Filter\FundingFilter;
+use Rentpost\ForteApi\Filter\LocationFilter;
 use Rentpost\ForteApi\Model;
 use Rentpost\ForteApi\Model\Location;
 use Rentpost\ForteApi\UriBuilder\PaginationData;
@@ -20,7 +20,7 @@ class LocationSubResource extends AbstractSubResource
 {
 
     /**
-     * Finds a funding
+     * Finds a location
      *
      * @param Attribute\Id\OrganizationId $organizationId       Use reseller org id if reseller
      */
@@ -39,14 +39,14 @@ class LocationSubResource extends AbstractSubResource
 
 
     /**
-     * Finds a collection of fundings
+     * Finds a collection of locations
      *
      * @param Attribute\Id\OrganizationId $organizationId       Use reseller org id if reseller
-     * @param FundingFilter|null $filter                        Filter required for this method
+     * @param LocationFilter|null $filter                       Filter required for this method
      */
     public function find(
         Attribute\Id\OrganizationId $organizationId,
-        ?FundingFilter $filter = null,
+        ?LocationFilter $filter = null,
         ?PaginationData $pagination = null
     ): Model\LocationCollection
     {
@@ -76,7 +76,7 @@ class LocationSubResource extends AbstractSubResource
          * - we dont want to modify the object passed in
          * - forte is only expecting a few parameters, passing in all of them makes it complain.
          */
-        $echeckSettingCopy = new Model\EcheckSetting();
+        $echeckSettingCopy = new Model\EcheckSetting;
         $echeckSettingCopy->setDailyDebit($echeckSetting->getDailyDebit())
             ->setDailyCredit($echeckSetting->getDailyCredit())
             ->setMonthlyDebit($echeckSetting->getMonthlyDebit())
@@ -84,7 +84,7 @@ class LocationSubResource extends AbstractSubResource
             ->setPerTransDebit($echeckSetting->getPerTransDebit())
             ->setPerTransCredit($echeckSetting->getPerTransCredit());
 
-        $cardSettingCopy = new Model\CardSetting();
+        $cardSettingCopy = new Model\CardSetting;
         $cardSettingCopy->setDailyDebit($cardSetting->getDailyDebit())
             ->setDailyCredit($cardSetting->getDailyCredit())
             ->setMonthlyDebit($cardSetting->getMonthlyDebit())
@@ -92,11 +92,11 @@ class LocationSubResource extends AbstractSubResource
             ->setPerTransDebit($cardSetting->getPerTransDebit())
             ->setPerTransCredit($cardSetting->getPerTransCredit());
 
-        $service = new Model\Service();
+        $service = new Model\Service;
         $service->setEcheck($echeckSettingCopy)
             ->setCard($cardSettingCopy);
 
-        $location = new Location();
+        $location = new Location;
         $location->setOrganizationId($organizationId)
             ->setLocationId($locationId)
             ->setServices($service);

@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace Rentpost\ForteApi\Filter;
 
 use Rentpost\ForteApi\Attribute;
-use Symfony\Component\Validator\Constraints as Assert;
 
 
 class ApplicationFilter extends AbstractFilter
@@ -144,6 +143,4 @@ class ApplicationFilter extends AbstractFilter
 
         return $this;
     }
-    
-    
 }

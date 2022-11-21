@@ -278,6 +278,4 @@ class DisputeFilter extends AbstractFilter
 
         return $this;
     }
-    
-    
 }
