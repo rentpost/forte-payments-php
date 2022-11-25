@@ -33,7 +33,7 @@ class HttpClient
      */
     public function __construct(GuzzleClient $guzzleClient)
     {
-        $this->validatingSerializer = (new ValidatingSerializerFactory())->make();
+        $this->validatingSerializer = (new ValidatingSerializerFactory)->make();
 
         $this->guzzleClient = $guzzleClient;
     }
@@ -73,7 +73,7 @@ class HttpClient
             }
 
             throw $e;
-        } catch (BadResponseException|NotEncodableValueException $e) {
+        } catch (BadResponseException | NotEncodableValueException $e) {
             // A BadResponseException is going to be thrown before $response is set
             // NotEncodableValueException is thrown when parsing the response body, so $response is set
             $response = $e instanceof BadResponseException ? $e->getResponse() : $response;
