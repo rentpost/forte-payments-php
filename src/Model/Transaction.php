@@ -4,8 +4,8 @@ declare(strict_types = 1);
 
 namespace Rentpost\ForteApi\Model;
 
-use Rentpost\ForteApi\Attribute as Attribute;
-use Rentpost\ForteApi\Model as Model;
+use Rentpost\ForteApi\Attribute;
+use Rentpost\ForteApi\Model;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class Transaction extends AbstractModel
