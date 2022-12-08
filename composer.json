@@ -26,8 +26,8 @@
         "symfony/expression-language":  "^6.0",
         "symfony/property-access":      "^6.0",
         "symfony/property-info":        "^6.0",
-        "symfony/serializer":           "~6.1.0",
-        "symfony/validator":            "^6.0",
+        "symfony/serializer":           "^6.0",
+        "symfony/validator":            "~6.1.0",
         "symfony/var-dumper":           "^6.0",
         "symfony/yaml":                 "^6.0"
     },
