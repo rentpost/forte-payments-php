@@ -14,11 +14,11 @@ use Rentpost\ForteApi\Exception\LibraryGenericException;
  */
 class Formatter
 {
+
     /**
      * @param string $format `printf` compatible string
      * @param array $args
      *
-     * @return string
      * @throws LibraryGenericException
      */
     public static function format(string $format, array $args): string
@@ -30,9 +30,11 @@ class Formatter
         $countVariables = isset($expected[0]) ? count($expected[0]) : 0;
 
         if ($countArgs !== $countVariables) {
-            throw new LibraryGenericException('The number of arguments in the string does not match the number of arguments in the format string.');
-        } else {
-            return vsprintf($format, $args);
+            throw new LibraryGenericException(
+                'The number of arguments in the string does not match the number of arguments in the format string.',
+            );
         }
+
+        return vsprintf($format, $args);
     }
 }

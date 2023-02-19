@@ -6,6 +6,7 @@ namespace Rentpost\ForteApi\UriBuilder;
 
 use Rentpost\ForteApi\Exception\LibraryFaultException;
 use Rentpost\ForteApi\Filter\AbstractFilter;
+use Rentpost\ForteApi\ValidatingSerializer\Factory as ValidatingSerializerFactory;
 use Rentpost\ForteApi\ValidatingSerializer\ValidatingSerializer;
 
 /**
@@ -19,7 +20,7 @@ class UriBuilder
     /**
      * Gets a filtered string
      */
-    static private function getFilterString(
+    private static function getFilterString(
         AbstractFilter $filter,
         ValidatingSerializer $validatingSerializer
     ): string
@@ -47,7 +48,7 @@ class UriBuilder
     /**
      * Gets the pagination data
      */
-    static private function getPaginationData(
+    private static function getPaginationData(
         PaginationData $paginationData,
         ValidatingSerializer $validatingSerializer
     ): array
@@ -60,16 +61,16 @@ class UriBuilder
      * Builds the actual URI
      *
      * @param string $format                Formatted `vsprintf` (printf) compatiable string
-     * @param array $args                   Substiutions args passed to `vsprintf`
+     * @param mixed[] $args                 Substiutions args passed to `vsprintf`
      */
-    static public function build(
+    public static function build(
         string $format,
         array $args = [],
         ?AbstractFilter $filter = null,
         ?PaginationData $paginationData = null
     ): string
     {
-        $validatingSerializer = (new \Rentpost\ForteApi\ValidatingSerializer\Factory())->make();
+        $validatingSerializer = (new ValidatingSerializerFactory)->make();
 
         $uri = Formatter::format($format, $args);
 
