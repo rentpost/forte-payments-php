@@ -59,4 +59,20 @@ class FundingSubResource extends AbstractSubResource
 
         return $this->getHttpClient()->makeModelRequest('get', $uri, Model\FundingCollection::class);
     }
+
+
+    /**
+     * Find for the organization which is authenticated
+     *
+     * @param FundingFilter $filter          Unlike most other find() methods, this one requires filter
+     */
+    public function findForEntireOrganization(
+        FundingFilter $filter,
+        ?PaginationData $pagination = null
+    ): Model\FundingCollection
+    {
+        $uri = UriBuilder::build('fundings/', [], $filter, $pagination);
+
+        return $this->getHttpClient()->makeModelRequest('get', $uri, Model\FundingCollection::class);
+    }
 }
