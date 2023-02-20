@@ -17,6 +17,7 @@ class Funding extends AbstractModel
 
     protected Attribute\Id\OrganizationId $organizationId;
     protected Attribute\Id\LocationId $locationId;
+    protected Attribute\Id\FundingId $fundingId;
 
     #[Assert\Choice(['completed', 'pending', 'failed', 'not_applicable'])]
     protected string $status;
@@ -67,6 +68,26 @@ class Funding extends AbstractModel
     public function setLocationId(Attribute\Id\LocationId $locationId): self
     {
         $this->locationId = $locationId;
+
+        return $this;
+    }
+
+
+    /**
+     * A unique string used to represent a funding entry. For example, fnd_ACH-0226-173C5.
+     */
+    public function getFundingId(): Attribute\Id\FundingId
+    {
+        return $this->fundingId;
+    }
+
+
+    /**
+     * @internal api read only field
+     */
+    public function setFundingId(Attribute\Id\FundingId $fundingId): self
+    {
+        $this->fundingId = $fundingId;
 
         return $this;
     }
