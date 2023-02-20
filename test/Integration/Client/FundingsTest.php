@@ -13,8 +13,6 @@ use Rentpost\ForteApi\Test\UserSettings;
 /**
  * FundingSubResource tests
  *
- * @group test-only
- *
  * @author Sam Anthony <sam@rentpost.com>
  */
 class FundingsTest extends AbstractIntegrationTest
