@@ -19,18 +19,10 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class ValidatingSerializer
 {
 
-    protected Serializer $internalSerializer;
-    protected ValidatorInterface $internalValidator;
-
-
-    /**
-     * Constructor
-     */
-    public function __construct(Serializer $serializer, ValidatorInterface $validator)
-    {
-        $this->internalSerializer = $serializer;
-        $this->internalValidator = $validator;
-    }
+    public function __construct(
+        protected Serializer $internalSerializer,
+        protected ValidatorInterface $internalValidator,
+    ) {}
 
 
     /**
@@ -106,6 +98,8 @@ class ValidatingSerializer
     public function normalizeFilter(AbstractFilter $filter): array
     {
         $this->validate($filter);
+
+        // dd($filter);
 
         return $this->internalSerializer->normalize($filter);
     }

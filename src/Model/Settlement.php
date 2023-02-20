@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace Rentpost\ForteApi\Model;
 
 use Rentpost\ForteApi\Attribute;
-use Symfony\Component\Validator\Constraints;
 
 /**
  * This entire model is "read only" from the API. Hence the validation has been kept simple
