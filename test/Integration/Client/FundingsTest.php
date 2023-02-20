@@ -13,6 +13,8 @@ use Rentpost\ForteApi\Test\UserSettings;
 /**
  * FundingSubResource tests
  *
+ * @group test-only
+ *
  * @author Sam Anthony <sam@rentpost.com>
  */
 class FundingsTest extends AbstractIntegrationTest
@@ -23,9 +25,8 @@ class FundingsTest extends AbstractIntegrationTest
         $client = $this->getForteClient();
 
         $filter = new FundingFilter;
-        $filter
-            ->setStartEffectiveDate(new Attribute\Date('2017-09-01'))
-            ->setEndEffectiveDate(new Attribute\Date('2018-01-01'));
+        $filter->setStartEffectiveDate(new Attribute\Date('2018-01-01'))
+            ->setEndEffectiveDate(new Attribute\Date((new \DateTimeImmutable)->format('Y-m-d')));
 
         $fundingsCollection = $client
             ->useFundings('livetest')
@@ -41,9 +42,8 @@ class FundingsTest extends AbstractIntegrationTest
         $client = $this->getForteClient();
 
         $filter = new FundingFilter;
-        $filter
-            ->setStartEffectiveDate(new Attribute\Date('2017-09-01'))
-            ->setEndEffectiveDate(new Attribute\Date('2018-01-01'));
+        $filter->setStartEffectiveDate(new Attribute\Date('2018-01-01'))
+            ->setEndEffectiveDate(new Attribute\Date((new \DateTimeImmutable)->format('Y-m-d')));
 
         $fundingsCollection = $client->useFundings('livetest')->findForEntireOrganization($filter);
 

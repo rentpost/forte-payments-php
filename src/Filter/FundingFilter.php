@@ -16,73 +16,28 @@ use Symfony\Component\Validator\Constraints as Assert;
 class FundingFilter extends AbstractFilter
 {
 
-    /**
-     * @var Attribute\Date
-     */
-    #[Assert\NotBlank(message: 'start_effective_date and end_effective_date are both always required')]
-    protected $startEffectiveDate;
+    #[Assert\NotNull(message: 'start_effective_date and end_effective_date are both always required')]
+    protected ?Attribute\Date $startEffectiveDate = null;
 
-    /**
-     * @var Attribute\Date
-     */
-    #[Assert\NotBlank(message: 'start_effective_date and end_effective_date are both always required')]
-    protected $endEffectiveDate;
+    #[Assert\NotNull(message: 'start_effective_date and end_effective_date are both always required')]
+    protected ?Attribute\Date $endEffectiveDate = null;
 
-    /**
-     * @var Attribute\Money
-     */
-    protected $startNetAmount;
-
-    /**
-     * @var Attribute\Money
-     */
-    protected $endNetAmount;
-
-    /**
-     * @var Attribute\BankRoutingNumber
-     */
-    protected $routingNumber;
-
-    /**
-     * @var string
-     */
-    protected $bankInformation;
-
-    /**
-     * @var Attribute\Id\LocationId
-     */
-    protected $locationId;
-
-    /**
-     * @var string
-     */
-    protected $last4AccountNumber;
-
-    /**
-     * @var string
-     */
-    protected $code;
-
-    /**
-     * @var string
-     */
-    protected $status;
+    protected ?Attribute\Money $startNetAmount = null;
+    protected ?Attribute\Money $endNetAmount = null;
+    protected ?Attribute\BankRoutingNumber $routingNumber = null;
+    protected ?string $bankInformation = null;
+    protected ?Attribute\Id\LocationId $locationId = null;
+    protected ?string $last4AccountNumber = null;
+    protected ?string $code = null;
+    protected ?string $status = null;
 
 
-    /**
-     * @return Attribute\Date
-     */
     public function getStartEffectiveDate(): Attribute\Date
     {
         return $this->startEffectiveDate;
     }
 
 
-    /**
-     * @param Attribute\Date $startEffectiveDate
-     *
-     * @return self
-     */
     public function setStartEffectiveDate(Attribute\Date $startEffectiveDate): self
     {
         $this->startEffectiveDate = $startEffectiveDate;
@@ -91,20 +46,12 @@ class FundingFilter extends AbstractFilter
     }
 
 
-    /**
-     * @return Attribute\Date
-     */
     public function getEndEffectiveDate(): Attribute\Date
     {
         return $this->endEffectiveDate;
     }
 
 
-    /**
-     * @param Attribute\Date $endEffectiveDate
-     *
-     * @return self
-     */
     public function setEndEffectiveDate(Attribute\Date $endEffectiveDate): self
     {
         $this->endEffectiveDate = $endEffectiveDate;
@@ -113,20 +60,12 @@ class FundingFilter extends AbstractFilter
     }
 
 
-    /**
-     * @return Attribute\Money
-     */
     public function getStartNetAmount(): ?Attribute\Money
     {
         return $this->startNetAmount;
     }
 
 
-    /**
-     * @param Attribute\Money $startNetAmount
-     *
-     * @return self
-     */
     public function setStartNetAmount(Attribute\Money $startNetAmount): self
     {
         $this->startNetAmount = $startNetAmount;
@@ -135,20 +74,12 @@ class FundingFilter extends AbstractFilter
     }
 
 
-    /**
-     * @return Attribute\Money
-     */
     public function getEndNetAmount(): ?Attribute\Money
     {
         return $this->endNetAmount;
     }
 
 
-    /**
-     * @param Attribute\Money $endNetAmount
-     *
-     * @return self
-     */
     public function setEndNetAmount(Attribute\Money $endNetAmount): self
     {
         $this->endNetAmount = $endNetAmount;
@@ -157,20 +88,12 @@ class FundingFilter extends AbstractFilter
     }
 
 
-    /**
-     * @return Attribute\BankRoutingNumber
-     */
     public function getRoutingNumber(): ?Attribute\BankRoutingNumber
     {
         return $this->routingNumber;
     }
 
 
-    /**
-     * @param Attribute\BankRoutingNumber $routingNumber
-     *
-     * @return self
-     */
     public function setRoutingNumber(Attribute\BankRoutingNumber $routingNumber): self
     {
         $this->routingNumber = $routingNumber;
@@ -179,20 +102,12 @@ class FundingFilter extends AbstractFilter
     }
 
 
-    /**
-     * @return string
-     */
     public function getBankInformation(): ?string
     {
         return $this->bankInformation;
     }
 
 
-    /**
-     * @param string $bankInformation
-     *
-     * @return self
-     */
     public function setBankInformation(string $bankInformation): self
     {
         $this->bankInformation = $bankInformation;
@@ -201,20 +116,12 @@ class FundingFilter extends AbstractFilter
     }
 
 
-    /**
-     * @return Attribute\Id\LocationId
-     */
     public function getLocationId(): ?Attribute\Id\LocationId
     {
         return $this->locationId;
     }
 
 
-    /**
-     * @param Attribute\Id\LocationId $locationId
-     *
-     * @return self
-     */
     public function setLocationId(Attribute\Id\LocationId $locationId): self
     {
         $this->locationId = $locationId;
@@ -223,20 +130,12 @@ class FundingFilter extends AbstractFilter
     }
 
 
-    /**
-     * @return string
-     */
     public function getLast4AccountNumber(): ?string
     {
         return $this->last4AccountNumber;
     }
 
 
-    /**
-     * @param string $last4AccountNumber
-     *
-     * @return self
-     */
     public function setLast4AccountNumber(string $last4AccountNumber): self
     {
         $this->last4AccountNumber = $last4AccountNumber;
@@ -245,20 +144,12 @@ class FundingFilter extends AbstractFilter
     }
 
 
-    /**
-     * @return string
-     */
     public function getCode(): ?string
     {
         return $this->code;
     }
 
 
-    /**
-     * @param string $code
-     *
-     * @return self
-     */
     public function setCode(string $code): self
     {
         $this->code = $code;
@@ -267,20 +158,12 @@ class FundingFilter extends AbstractFilter
     }
 
 
-    /**
-     * @return string
-     */
     public function getStatus(): ?string
     {
         return $this->status;
     }
 
 
-    /**
-     * @param string $status
-     *
-     * @return self
-     */
     public function setStatus(string $status): self
     {
         $this->status = $status;
