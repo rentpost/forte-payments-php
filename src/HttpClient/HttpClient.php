@@ -25,17 +25,12 @@ class HttpClient
 {
 
     protected ValidatingSerializer $validatingSerializer;
-    protected GuzzleClient $guzzleClient;
 
 
-    /**
-     * @inheritDoc
-     */
-    public function __construct(GuzzleClient $guzzleClient)
-    {
+    public function __construct(
+        protected GuzzleClient $guzzleClient,
+    ) {
         $this->validatingSerializer = (new ValidatingSerializerFactory)->make();
-
-        $this->guzzleClient = $guzzleClient;
     }
 
 
@@ -137,10 +132,6 @@ class HttpClient
                 'body' => $body,
             ],
         );
-
-        $json = $response->getBody()->__toString();
-
-        return $this->validatingSerializer->deserialize($json, $responseModelFqns);
     }
 
 
