@@ -25,7 +25,16 @@ class Funding extends AbstractModel
     protected Attribute\DateTime $effectiveDate;
     protected Attribute\DateTime $originationDate;
     protected Attribute\Decimal $netAmount;
+
+    /**
+     * Forte currently isn't supporting this object as the docs state, instead it's returning
+     * the properties directly on the Funding object.  We'll leave this here for now, and have
+     * inquired about the inconsistency.
+     */
     protected Echeck $echeck;
+    protected Attribute\BankRoutingNumber $routingNumber;
+    protected ?string $last4AccountNumber;
+
     protected FundingSource $fundingSource;
     protected string $entryDescription;
     protected string $fundingResponseCode;
@@ -189,6 +198,34 @@ class Funding extends AbstractModel
     public function setEcheck(Echeck $echeck): self
     {
         $this->echeck = $echeck;
+
+        return $this;
+    }
+
+
+    public function getRoutingNumber(): Attribute\BankRoutingNumber
+    {
+        return $this->routingNumber;
+    }
+
+
+    public function setRoutingNumber(Attribute\BankRoutingNumber $routingNumber): self
+    {
+        $this->routingNumber = $routingNumber;
+
+        return $this;
+    }
+
+
+    public function getLast4AccountNumber(): string
+    {
+        return $this->last4AccountNumber;
+    }
+
+
+    public function setLast4AccountNumber(string $last4AccountNumber): self
+    {
+        $this->last4AccountNumber = $last4AccountNumber;
 
         return $this;
     }
