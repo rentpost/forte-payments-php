@@ -33,11 +33,11 @@ class Funding extends AbstractModel
      */
     protected Echeck $echeck;
     protected Attribute\BankRoutingNumber $routingNumber;
-    protected ?string $last4AccountNumber;
+    protected ?string $last4AccountNumber = null;
 
     protected FundingSource $fundingSource;
     protected string $entryDescription;
-    protected string $fundingResponseCode;
+    protected ?string $fundingResponseCode = null;
 
 
     /**
@@ -217,13 +217,13 @@ class Funding extends AbstractModel
     }
 
 
-    public function getLast4AccountNumber(): string
+    public function getLast4AccountNumber(): ?string
     {
         return $this->last4AccountNumber;
     }
 
 
-    public function setLast4AccountNumber(string $last4AccountNumber): self
+    public function setLast4AccountNumber(?string $last4AccountNumber): self
     {
         $this->last4AccountNumber = $last4AccountNumber;
 
@@ -275,7 +275,7 @@ class Funding extends AbstractModel
     /**
      * Contains the reason code for why a funding attempt failed, but also the success response codes.
      */
-    public function getFundingResponseCode(): string
+    public function getFundingResponseCode(): ?string
     {
         return $this->fundingResponseCode;
     }
@@ -284,7 +284,7 @@ class Funding extends AbstractModel
     /**
      * @internal api read only field
      */
-    public function setFundingResponseCode(string $fundingResponseCode): self
+    public function setFundingResponseCode(?string $fundingResponseCode): self
     {
         $this->fundingResponseCode = $fundingResponseCode;
 
