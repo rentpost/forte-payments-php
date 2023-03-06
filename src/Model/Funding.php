@@ -36,7 +36,7 @@ class Funding extends AbstractModel
     protected ?string $last4AccountNumber = null;
 
     protected FundingSource $fundingSource;
-    protected string $entryDescription;
+    protected ?string $entryDescription = null;
     protected ?string $fundingResponseCode = null;
 
 
@@ -255,7 +255,7 @@ class Funding extends AbstractModel
      * Details pertaining to the funding entry that can be overwritten by the merchant after the
      * funds are in the merchant's bank account.
      */
-    public function getEntryDescription(): string
+    public function getEntryDescription(): ?string
     {
         return $this->entryDescription;
     }
@@ -264,7 +264,7 @@ class Funding extends AbstractModel
     /**
      * @internal api read only field
      */
-    public function setEntryDescription(string $entryDescription): self
+    public function setEntryDescription(?string $entryDescription): self
     {
         $this->entryDescription = $entryDescription;
 
