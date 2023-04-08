@@ -75,4 +75,42 @@ class FundingSubResource extends AbstractSubResource
 
         return $this->getHttpClient()->makeModelRequest('get', $uri, Model\FundingCollection::class);
     }
+
+
+    /**
+     * Finds all the transactions related to a funding
+     *
+     * @param Attribute\Id\OrganizationId $organizationId       Use reseller org id if reseller
+     */
+    public function findRelatedTransactions(
+        Attribute\Id\OrganizationId $organizationId,
+        Attribute\Id\FundingId $fundingId
+    ): Model\FundingCollection
+    {
+        $uri = UriBuilder::build('organizations/%s/fundings/%s/transactions', [
+            $organizationId->getValue(),
+            $fundingId->getValue(),
+        ]);
+
+        return $this->getHttpClient()->makeModelRequest('get', $uri, Model\TransactionCollection::class);
+    }
+
+
+    /**
+     * Finds all the settlements related to a funding
+     *
+     * @param Attribute\Id\OrganizationId $organizationId       Use reseller org id if reseller
+     */
+    public function findRelatedSettlements(
+        Attribute\Id\OrganizationId $organizationId,
+        Attribute\Id\FundingId $fundingId
+    ): Model\FundingCollection
+    {
+        $uri = UriBuilder::build('organizations/%s/fundings/%s/settlements', [
+            $organizationId->getValue(),
+            $fundingId->getValue(),
+        ]);
+
+        return $this->getHttpClient()->makeModelRequest('get', $uri, Model\SettlementCollection::class);
+    }
 }
