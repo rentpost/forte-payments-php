@@ -85,7 +85,7 @@ class FundingSubResource extends AbstractSubResource
     public function findRelatedTransactions(
         Attribute\Id\OrganizationId $organizationId,
         Attribute\Id\FundingId $fundingId
-    ): Model\FundingCollection
+    ): Model\TransactionCollection
     {
         $uri = UriBuilder::build('organizations/%s/fundings/%s/transactions', [
             $organizationId->getValue(),
@@ -104,7 +104,7 @@ class FundingSubResource extends AbstractSubResource
     public function findRelatedSettlements(
         Attribute\Id\OrganizationId $organizationId,
         Attribute\Id\FundingId $fundingId
-    ): Model\FundingCollection
+    ): Model\SettlementCollection
     {
         $uri = UriBuilder::build('organizations/%s/fundings/%s/settlements', [
             $organizationId->getValue(),
