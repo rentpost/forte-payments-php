@@ -84,13 +84,16 @@ class FundingSubResource extends AbstractSubResource
      */
     public function findRelatedTransactions(
         Attribute\Id\OrganizationId $organizationId,
-        Attribute\Id\FundingId $fundingId
+        Attribute\Id\FundingId $fundingId,
+        ?PaginationData $pagination = null
     ): Model\TransactionCollection
     {
+        $pagination ??= (new PaginationData())->setPageSize(10,000);
+
         $uri = UriBuilder::build('organizations/%s/fundings/%s/transactions', [
             $organizationId->getValue(),
             $fundingId->getValue(),
-        ]);
+        ], null, $pagination);
 
         return $this->getHttpClient()->makeModelRequest('get', $uri, Model\TransactionCollection::class);
     }
@@ -103,13 +106,16 @@ class FundingSubResource extends AbstractSubResource
      */
     public function findRelatedSettlements(
         Attribute\Id\OrganizationId $organizationId,
-        Attribute\Id\FundingId $fundingId
+        Attribute\Id\FundingId $fundingId,
+        ?PaginationData $pagination = null
     ): Model\SettlementCollection
     {
+        $pagination ??= (new PaginationData())->setPageSize(10,000);
+
         $uri = UriBuilder::build('organizations/%s/fundings/%s/settlements', [
             $organizationId->getValue(),
             $fundingId->getValue(),
-        ]);
+        ], null, $pagination);
 
         return $this->getHttpClient()->makeModelRequest('get', $uri, Model\SettlementCollection::class);
     }
