@@ -88,7 +88,7 @@ class FundingSubResource extends AbstractSubResource
         ?PaginationData $pagination = null
     ): Model\TransactionCollection
     {
-        $pagination ??= (new PaginationData())->setPageSize(10,000);
+        $pagination ??= (new PaginationData())->setPageSize(1,000);
 
         $uri = UriBuilder::build('organizations/%s/fundings/%s/transactions', [
             $organizationId->getValue(),
@@ -110,7 +110,7 @@ class FundingSubResource extends AbstractSubResource
         ?PaginationData $pagination = null
     ): Model\SettlementCollection
     {
-        $pagination ??= (new PaginationData())->setPageSize(10,000);
+        $pagination ??= (new PaginationData())->setPageSize(1,000);
 
         $uri = UriBuilder::build('organizations/%s/fundings/%s/settlements', [
             $organizationId->getValue(),
