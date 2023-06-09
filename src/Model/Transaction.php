@@ -36,7 +36,7 @@ class Transaction extends AbstractModel
     /**
      * @var Attribute\Id\CustomerToken
      */
-    protected $customerToekn;
+    protected $customerToken;
 
     /**
      * @var string
@@ -256,18 +256,18 @@ class Transaction extends AbstractModel
      */
     public function getCustomerToken(): ?Attribute\Id\CustomerToken
     {
-        return $this->customerToekn;
+        return $this->customerToken;
     }
 
 
     /**
-     * @param Attribute\Id\CustomerToken $customerToekn
+     * @param Attribute\Id\CustomerToken $customerToken
      *
      * @return self
      */
-    public function setCustomerToken(Attribute\Id\CustomerToken $customerToekn): self
+    public function setCustomerToken(Attribute\Id\CustomerToken $customerToken): self
     {
-        $this->customerToekn = $customerToekn;
+        $this->customerToken = $customerToken;
 
         return $this;
     }
