@@ -22,15 +22,18 @@ class FundingSubResource extends AbstractSubResource
     /**
      * Finds a funding
      *
-     * @param Attribute\Id\OrganizationId $organizationId       Use reseller org id if reseller
+     * @param Attribute\Id\OrganizationId $organizationId   Use reseller org id if reseller
+     * @param Attribute\Id\LocationId $locationId           The specific location id (funding ids are only unique per location!)
      */
     public function findOne(
         Attribute\Id\OrganizationId $organizationId,
+        Attribute\Id\LocationId $locationId,
         Attribute\Id\FundingId $fundingId
     ): ?Model\Funding
     {
-        $uri = UriBuilder::build('organizations/%s/fundings/%s', [
+        $uri = UriBuilder::build('organizations/%s/locations/%s/fundings/%s', [
             $organizationId->getValue(),
+            $locationId->getValue(),
             $fundingId->getValue(),
         ]);
 
@@ -80,18 +83,21 @@ class FundingSubResource extends AbstractSubResource
     /**
      * Finds all the transactions related to a funding
      *
-     * @param Attribute\Id\OrganizationId $organizationId       Use reseller org id if reseller
+     * @param Attribute\Id\OrganizationId $organizationId   Use reseller org id if reseller
+     * @param Attribute\Id\LocationId $locationId           The specific location id (funding ids are only unique per location!)
      */
     public function findRelatedTransactions(
         Attribute\Id\OrganizationId $organizationId,
+        Attribute\Id\LocationId $locationId,
         Attribute\Id\FundingId $fundingId,
         ?PaginationData $pagination = null
     ): Model\TransactionCollection
     {
-        $pagination ??= (new PaginationData())->setPageSize(1,000);
+        $pagination ??= (new PaginationData)->setPageSize(1_000);
 
-        $uri = UriBuilder::build('organizations/%s/fundings/%s/transactions', [
+        $uri = UriBuilder::build('organizations/%s/locations/%s/fundings/%s/transactions', [
             $organizationId->getValue(),
+            $locationId->getValue(),
             $fundingId->getValue(),
         ], null, $pagination);
 
@@ -102,18 +108,21 @@ class FundingSubResource extends AbstractSubResource
     /**
      * Finds all the settlements related to a funding
      *
-     * @param Attribute\Id\OrganizationId $organizationId       Use reseller org id if reseller
+     * @param Attribute\Id\OrganizationId $organizationId   Use reseller org id if reseller
+     * @param Attribute\Id\LocationId $locationId           The specific location id (funding ids are only unique per location!)
      */
     public function findRelatedSettlements(
         Attribute\Id\OrganizationId $organizationId,
+        Attribute\Id\LocationId $locationId,
         Attribute\Id\FundingId $fundingId,
         ?PaginationData $pagination = null
     ): Model\SettlementCollection
     {
-        $pagination ??= (new PaginationData())->setPageSize(1,000);
+        $pagination ??= (new PaginationData)->setPageSize(1_000);
 
-        $uri = UriBuilder::build('organizations/%s/fundings/%s/settlements', [
+        $uri = UriBuilder::build('organizations/%s/locations/%s/fundings/%s/settlements', [
             $organizationId->getValue(),
+            $locationId->getValue(),
             $fundingId->getValue(),
         ], null, $pagination);
 
