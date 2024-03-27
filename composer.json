@@ -37,7 +37,11 @@
     },
     "autoload": {
         "psr-4": {
-            "Rentpost\\ForteApi\\": "src/",
+            "Rentpost\\ForteApi\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
             "Rentpost\\ForteApi\\Test\\": "test/"
         }
     }
