@@ -33,6 +33,6 @@ class Factory
                     EmailValidator::class => new EmailValidator(Email::VALIDATION_MODE_HTML5),
                 ])
             )
-            ->enableAnnotationMapping(true)->getValidator();
+            ->enableAttributeMapping(true)->getValidator();
     }
 }
