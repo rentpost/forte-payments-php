@@ -68,4 +68,10 @@ class ForteObjectNormalizer extends ObjectNormalizer
             return ($value !== null);
         });
     }
+
+
+    public function getSupportedTypes(?string $format): array
+    {
+        return ['object' => true];
+    }
 }
