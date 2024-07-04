@@ -43,7 +43,7 @@ class PhysicalAddress extends AbstractModel
      *
      * @var string
      */
-    #[Assert\Length(max: 2)]
+    #[Assert\Length(max: 10)]
     protected $region;
 
     protected Attribute\PostalCode $postalCode;
