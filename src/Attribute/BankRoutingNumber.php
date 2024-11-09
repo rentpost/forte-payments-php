@@ -21,7 +21,7 @@ class BankRoutingNumber extends AbstractAttribute
     protected function internalize($value): string
     {
         if (!$value) {
-            throw new ValidationException('Routing number must not evaluate to false');
+            throw new ValidationException('A valid bank routing number must be provided');
         }
 
         $usRoutingNumber = $this->tryUsRoutingNumber($value);
