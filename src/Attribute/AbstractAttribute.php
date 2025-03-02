@@ -104,7 +104,7 @@ abstract class AbstractAttribute implements NormalizableInterface, Denormalizabl
         array|string|int|float|bool $data,
         ?string $format = null,
         array $context = [],
-    ) {
+    ): void {
         $this->setValueViaSerializer($data);
     }
 }

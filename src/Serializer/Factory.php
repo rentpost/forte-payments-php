@@ -10,6 +10,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\NameConverter\NameConverterInterface;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Serializer\Normalizer\CustomNormalizer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
 /**
@@ -46,28 +47,26 @@ class Factory
      */
     public function make(): Serializer
     {
-        $extractor = new ReflectionExtractor();
-
-        $customNormalizer = new CustomNormalizer();
-
+        $extractor = new ReflectionExtractor;
+        $customNormalizer = new CustomNormalizer;
         $nameConverter = $this->makeNameConverter();
-
-        $arrayDenormalizer = new ArrayDenormalizer(); // Seems to help respect the 'adder' typehints in the model. eg `addEmployee(Employee $employee)`
-
-        $objectNormalizer = new ForteObjectNormalizer(
+        // Seems to help respect the 'adder' typehints in the model. eg `addEmployee(Employee $employee)`
+        $arrayDenormalizer = new ArrayDenormalizer;
+        $objectNormalizer = new ObjectNormalizer(
             null,
             $nameConverter,
             null,
             $extractor,
         );
+        $forteObjectNormalizer = new ForteObjectNormalizer($objectNormalizer);
 
-        $encoder = new JsonEncoder();
+        $encoder = new JsonEncoder;
 
         return new Serializer(
             [
                 $arrayDenormalizer,
                 $customNormalizer,
-                $objectNormalizer,
+                $forteObjectNormalizer,
             ],
             [$encoder],
         );

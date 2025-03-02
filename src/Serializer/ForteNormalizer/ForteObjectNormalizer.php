@@ -5,19 +5,28 @@ declare(strict_types = 1);
 namespace Rentpost\ForteApi\Serializer\ForteNormalizer;
 
 use Rentpost\ForteApi\Exception\LibraryGenericException;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\SerializerAwareInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @author Sam Anthony <sam@rentpost.com>
  *
- * This adds additional functionality onto `ObjectNormalizer`
- * see `PreProcessDenormalizationInterface.php`
+ * Adapts the `ObjectNormalizer`.
+ * @see `PreProcessDenormalizationInterface.php`
  */
-class ForteObjectNormalizer extends ObjectNormalizer
+class ForteObjectNormalizer implements NormalizerInterface, DenormalizerInterface, SerializerAwareInterface
 {
 
+    public function __construct(
+        private ObjectNormalizer $normalizer,
+    ) {}
+
+
     /**
-     * @param string $class fqcn.
+     * @param class-string $class
      *
      * @internal
      */
@@ -33,43 +42,76 @@ class ForteObjectNormalizer extends ObjectNormalizer
     }
 
 
+    public function setSerializer(SerializerInterface $serializer): void
+    {
+        $this->normalizer->setSerializer($serializer);
+    }
+
+
     /**
      * {@inheritdoc}
      *
      * @internal
      */
-    public function denormalize($data, $class, $format = null, array $context = array())
+    public function denormalize(
+        mixed $data,
+        string $class,
+        ?string $format = null,
+        array $context = [],
+    ): mixed
     {
-        $normalizedData = $this->prepareForDenormalization($data);
+        $normalizedData = (array)$data;
 
         if ($this->isPreProcessDenormalizationInterface($class)) {
             $normalizedData = $class::preProcessDataForDenormalization($normalizedData);
         }
 
-        return parent::denormalize($normalizedData, $class, $format, $context);
+        return $this->normalizer->denormalize($normalizedData, $class, $format, $context);
+    }
+
+
+    public function supportsDenormalization(
+        mixed $data,
+        string $type,
+        ?string $format = null,
+        array $context = [],
+    ): bool
+    {
+        return $this->normalizer->supportsDenormalization($data, $type, $format, $context);
     }
 
 
     /**
      * Normalizes an object
      *
-     * @param object $object
-     * @param string|null $format
-     * @param array $context
+     * @param array<string, mixed> $context
      *
-     * @return array
+     * @return array<string, mixed>
      */
-    public function normalize($object, $format = null, array $context = array())
+    public function normalize(
+        mixed $object,
+        ?string $format = null,
+        array $context = [],
+    ): array
     {
-        $data = parent::normalize($object, $format, $context);
+        $data = $this->normalizer->normalize($object, $format, $context);
 
         // Remove properties with `null` values
-        return array_filter($data, function($value) {
-            return ($value !== null);
-        });
+        return array_filter($data, fn ($value): bool => $value !== null);
     }
 
 
+    public function supportsNormalization(
+        mixed $data,
+        ?string $format = null,
+        array $context = [],
+    ): bool
+    {
+        return $this->normalizer->supportsNormalization($data, $format, $context);
+    }
+
+
+    /** @return array<string,bool> */
     public function getSupportedTypes(?string $format): array
     {
         return ['object' => true];
