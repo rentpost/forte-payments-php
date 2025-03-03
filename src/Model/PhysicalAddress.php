@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace Rentpost\ForteApi\Model;
 
-use Rentpost\ForteApi\Attribute as Attribute;
+use Rentpost\ForteApi\Attribute;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -16,35 +16,19 @@ use Symfony\Component\Validator\Constraints as Assert;
 class PhysicalAddress extends AbstractModel
 {
 
-    /**
-     * @var string
-     */
     #[Assert\NotBlank]
     #[Assert\Length(max: 35)]
-    protected $streetLine1;
+    protected string $streetLine1;
 
-    /**
-     * @var string
-     */
     #[Assert\Length(max: 35)]
-    protected $streetLine2;
+    protected string $streetLine2;
 
-    /**
-     * Town/village/city
-     *
-     * @var string
-     */
     #[Assert\NotBlank]
     #[Assert\Length(max: 25)]
-    protected $locality;
+    protected string $locality;
 
-    /**
-     * State or province
-     *
-     * @var string
-     */
     #[Assert\Length(max: 10)]
-    protected $region;
+    protected string $region;
 
     protected Attribute\PostalCode $postalCode;
 

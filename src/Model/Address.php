@@ -4,8 +4,11 @@ declare(strict_types = 1);
 
 namespace Rentpost\ForteApi\Model;
 
-use Rentpost\ForteApi\Model as Model;
-use Rentpost\ForteApi\Attribute as Attribute;
+use Rentpost\ForteApi\Attribute\Id\AddressToken;
+use Rentpost\ForteApi\Attribute\Id\CustomerToken;
+use Rentpost\ForteApi\Attribute\Id\LocationId;
+use Rentpost\ForteApi\Attribute\Id\OrganizationId;
+use Rentpost\ForteApi\Attribute\Phone;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -21,96 +24,46 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Address extends AbstractModel
 {
 
-    /**
-     * @var Attribute\Id\AddressToken
-     */
-    protected $addressToken;
+    protected AddressToken $addressToken;
+    protected CustomerToken $customerToken;
+    protected OrganizationId $organizationId;
+    protected LocationId $locationId;
 
-    /**
-     * @var Attribute\Id\CustomerToken
-     */
-    protected $customerToken;
-
-    /**
-     * @var Attribute\Id\OrganizationId
-     */
-    protected $organizationId;
-
-    /**
-     * @var Attribute\Id\LocationId
-     */
-    protected $locationId;
-
-    /**
-     * @var string
-     */
     #[Assert\Length(max: 50)]
-    protected $firstName;
+    protected ?string $firstName;
 
-    /**
-     * @var string
-     */
     #[Assert\Length(max: 50)]
-    protected $lastName;
+    protected ?string $lastName;
 
-    /**
-     * @var string
-     */
     #[Assert\Length(max: 50)]
-    protected $companyName;
+    protected ?string $companyName;
 
-    /**
-     * @var Attribute\Phone
-     */
-    protected $phone;
+    protected ?Phone $phone;
 
-    /**
-     * @var string
-     */
     #[Assert\Email]
     #[Assert\Length(max: 50)]
-    protected $email;
+    protected ?string $email;
 
-    /**
-     * @var string
-     */
     #[Assert\Length(max: 50)]
-    protected $label;
+    protected ?string $label;
 
-    /**
-     * @var string
-     */
     #[Assert\Choice(['default_billing', 'none', 'both'])]
-    protected $addressType;
+    protected ?string $addressType;
 
-    /**
-     * @var string
-     */
     #[Assert\Choice(['residential', 'commercial'])]
-    protected $shippingAddressType;
+    protected string $shippingAddressType;
 
-    /**
-     * @var Model\PhysicalAddress
-     */
     #[Assert\Valid]
-    protected $physicalAddress;
+    protected ?PhysicalAddress $physicalAddress;
 
 
-    /**
-     * @return Attribute\Id\AddressToken
-     */
-    public function getAddressToken(): ?Attribute\Id\AddressToken
+    public function getAddressToken(): AddressToken
     {
         return $this->addressToken;
     }
 
 
-    /**
-     * @param Attribute\Id\AddressToken $addressToken
-     *
-     * @return self
-     */
-    public function setAddressToken(Attribute\Id\AddressToken $addressToken): self
+    public function setAddressToken(AddressToken $addressToken): self
     {
         $this->addressToken = $addressToken;
 
@@ -118,21 +71,13 @@ class Address extends AbstractModel
     }
 
 
-    /**
-     * @return Attribute\Id\CustomerToken
-     */
-    public function getCustomerToken(): ?Attribute\Id\CustomerToken
+    public function getCustomerToken(): CustomerToken
     {
         return $this->customerToken;
     }
 
 
-    /**
-     * @param Attribute\Id\CustomerToken $customerToken
-     *
-     * @return self
-     */
-    public function setCustomerToken(Attribute\Id\CustomerToken $customerToken): self
+    public function setCustomerToken(CustomerToken $customerToken): self
     {
         $this->customerToken = $customerToken;
 
@@ -140,21 +85,13 @@ class Address extends AbstractModel
     }
 
 
-    /**
-     * @return Attribute\Id\OrganizationId
-     */
-    public function getOrganizationId(): ?Attribute\Id\OrganizationId
+    public function getOrganizationId(): OrganizationId
     {
         return $this->organizationId;
     }
 
 
-    /**
-     * @param  Attribute\Id\OrganizationId $organizationId
-     *
-     * @return self
-     */
-    public function setOrganizationId(Attribute\Id\OrganizationId $organizationId): self
+    public function setOrganizationId(OrganizationId $organizationId): self
     {
         $this->organizationId = $organizationId;
 
@@ -162,21 +99,13 @@ class Address extends AbstractModel
     }
 
 
-    /**
-     * @return Attribute\Id\LocationId
-     */
-    public function getLocationId(): ?Attribute\Id\LocationId
+    public function getLocationId(): LocationId
     {
         return $this->locationId;
     }
 
 
-    /**
-     * @param Attribute\Id\LocationId $locationId
-     *
-     * @return self
-     */
-    public function setLocationId(Attribute\Id\LocationId $locationId): self
+    public function setLocationId(LocationId $locationId): self
     {
         $this->locationId = $locationId;
 
@@ -184,21 +113,13 @@ class Address extends AbstractModel
     }
 
 
-    /**
-     * @return mixed
-     */
     public function getFirstName(): ?string
     {
         return $this->firstName;
     }
 
 
-    /**
-     * @param string $firstName
-     *
-     * @return self
-     */
-    public function setFirstName(string $firstName): self
+    public function setFirstName(?string $firstName): self
     {
         $this->firstName = $firstName;
 
@@ -206,21 +127,13 @@ class Address extends AbstractModel
     }
 
 
-    /**
-     * @return string
-     */
     public function getLastName(): ?string
     {
         return $this->lastName;
     }
 
 
-    /**
-     * @param string $lastName
-     *
-     * @return self
-     */
-    public function setLastName(string $lastName): self
+    public function setLastName(?string $lastName): self
     {
         $this->lastName = $lastName;
 
@@ -228,21 +141,13 @@ class Address extends AbstractModel
     }
 
 
-    /**
-     * @return string
-     */
     public function getCompanyName(): ?string
     {
         return $this->companyName;
     }
 
 
-    /**
-     * @param string $companyName
-     *
-     * @return self
-     */
-    public function setCompanyName(string $companyName): self
+    public function setCompanyName(?string $companyName): self
     {
         $this->companyName = $companyName;
 
@@ -250,21 +155,13 @@ class Address extends AbstractModel
     }
 
 
-    /**
-     * @return Attribute\Phone
-     */
-    public function getPhone(): ?Attribute\Phone
+    public function getPhone(): ?Phone
     {
         return $this->phone;
     }
 
 
-    /**
-     * @param Attribute\Phone $phone
-     *
-     * @return self
-     */
-    public function setPhone(Attribute\Phone $phone): self
+    public function setPhone(?Phone $phone): self
     {
         $this->phone = $phone;
 
@@ -272,21 +169,13 @@ class Address extends AbstractModel
     }
 
 
-    /**
-     * @return string
-     */
     public function getEmail(): ?string
     {
         return $this->email;
     }
 
 
-    /**
-     * @param string $email
-     *
-     * @return self
-     */
-    public function setEmail(string $email): self
+    public function setEmail(?string $email): self
     {
         $this->email = $email;
 
@@ -294,21 +183,13 @@ class Address extends AbstractModel
     }
 
 
-    /**
-     * @return string
-     */
     public function getLabel(): ?string
     {
         return $this->label;
     }
 
 
-    /**
-     * @param string $label
-     *
-     * @return self
-     */
-    public function setLabel(string $label): self
+    public function setLabel(?string $label): self
     {
         $this->label = $label;
 
@@ -316,21 +197,13 @@ class Address extends AbstractModel
     }
 
 
-    /**
-     * @return string
-     */
     public function getAddressType(): ?string
     {
         return $this->addressType;
     }
 
 
-    /**
-     * @param string $addressType
-     *
-     * @return self
-     */
-    public function setAddressType(string $addressType): self
+    public function setAddressType(?string $addressType): self
     {
         $this->addressType = $addressType;
 
@@ -338,20 +211,12 @@ class Address extends AbstractModel
     }
 
 
-    /**
-     * @return string
-     */
-    public function getShippingAddressType(): ?string
+    public function getShippingAddressType(): string
     {
         return $this->shippingAddressType;
     }
 
 
-    /**
-     * @param string $shippingAddressType
-     *
-     * @return self
-     */
     public function setShippingAddressType(string $shippingAddressType): self
     {
         $this->shippingAddressType = $shippingAddressType;
@@ -360,21 +225,13 @@ class Address extends AbstractModel
     }
 
 
-    /**
-     * @return Model\PhysicalAddress
-     */
-    public function getPhysicalAddress(): ?Model\PhysicalAddress
+    public function getPhysicalAddress(): ?PhysicalAddress
     {
         return $this->physicalAddress;
     }
 
 
-    /**
-     * @param mixed $physicalAddress
-     *
-     * @return self
-     */
-    public function setPhysicalAddress(Model\PhysicalAddress $physicalAddress): self
+    public function setPhysicalAddress(?PhysicalAddress $physicalAddress): self
     {
         $this->physicalAddress = $physicalAddress;
 
