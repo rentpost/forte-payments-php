@@ -30,31 +30,31 @@ class Address extends AbstractModel
     protected LocationId $locationId;
 
     #[Assert\Length(max: 50)]
-    protected ?string $firstName;
+    protected ?string $firstName = null;
 
     #[Assert\Length(max: 50)]
-    protected ?string $lastName;
+    protected ?string $lastName = null;
 
     #[Assert\Length(max: 50)]
-    protected ?string $companyName;
+    protected ?string $companyName = null;
 
-    protected ?Phone $phone;
+    protected ?Phone $phone = null;
 
     #[Assert\Email]
     #[Assert\Length(max: 50)]
-    protected ?string $email;
+    protected ?string $email = null;
 
     #[Assert\Length(max: 50)]
-    protected ?string $label;
+    protected ?string $label = null;
 
     #[Assert\Choice(['default_billing', 'none', 'both'])]
-    protected ?string $addressType;
+    protected ?string $addressType = null;
 
     #[Assert\Choice(['residential', 'commercial'])]
     protected string $shippingAddressType;
 
     #[Assert\Valid]
-    protected ?PhysicalAddress $physicalAddress;
+    protected ?PhysicalAddress $physicalAddress = null;
 
 
     public function getAddressToken(): AddressToken

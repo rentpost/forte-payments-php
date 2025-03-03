@@ -4,8 +4,10 @@ declare(strict_types = 1);
 
 namespace Rentpost\ForteApi\Model;
 
-use Rentpost\ForteApi\Attribute as Attribute;
-use Rentpost\ForteApi\Model as Model;
+use Rentpost\ForteApi\Attribute\DateTime;
+use Rentpost\ForteApi\Attribute\Id\LocationId;
+use Rentpost\ForteApi\Attribute\Id\OrganizationId;
+use Rentpost\ForteApi\Attribute\Phone;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -16,162 +18,74 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Location extends AbstractModel
 {
 
-    /**
-     * @var Attribute\Id\OrganizationId|null
-     */
-    protected $parentOrganizationId;
+    protected ?OrganizationId $parentOrganizationId;
+    protected OrganizationId $organizationId;
+    protected LocationId $locationId;
 
-    /**
-     * @var Attribute\Id\OrganizationId
-     */
-    #[Assert\NotBlank]
-    protected $organizationId;
-
-    /**
-     * @var Attribute\Id\LocationId
-     */
-    #[Assert\NotBlank]
-    protected $locationId;
-
-    /**
-     * @var string|null
-     */
     #[Assert\Choice(['live', 'pending', 'closing', 'on-hold', 'deleted'])]
-    protected $status;
+    protected string $status;
 
     /**
      * Read only
-     * @var Attribute\DateTime|null
      */
-    protected $createdDate;
+    protected DateTime $createdDate;
 
-    /**
-     * @var string|null
-     */
     #[Assert\Length(max: 255)]
-    protected $dbaName;
+    protected string $streetAddress1;
 
-    /**
-     * @var string|null
-     */
     #[Assert\Length(max: 255)]
-    protected $streetAddress1;
+    protected ?string $streetAddress2 = null;
 
-    /**
-     * @var string|null
-     */
     #[Assert\Length(max: 255)]
-    protected $streetAddress2;
+    protected string $locality;
 
-    /**
-     * @var string|null
-     */
     #[Assert\Length(max: 255)]
-    protected $locality;
+    protected string $region;
 
-    /**
-     * @var string|null
-     */
     #[Assert\Length(max: 255)]
-    protected $region;
+    protected string $postalCode;
 
-    /**
-     * @var string|null
-     */
-    #[Assert\Length(max: 255)]
-    protected $postalCode;
-
-    /**
-     * @var string|null
-     */
     #[Assert\Length(max: 3)]
-    protected $country;
+    protected string $country;
 
-    /**
-     * @var string|null
-     */
-    #[Assert\Length(max: 15)]
-    protected $businessPhone;
+    protected Phone $businessPhone;
 
-    /**
-     * @var string|null
-     */
     #[Assert\Length(max: 3)]
-    protected $currency;
+    protected string $currency;
 
-    /**
-     * @var string|null
-     */
     #[Assert\Length(max: 2)]
     #[Assert\Choice(['PT', 'MT', 'CT', 'ET'])]
-    protected $timezone;
+    protected string $timezone;
 
-    /**
-     * @var string|null
-     */
     #[Assert\Length(max: 20)]
-    protected $businessType;
+    protected string $businessType;
 
-    /**
-     * @var string|null
-     */
     #[Assert\Length(max: 50)]
-    protected $organizationName;
+    protected string $organizationName;
 
-    /**
-     * @var Model\Contact|null
-     */
+    #[Assert\Length(max: 255)]
+    protected ?string $dbaName = null;
+
     #[Assert\Valid]
-    protected $contacts;
+    protected Contact $contacts;
 
-    /**
-     * @var Model\Service
-     */
-    #[Assert\NotBlank]
     #[Assert\Valid]
-    protected $services;
+    protected Service $services;
 
-    /**
-     * @var string|null
-     */
-    protected $bankaccountCreditsToken;
-
-    /**
-     * @var string|null
-     */
-    protected $bankaccountDebitsToken;
-
-    /**
-     * @var string|null
-     */
-    protected $bankaccountBillingToken;
-
-    /**
-     * @var string|null
-     */
-    protected $bankaccountCcfeeToken;
-
-    /**
-     * @var string|null
-     */
-    protected $bankaccountEcfeeToken;
+    protected ?string $bankaccountCreditsToken = null;
+    protected ?string $bankaccountDebitsToken = null;
+    protected ?string $bankaccountBillingToken = null;
+    protected ?string $bankaccountCcfeeToken = null;
+    protected ?string $bankaccountEcfeeToken = null;
 
 
-    /**
-     * Get the value of parentOrganizationId
-     */
-    public function getParentOrganizationId(): ?Attribute\Id\OrganizationId
+    public function getParentOrganizationId(): ?OrganizationId
     {
         return $this->parentOrganizationId;
     }
 
 
-    /**
-     * Set the value of parentOrganizationId
-     *
-     * @param Attribute\Id\OrganizationId|null $parentOrganizationId
-     */
-    public function setParentOrganizationId(?Attribute\Id\OrganizationId $parentOrganizationId): self
+    public function setParentOrganizationId(?OrganizationId $parentOrganizationId): self
     {
         $this->parentOrganizationId = $parentOrganizationId;
 
@@ -179,21 +93,13 @@ class Location extends AbstractModel
     }
 
 
-    /**
-     * Get the value of organizationId
-     */
-    public function getOrganizationId(): Attribute\Id\OrganizationId
+    public function getOrganizationId(): OrganizationId
     {
         return $this->organizationId;
     }
 
 
-    /**
-     * Set the value of organizationId
-     *
-     * @param Attribute\Id\OrganizationId $organizationId
-     */
-    public function setOrganizationId(Attribute\Id\OrganizationId $organizationId): self
+    public function setOrganizationId(OrganizationId $organizationId): self
     {
         $this->organizationId = $organizationId;
 
@@ -201,21 +107,13 @@ class Location extends AbstractModel
     }
 
 
-    /**
-     * Get the value of locationId
-     */
-    public function getLocationId(): Attribute\Id\LocationId
+    public function getLocationId(): LocationId
     {
         return $this->locationId;
     }
 
 
-    /**
-     * Set the value of locationId
-     *
-     * @param Attribute\Id\LocationId $locationId
-     */
-    public function setLocationId(Attribute\Id\LocationId $locationId): self
+    public function setLocationId(LocationId $locationId): self
     {
         $this->locationId = $locationId;
 
@@ -223,21 +121,13 @@ class Location extends AbstractModel
     }
 
 
-    /**
-     * Get the value of status
-     */
-    public function getStatus(): ?string
+    public function getStatus(): string
     {
         return $this->status;
     }
 
 
-    /**
-     * Set the value of status
-     *
-     * @param string|null $status
-     */
-    public function setStatus(?string $status): self
+    public function setStatus(string $status): self
     {
         $this->status = $status;
 
@@ -245,21 +135,13 @@ class Location extends AbstractModel
     }
 
 
-    /**
-     * Get read only
-     */
-    public function getCreatedDate(): ?Attribute\DateTime
+    public function getCreatedDate(): DateTime
     {
         return $this->createdDate;
     }
 
 
-    /**
-     * Set read only
-     *
-     * @param Attribute\DateTime|null $createdDate Read only
-     */
-    public function setCreatedDate(?Attribute\DateTime $createdDate): self
+    public function setCreatedDate(DateTime $createdDate): self
     {
         $this->createdDate = $createdDate;
 
@@ -267,43 +149,13 @@ class Location extends AbstractModel
     }
 
 
-    /**
-     * Get the value of dbaName
-     */
-    public function getDbaName(): ?string
-    {
-        return $this->dbaName;
-    }
-
-
-    /**
-     * Set the value of dbaName
-     *
-     * @param string|null $dbaName
-     */
-    public function setDbaName(?string $dbaName): self
-    {
-        $this->dbaName = $dbaName;
-
-        return $this;
-    }
-
-
-    /**
-     * Get the value of streetAddress1
-     */
-    public function getStreetAddress1(): ?string
+    public function getStreetAddress1(): string
     {
         return $this->streetAddress1;
     }
 
 
-    /**
-     * Set the value of streetAddress1
-     *
-     * @param string|null $streetAddress1
-     */
-    public function setStreetAddress1(?string $streetAddress1): self
+    public function setStreetAddress1(string $streetAddress1): self
     {
         $this->streetAddress1 = $streetAddress1;
 
@@ -311,20 +163,12 @@ class Location extends AbstractModel
     }
 
 
-    /**
-     * Get the value of streetAddress2
-     */
     public function getStreetAddress2(): ?string
     {
         return $this->streetAddress2;
     }
 
 
-    /**
-     * Set the value of streetAddress2
-     *
-     * @param string|null $streetAddress2
-     */
     public function setStreetAddress2(?string $streetAddress2): self
     {
         $this->streetAddress2 = $streetAddress2;
@@ -333,21 +177,13 @@ class Location extends AbstractModel
     }
 
 
-    /**
-     * Get the value of locality
-     */
-    public function getLocality(): ?string
+    public function getLocality(): string
     {
         return $this->locality;
     }
 
 
-    /**
-     * Set the value of locality
-     *
-     * @param string|null $locality
-     */
-    public function setLocality(?string $locality): self
+    public function setLocality(string $locality): self
     {
         $this->locality = $locality;
 
@@ -355,21 +191,13 @@ class Location extends AbstractModel
     }
 
 
-    /**
-     * Get the value of region
-     */
-    public function getRegion(): ?string
+    public function getRegion(): string
     {
         return $this->region;
     }
 
 
-    /**
-     * Set the value of region
-     *
-     * @param string|null $region
-     */
-    public function setRegion(?string $region): self
+    public function setRegion(string $region): self
     {
         $this->region = $region;
 
@@ -377,21 +205,13 @@ class Location extends AbstractModel
     }
 
 
-    /**
-     * Get the value of postalCode
-     */
-    public function getPostalCode(): ?string
+    public function getPostalCode(): string
     {
         return $this->postalCode;
     }
 
 
-    /**
-     * Set the value of postalCode
-     *
-     * @param string|null $postalCode
-     */
-    public function setPostalCode(?string $postalCode): self
+    public function setPostalCode(string $postalCode): self
     {
         $this->postalCode = $postalCode;
 
@@ -399,21 +219,13 @@ class Location extends AbstractModel
     }
 
 
-    /**
-     * Get the value of country
-     */
-    public function getCountry(): ?string
+    public function getCountry(): string
     {
         return $this->country;
     }
 
 
-    /**
-     * Set the value of country
-     *
-     * @param string|null $country
-     */
-    public function setCountry(?string $country): self
+    public function setCountry(string $country): self
     {
         $this->country = $country;
 
@@ -421,21 +233,13 @@ class Location extends AbstractModel
     }
 
 
-    /**
-     * Get the value of businessPhone
-     */
-    public function getBusinessPhone(): ?string
+    public function getBusinessPhone(): Phone
     {
         return $this->businessPhone;
     }
 
 
-    /**
-     * Set the value of businessPhone
-     *
-     * @param string|null $businessPhone
-     */
-    public function setBusinessPhone(?string $businessPhone): self
+    public function setBusinessPhone(Phone $businessPhone): self
     {
         $this->businessPhone = $businessPhone;
 
@@ -443,21 +247,13 @@ class Location extends AbstractModel
     }
 
 
-    /**
-     * Get the value of currency
-     */
-    public function getCurrency(): ?string
+    public function getCurrency(): string
     {
         return $this->currency;
     }
 
 
-    /**
-     * Set the value of currency
-     *
-     * @param string|null $currency
-     */
-    public function setCurrency(?string $currency): self
+    public function setCurrency(string $currency): self
     {
         $this->currency = $currency;
 
@@ -465,21 +261,13 @@ class Location extends AbstractModel
     }
 
 
-    /**
-     * Get the value of timezone
-     */
-    public function getTimezone(): ?string
+    public function getTimezone(): string
     {
         return $this->timezone;
     }
 
 
-    /**
-     * Set the value of timezone
-     *
-     * @param string|null $timezone
-     */
-    public function setTimezone(?string $timezone): self
+    public function setTimezone(string $timezone): self
     {
         $this->timezone = $timezone;
 
@@ -487,21 +275,13 @@ class Location extends AbstractModel
     }
 
 
-    /**
-     * Get the value of businessType
-     */
-    public function getBusinessType(): ?string
+    public function getBusinessType(): string
     {
         return $this->businessType;
     }
 
 
-    /**
-     * Set the value of businessType
-     *
-     * @param string|null $businessType
-     */
-    public function setBusinessType(?string $businessType): self
+    public function setBusinessType(string $businessType): self
     {
         $this->businessType = $businessType;
 
@@ -509,21 +289,13 @@ class Location extends AbstractModel
     }
 
 
-    /**
-     * Get the value of organizationName
-     */
-    public function getOrganizationName(): ?string
+    public function getOrganizationName(): string
     {
         return $this->organizationName;
     }
 
 
-    /**
-     * Set the value of organizationName
-     *
-     * @param string|null $organizationName
-     */
-    public function setOrganizationName(?string $organizationName): self
+    public function setOrganizationName(string $organizationName): self
     {
         $this->organizationName = $organizationName;
 
@@ -531,21 +303,27 @@ class Location extends AbstractModel
     }
 
 
-    /**
-     * Get the value of contacts
-     */
-    public function getContacts(): ?Model\Contact
+    public function getDbaName(): ?string
+    {
+        return $this->dbaName;
+    }
+
+
+    public function setDbaName(?string $dbaName): self
+    {
+        $this->dbaName = $dbaName;
+
+        return $this;
+    }
+
+
+    public function getContacts(): Contact
     {
         return $this->contacts;
     }
 
 
-    /**
-     * Set the value of contacts
-     *
-     * @param Model\Contact|null $contacts
-     */
-    public function setContacts(?Model\Contact $contacts): self
+    public function setContacts(Contact $contacts): self
     {
         $this->contacts = $contacts;
 
@@ -553,21 +331,13 @@ class Location extends AbstractModel
     }
 
 
-    /**
-     * Get the value of services
-     */
-    public function getServices(): Model\Service
+    public function getServices(): Service
     {
         return $this->services;
     }
 
 
-    /**
-     * Set the value of services
-     *
-     * @param Model\Service $services
-     */
-    public function setServices(Model\Service $services): self
+    public function setServices(Service $services): self
     {
         $this->services = $services;
 
@@ -575,20 +345,12 @@ class Location extends AbstractModel
     }
 
 
-    /**
-     * Get the value of bankaccountCreditsToken
-     */
     public function getBankaccountCreditsToken(): ?string
     {
         return $this->bankaccountCreditsToken;
     }
 
 
-    /**
-     * Set the value of bankaccountCreditsToken
-     *
-     * @param string|null $bankaccountCreditsToken
-     */
     public function setBankaccountCreditsToken(?string $bankaccountCreditsToken): self
     {
         $this->bankaccountCreditsToken = $bankaccountCreditsToken;
@@ -597,20 +359,12 @@ class Location extends AbstractModel
     }
 
 
-    /**
-     * Get the value of bankaccountDebitsToken
-     */
     public function getBankaccountDebitsToken(): ?string
     {
         return $this->bankaccountDebitsToken;
     }
 
 
-    /**
-     * Set the value of bankaccountDebitsToken
-     *
-     * @param string|null $bankaccountDebitsToken
-     */
     public function setBankaccountDebitsToken(?string $bankaccountDebitsToken): self
     {
         $this->bankaccountDebitsToken = $bankaccountDebitsToken;
@@ -619,20 +373,12 @@ class Location extends AbstractModel
     }
 
 
-    /**
-     * Get the value of bankaccountBillingToken
-     */
     public function getBankaccountBillingToken(): ?string
     {
         return $this->bankaccountBillingToken;
     }
 
 
-    /**
-     * Set the value of bankaccountBillingToken
-     *
-     * @param string|null $bankaccountBillingToken
-     */
     public function setBankaccountBillingToken(?string $bankaccountBillingToken): self
     {
         $this->bankaccountBillingToken = $bankaccountBillingToken;
@@ -641,20 +387,12 @@ class Location extends AbstractModel
     }
 
 
-    /**
-     * Get the value of bankaccountCcfeeToken
-     */
     public function getBankaccountCcfeeToken(): ?string
     {
         return $this->bankaccountCcfeeToken;
     }
 
 
-    /**
-     * Set the value of bankaccountCcfeeToken
-     *
-     * @param string|null $bankaccountCcfeeToken
-     */
     public function setBankaccountCcfeeToken(?string $bankaccountCcfeeToken): self
     {
         $this->bankaccountCcfeeToken = $bankaccountCcfeeToken;
@@ -663,20 +401,12 @@ class Location extends AbstractModel
     }
 
 
-    /**
-     * Get the value of bankaccountEcfeeToken
-     */
     public function getBankaccountEcfeeToken(): ?string
     {
         return $this->bankaccountEcfeeToken;
     }
 
 
-    /**
-     * Set the value of bankaccountEcfeeToken
-     *
-     * @param string|null $bankaccountEcfeeToken
-     */
     public function setBankaccountEcfeeToken(?string $bankaccountEcfeeToken): self
     {
         $this->bankaccountEcfeeToken = $bankaccountEcfeeToken;

@@ -4,27 +4,33 @@ declare(strict_types = 1);
 
 namespace Rentpost\ForteApi\Model;
 
-use Rentpost\ForteApi\Attribute;
+use Rentpost\ForteApi\Attribute\BankRoutingNumber;
+use Rentpost\ForteApi\Attribute\DateTime;
+use Rentpost\ForteApi\Attribute\Decimal;
+use Rentpost\ForteApi\Attribute\Id\FundingId;
+use Rentpost\ForteApi\Attribute\Id\LocationId;
+use Rentpost\ForteApi\Attribute\Id\OrganizationId;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Funding
  *
  * @author Sam Anthony <sam@rentpost.com>
+ * @author Jacob Thomason <jacob@rentpost.com>
  */
 class Funding extends AbstractModel
 {
 
-    protected Attribute\Id\OrganizationId $organizationId;
-    protected Attribute\Id\LocationId $locationId;
-    protected Attribute\Id\FundingId $fundingId;
+    protected OrganizationId $organizationId;
+    protected LocationId $locationId;
+    protected FundingId $fundingId;
 
     #[Assert\Choice(['completed', 'pending', 'failed', 'not_applicable'])]
     protected string $status;
 
-    protected Attribute\DateTime $effectiveDate;
-    protected Attribute\DateTime $originationDate;
-    protected Attribute\Decimal $netAmount;
+    protected ?DateTime $effectiveDate;
+    protected ?DateTime $originationDate;
+    protected ?Decimal $netAmount;
 
     /**
      * Forte currently isn't supporting this object as the docs state, instead it's returning
@@ -32,19 +38,19 @@ class Funding extends AbstractModel
      * inquired about the inconsistency.
      */
     protected Echeck $echeck;
-    protected Attribute\BankRoutingNumber $routingNumber;
+    protected BankRoutingNumber $routingNumber;
     protected ?string $last4AccountNumber = null;
 
     protected FundingSource $fundingSource;
     protected ?string $entryDescription = null;
-    protected ?string $fundingResponseCode = null;
+    protected ?string $fundingResponseCode;
 
 
     /**
      * The identification number of the associated organization.
      * For example, org_5551236.
      */
-    public function getOrganizationId(): Attribute\Id\OrganizationId
+    public function getOrganizationId(): OrganizationId
     {
         return $this->organizationId;
     }
@@ -53,7 +59,7 @@ class Funding extends AbstractModel
     /**
      * @internal api read only field
      */
-    public function setOrganizationId(Attribute\Id\OrganizationId $organizationId): self
+    public function setOrganizationId(OrganizationId $organizationId): self
     {
         $this->organizationId = $organizationId;
 
@@ -65,7 +71,7 @@ class Funding extends AbstractModel
      * The identification number of the associated location.
      * For example, loc_1234568.
      */
-    public function getLocationId(): Attribute\Id\LocationId
+    public function getLocationId(): LocationId
     {
         return $this->locationId;
     }
@@ -74,7 +80,7 @@ class Funding extends AbstractModel
     /**
      * @internal api read only field
      */
-    public function setLocationId(Attribute\Id\LocationId $locationId): self
+    public function setLocationId(LocationId $locationId): self
     {
         $this->locationId = $locationId;
 
@@ -85,7 +91,7 @@ class Funding extends AbstractModel
     /**
      * A unique string used to represent a funding entry. For example, fnd_ACH-0226-173C5.
      */
-    public function getFundingId(): Attribute\Id\FundingId
+    public function getFundingId(): FundingId
     {
         return $this->fundingId;
     }
@@ -94,7 +100,7 @@ class Funding extends AbstractModel
     /**
      * @internal api read only field
      */
-    public function setFundingId(Attribute\Id\FundingId $fundingId): self
+    public function setFundingId(FundingId $fundingId): self
     {
         $this->fundingId = $fundingId;
 
@@ -126,7 +132,7 @@ class Funding extends AbstractModel
     /**
      * The date and time when the net_amount is credited to the merchant's bank account.
      */
-    public function getEffectiveDate(): Attribute\DateTime
+    public function getEffectiveDate(): ?DateTime
     {
         return $this->effectiveDate;
     }
@@ -135,7 +141,7 @@ class Funding extends AbstractModel
     /**
      * @internal api read only field
      */
-    public function setEffectiveDate(Attribute\DateTime $effectiveDate): self
+    public function setEffectiveDate(DateTime $effectiveDate): self
     {
         $this->effectiveDate = $effectiveDate;
 
@@ -146,7 +152,7 @@ class Funding extends AbstractModel
     /**
      * The date the funds of the transaction go to the originating depository financial institution.
      */
-    public function getOriginationDate(): Attribute\DateTime
+    public function getOriginationDate(): ?DateTime
     {
         return $this->originationDate;
     }
@@ -155,7 +161,7 @@ class Funding extends AbstractModel
     /**
      * @internal api read only field
      */
-    public function setOriginationDate(Attribute\DateTime $originationDate): self
+    public function setOriginationDate(DateTime $originationDate): self
     {
         $this->originationDate = $originationDate;
 
@@ -166,7 +172,7 @@ class Funding extends AbstractModel
     /**
      * The amount that is being funded.
      */
-    public function getNetAmount(): Attribute\Decimal
+    public function getNetAmount(): ?Decimal
     {
         return $this->netAmount;
     }
@@ -175,7 +181,7 @@ class Funding extends AbstractModel
     /**
      * @internal api read only field
      */
-    public function setNetAmount(Attribute\Decimal $netAmount): self
+    public function setNetAmount(Decimal $netAmount): self
     {
         $this->netAmount = $netAmount;
 
@@ -203,13 +209,13 @@ class Funding extends AbstractModel
     }
 
 
-    public function getRoutingNumber(): Attribute\BankRoutingNumber
+    public function getRoutingNumber(): BankRoutingNumber
     {
         return $this->routingNumber;
     }
 
 
-    public function setRoutingNumber(Attribute\BankRoutingNumber $routingNumber): self
+    public function setRoutingNumber(BankRoutingNumber $routingNumber): self
     {
         $this->routingNumber = $routingNumber;
 

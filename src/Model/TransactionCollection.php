@@ -15,7 +15,7 @@ class TransactionCollection extends AbstractResultCollection
     /**
      * @internal only here so the Symfony serializer can detect the typehints
      */
-    public function addResult(Transaction $transaction)
+    public function addResult(Transaction $transaction): void
     {
     }
 }

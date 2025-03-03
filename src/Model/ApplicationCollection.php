@@ -8,6 +8,7 @@ namespace Rentpost\ForteApi\Model;
  * Application Collection
  *
  * @author Sam Anthony <sam@rentpost.com>
+ * @author Jacob Thomason <jacob@rentpost.com>
  */
 class ApplicationCollection extends AbstractResultCollection
 {
@@ -15,7 +16,7 @@ class ApplicationCollection extends AbstractResultCollection
     /**
      * @internal only here so the Symfony serializer can detect the typehints
      */
-    public function addResult(Application $application)
+    public function addResult(Application $application): void
     {
     }
 }

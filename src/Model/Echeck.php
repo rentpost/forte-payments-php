@@ -4,7 +4,9 @@ declare(strict_types = 1);
 
 namespace Rentpost\ForteApi\Model;
 
-use Rentpost\ForteApi\Attribute;
+use Rentpost\ForteApi\Attribute\BankAccountNumber;
+use Rentpost\ForteApi\Attribute\BankRoutingNumber;
+use Rentpost\ForteApi\Attribute\Id\OneTimeToken;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -15,23 +17,27 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Echeck extends AbstractModel
 {
 
-    protected ?string $accountHolder;
+    #[Assert\NotBlank]
+    protected string $accountHolder;
 
-    // Read-only field
+    // API Read-only field
     protected ?string $last4AccountNumber;
 
-    protected ?Attribute\BankAccountNumber $accountNumber;
-    protected ?Attribute\BankRoutingNumber $routingNumber;
+    protected BankAccountNumber $accountNumber;
+    protected BankRoutingNumber $routingNumber;
 
     #[Assert\Choice(['Checking', 'Savings'])]
-    protected ?string $accountType;
+    protected ?string $accountType = null;
 
-    protected ?string $itemDescription;
-    protected ?string $secCode;
-    protected ?Attribute\Id\OneTimeToken $oneTimeToken;
+    protected ?string $itemDescription = null;
+
+    // Required for "sale", "authorize", "credit" and "force" actions
+    protected ?string $secCode = null;
+
+    protected ?OneTimeToken $oneTimeToken = null;
 
 
-    public function getAccountHolder(): ?string
+    public function getAccountHolder(): string
     {
         return $this->accountHolder;
     }
@@ -62,13 +68,13 @@ class Echeck extends AbstractModel
     }
 
 
-    public function getAccountNumber(): ?Attribute\BankAccountNumber
+    public function getAccountNumber(): BankAccountNumber
     {
         return $this->accountNumber;
     }
 
 
-    public function setAccountNumber(Attribute\BankAccountNumber $accountNumber): self
+    public function setAccountNumber(BankAccountNumber $accountNumber): self
     {
         $this->accountNumber = $accountNumber;
 
@@ -76,13 +82,13 @@ class Echeck extends AbstractModel
     }
 
 
-    public function getRoutingNumber(): ?Attribute\BankRoutingNumber
+    public function getRoutingNumber(): BankRoutingNumber
     {
         return $this->routingNumber;
     }
 
 
-    public function setRoutingNumber(Attribute\BankRoutingNumber $routingNumber): self
+    public function setRoutingNumber(BankRoutingNumber $routingNumber): self
     {
         $this->routingNumber = $routingNumber;
 
@@ -132,13 +138,13 @@ class Echeck extends AbstractModel
     }
 
 
-    public function getOneTimeToken(): ?Attribute\Id\OneTimeToken
+    public function getOneTimeToken(): ?OneTimeToken
     {
         return $this->oneTimeToken;
     }
 
 
-    public function setOneTimeToken(Attribute\Id\OneTimeToken $oneTimeToken): self
+    public function setOneTimeToken(OneTimeToken $oneTimeToken): self
     {
         $this->oneTimeToken = $oneTimeToken;
 

@@ -22,45 +22,31 @@ class Attachment extends AbstractModel
 
     /**
      * Any value which can be accepted by `file_get_contents()`
-     *
-     * @var string
      */
     #[Assert\NotBlank]
-    protected $source;
+    protected string $source;
 
     /**
      * Any file name you like including the extension. This will be used as the `filename`
      * parameter in the multipart http request. Try and keep the extension consistent with
      * the `contentType`
-     *
-     * @var string
      */
     #[Assert\NotBlank]
-    protected $httpFileName;
+    protected string $httpFileName;
 
     /**
      * Mime type of the upload, eg `image/jpeg`
-     *
-     * @var string
      */
     #[Assert\NotBlank]
-    protected $contentType;
+    protected string $contentType;
 
 
-    /**
-     * @return string
-     */
     public function getSource(): string
     {
         return $this->source;
     }
 
 
-    /**
-     * @param string $source
-     *
-     * @return self
-     */
     public function setSource(string $source): self
     {
         $this->source = $source;
@@ -69,20 +55,12 @@ class Attachment extends AbstractModel
     }
 
 
-    /**
-     * @return string
-     */
     public function getHttpFileName(): string
     {
         return $this->httpFileName;
     }
 
 
-    /**
-     * @param string $httpFileName
-     *
-     * @return self
-     */
     public function setHttpFileName(string $httpFileName): self
     {
         $this->httpFileName = $httpFileName;
@@ -91,27 +69,16 @@ class Attachment extends AbstractModel
     }
 
 
-    /**
-     * @return string
-     */
     public function getContentType(): string
     {
         return $this->contentType;
     }
 
 
-    /**
-     * @param string $contentType
-     *
-     * @return self
-     */
     public function setContentType(string $contentType): self
     {
         $this->contentType = $contentType;
 
         return $this;
     }
-
-
-
 }

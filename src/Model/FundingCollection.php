@@ -4,24 +4,21 @@ declare(strict_types = 1);
 
 namespace Rentpost\ForteApi\Model;
 
-use Rentpost\ForteApi\Attribute as Attribute;
-use Rentpost\ForteApi\Model as Model;
-use Symfony\Component\Validator\Constraints as Assert;
+use Rentpost\ForteApi\Model\Funding;
 
 /**
  * FundingCollection
  *
  * @author Sam Anthony <sam@rentpost.com>
+ * @author Jacob Thomason <jacob@rentpost.com>
  */
 class FundingCollection extends AbstractResultCollection
 {
-    
+
     /**
      * @internal only here so the Symfony serializer can detect the typehints
-     *
-     * @param Model\Funding $funding
      */
-    public function addResult(Model\Funding $funding)
+    public function addResult(Funding $funding): void
     {
     }
 }

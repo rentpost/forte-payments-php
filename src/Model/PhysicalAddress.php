@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace Rentpost\ForteApi\Model;
 
-use Rentpost\ForteApi\Attribute;
+use Rentpost\ForteApi\Attribute\PostalCode;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -21,7 +21,7 @@ class PhysicalAddress extends AbstractModel
     protected string $streetLine1;
 
     #[Assert\Length(max: 35)]
-    protected ?string $streetLine2;
+    protected ?string $streetLine2 = null;
 
     #[Assert\NotBlank]
     #[Assert\Length(max: 25)]
@@ -31,21 +31,19 @@ class PhysicalAddress extends AbstractModel
     #[Assert\Length(max: 10)]
     protected string $region;
 
-    protected Attribute\PostalCode $postalCode;
+    protected PostalCode $postalCode;
+
+    #[Assert\NotBlank(allowNull: true)]
+    #[Assert\Length(exactly: 2)]
+    protected ?string $country = null;
 
 
-    /**
-     * Gets the street address
-     */
     public function getStreetLine1(): string
     {
         return $this->streetLine1;
     }
 
 
-    /**
-     * Sets street address
-     */
     public function setStreetLine1(string $streetLine1): self
     {
         $this->streetLine1 = $streetLine1;
@@ -54,18 +52,12 @@ class PhysicalAddress extends AbstractModel
     }
 
 
-    /**
-     * Get apt, suite, etc.
-     */
     public function getStreetLine2(): ?string
     {
         return $this->streetLine2;
     }
 
 
-    /**
-     * Set apt, suite, etc.
-     */
     public function setStreetLine2(?string $streetLine2): self
     {
         $this->streetLine2 = $streetLine2;
@@ -74,18 +66,12 @@ class PhysicalAddress extends AbstractModel
     }
 
 
-    /**
-     * Gets the locatlity
-     */
     public function getLocality(): string
     {
         return $this->locality;
     }
 
 
-    /**
-     * Sets the locality
-     */
     public function setLocality(string $locality): self
     {
         $this->locality = $locality;
@@ -94,18 +80,12 @@ class PhysicalAddress extends AbstractModel
     }
 
 
-    /**
-     * Gets the region
-     */
     public function getRegion(): string
     {
         return $this->region;
     }
 
 
-    /**
-     * Sets the region
-     */
     public function setRegion(string $region): self
     {
         $this->region = $region;
@@ -114,21 +94,29 @@ class PhysicalAddress extends AbstractModel
     }
 
 
-    /**
-     * Gets the postal code
-     */
-    public function getPostalCode(): Attribute\PostalCode
+    public function getPostalCode(): PostalCode
     {
         return $this->postalCode;
     }
 
 
-    /**
-     * Sets the postal code
-     */
-    public function setPostalCode(Attribute\PostalCode $postalCode): self
+    public function setPostalCode(PostalCode $postalCode): self
     {
         $this->postalCode = $postalCode;
+
+        return $this;
+    }
+
+
+    public function getCountry(): ?string
+    {
+        return $this->country;
+    }
+
+
+    public function setCountry(?string $country): self
+    {
+        $this->country = $country;
 
         return $this;
     }

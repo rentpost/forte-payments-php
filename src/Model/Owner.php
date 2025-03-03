@@ -4,110 +4,69 @@ declare(strict_types = 1);
 
 namespace Rentpost\ForteApi\Model;
 
-use Rentpost\ForteApi\Attribute;
+use Rentpost\ForteApi\Attribute\Date;
+use Rentpost\ForteApi\Attribute\Phone;
+use Rentpost\ForteApi\Attribute\PostalCode;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Owner
  *
  * @author Sam Anthony <sam@rentpost.com>
+ * @author Jacob Thomason <jacob@rentpost.com>
  */
 class Owner extends AbstractModel
 {
 
-    /**
-     * @var float
-     */
     #[Assert\NotBlank]
-    protected $percentage;
+    protected float $percentage;
 
-    /**
-     * @var string
-     */
     #[Assert\NotBlank]
     #[Assert\Choice(['ceo', 'cfo', 'coo', 'managing_member', 'general_partner', 'president', 'vice_president', 'treasurer', 'other'])]
-    protected $title;
+    protected string $title;
 
-    /**
-     * @var string
-     */
     #[Assert\NotBlank]
-    protected $firstName;
+    protected string $firstName;
 
-    /**
-     * @var string
-     */
     #[Assert\NotBlank]
-    protected $lastName;
+    protected string $lastName;
 
-    /**
-     * @var string
-     */
     #[Assert\NotBlank]
-    protected $streetAddress1;
+    protected string $streetAddress1;
 
-    /**
-     * @var string
-     */
     #[Assert\NotBlank]
-    protected $locality;
+    protected string $locality;
 
     /**
      * Two character state abbreviation. It seems Forte also accepts the
      * full state name, however the spelling must be an exact match hence
      * the client library is forcing the two character state abbreviation.
-     *
-     * @var string
      */
     #[Assert\Length(min: 2, max: 2)]
     #[Assert\NotBlank]
-    protected $region;
+    protected string $region;
 
-    /**
-     * @var Attribute\PostalCode
-     */
-    #[Assert\NotBlank]
-    protected $postalCode;
+    protected PostalCode $postalCode;
 
-    /**
-     * @var string
-     */
     #[Assert\NotBlank]
     #[Assert\Length(min: 2, max: 3)]
-    protected $country;
+    protected string $country;
 
-    /**
-     * @var string
-     */
     #[Assert\NotBlank]
     #[Assert\Length(min: 2, max: 3)]
-    protected $citizenship;
+    protected string $citizenship;
 
-    /**
-     * @var string
-     */
     #[Assert\NotBlank]
     #[Assert\Email]
-    protected $emailAddress;
+    protected string $emailAddress;
 
-    /**
-     * @var Attribute\Phone
-     */
-    #[Assert\NotBlank]
-    protected $mobilePhone;
+    protected Phone $mobilePhone;
 
-    /**
-     * @var string
-     */
     #[Assert\NotBlank]
     #[Assert\Length(min: 4, max: 4)]
-    protected $last4Ssn;
+    protected string $last4Ssn;
 
-    /**
-     * @var Attribute\Date
-     */
-    #[Assert\NotBlank]
-    protected $dateOfBirth;
+    protected Date $dateOfBirth;
 
 
     public function getPercentage(): float
@@ -208,13 +167,13 @@ class Owner extends AbstractModel
     }
 
 
-    public function getPostalCode(): Attribute\PostalCode
+    public function getPostalCode(): PostalCode
     {
         return $this->postalCode;
     }
 
 
-    public function setPostalCode(Attribute\PostalCode $postalCode): self
+    public function setPostalCode(PostalCode $postalCode): self
     {
         $this->postalCode = $postalCode;
 
@@ -264,13 +223,13 @@ class Owner extends AbstractModel
     }
 
 
-    public function getMobilePhone(): ?Attribute\Phone
+    public function getMobilePhone(): Phone
     {
         return $this->mobilePhone;
     }
 
 
-    public function setMobilePhone(Attribute\Phone $mobilePhone): self
+    public function setMobilePhone(Phone $mobilePhone): self
     {
         $this->mobilePhone = $mobilePhone;
 
@@ -292,13 +251,13 @@ class Owner extends AbstractModel
     }
 
 
-    public function getDateOfBirth(): Attribute\Date
+    public function getDateOfBirth(): Date
     {
         return $this->dateOfBirth;
     }
 
 
-    public function setDateOfBirth(Attribute\Date $dateOfBirth): self
+    public function setDateOfBirth(Date $dateOfBirth): self
     {
         $this->dateOfBirth = $dateOfBirth;
 

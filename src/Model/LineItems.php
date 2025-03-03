@@ -4,43 +4,33 @@ declare(strict_types = 1);
 
 namespace Rentpost\ForteApi\Model;
 
-use Rentpost\ForteApi\Attribute as Attribute;
+use Rentpost\ForteApi\Attribute\CommaList;
 use Rentpost\ForteApi\Helper;
 use Rentpost\ForteApi\Serializer\ForteNormalizer\PreProcessDenormalizationInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizableInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * LineItems
+ *
+ * @author Jacob Thomason <jacob@rentpost.com>
+ */
 class LineItems extends AbstractModel implements NormalizableInterface, PreProcessDenormalizationInterface
 {
-    /**
-     * @var Attribute\CommaList
-     */
-    #[Assert\NotBlank]
-    protected $lineItemHeader;
 
-    /**
-     * @var Attribute\CommaList[]
-     */
-    #[Assert\NotBlank]
-    protected $lineItems;
+    protected CommaList $lineItemHeader;
+
+    /** @var CommaList[] */
+    protected array $lineItems;
 
 
-    /**
-     * @return Attribute\CommaList
-     */
-    public function getLineItemHeader(): Attribute\CommaList
+    public function getLineItemHeader(): CommaList
     {
         return $this->lineItemHeader;
     }
 
 
-    /**
-     * @param Attribute\CommaList $lineItemHeader
-     *
-     * @return self
-     */
-    public function setLineItemHeader(Attribute\CommaList $lineItemHeader): self
+    public function setLineItemHeader(CommaList $lineItemHeader): self
     {
         $this->lineItemHeader = $lineItemHeader;
 
@@ -48,20 +38,14 @@ class LineItems extends AbstractModel implements NormalizableInterface, PreProce
     }
 
 
-    /**
-     * @return array
-     */
+    /** @return CommaList[] */
     public function getLineItems(): array
     {
         return $this->lineItems;
     }
 
 
-    /**
-     * @param Attribute\CommaList[] $lineItems
-     *
-     * @return self
-     */
+    /** @param CommaList[] $lineItems */
     public function setLineItems(array $lineItems): self
     {
         $this->lineItems = $lineItems;
@@ -70,14 +54,9 @@ class LineItems extends AbstractModel implements NormalizableInterface, PreProce
     }
 
 
-    /**
-     * @param Attribute\CommaList $line_item
-     *
-     * @return self
-     */
-    public function addLineItem(Attribute\CommaList $line_item): self
+    public function addLineItem(CommaList $lineItem): self
     {
-        $this->lineItems[] = $line_item;
+        $this->lineItems[] = $lineItem;
 
         return $this;
     }
@@ -99,9 +78,9 @@ class LineItems extends AbstractModel implements NormalizableInterface, PreProce
     }
 
 
-    public static function preProcessDataForDenormalization($data): array
+    /** @return mixed[] */
+    public static function preProcessDataForDenormalization(mixed $data): array
     {
         return Helper::underscoredListItemsToArray($data, 'line_item', 'line_items');
     }
-
 }

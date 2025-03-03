@@ -4,7 +4,12 @@ declare(strict_types = 1);
 
 namespace Rentpost\ForteApi\Model;
 
-use Rentpost\ForteApi\Attribute as Attribute;
+use Rentpost\ForteApi\Attribute\BankAccountNumber;
+use Rentpost\ForteApi\Attribute\BankRoutingNumber;
+use Rentpost\ForteApi\Attribute\CustomerServicePhone;
+use Rentpost\ForteApi\Attribute\Id\OrganizationId;
+use Rentpost\ForteApi\Attribute\PostalCode;
+use Rentpost\ForteApi\Attribute\TaxIdNumber;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -20,7 +25,7 @@ class ApplicantOrganization extends AbstractModel
     protected string $legalName;
 
     #[Assert\NotBlank]
-    protected Attribute\TaxIdNumber $taxIdNumber;
+    protected TaxIdNumber $taxIdNumber;
 
     #[Assert\NotBlank]
     #[Assert\Choice(['c_corporation', 'government', 'limited_liability_corporation', 'partnership_general_or_limited', 'publicly_held_corporation', 's_corporation', 'sole_proprietorship', 'tax_exempt_or_non_profit_organization'])]
@@ -38,7 +43,7 @@ class ApplicantOrganization extends AbstractModel
     #[Assert\NotBlank]
     protected string $region;
 
-    protected Attribute\PostalCode $postalCode;
+    protected PostalCode $postalCode;
 
     /**
      * Not documented, defauling to "USA" for BC reasons. Use "CAN" for Canada
@@ -47,7 +52,7 @@ class ApplicantOrganization extends AbstractModel
     #[Assert\Length(max: 3)]
     protected string $country = 'USA';
 
-    protected Attribute\CustomerServicePhone $customerServicePhone;
+    protected CustomerServicePhone $customerServicePhone;
 
     #[Assert\NotBlank]
     protected string $website;
@@ -56,15 +61,15 @@ class ApplicantOrganization extends AbstractModel
     protected string $businessType;
 
     #[Assert\NotBlank]
-    protected Attribute\BankRoutingNumber $bankRoutingNumber;
+    protected BankRoutingNumber $bankRoutingNumber;
 
     #[Assert\NotBlank]
-    protected Attribute\BankAccountNumber $bankAccountNumber;
+    protected BankAccountNumber $bankAccountNumber;
 
     #[Assert\Choice(['checking', 'savings'])]
     protected string $bankAccountType;
 
-    protected ?Attribute\Id\OrganizationId $organizationId = null;
+    protected ?OrganizationId $organizationId = null;
 
 
     public function getLegalName(): string
@@ -81,13 +86,13 @@ class ApplicantOrganization extends AbstractModel
     }
 
 
-    public function getTaxIdNumber(): Attribute\TaxIdNumber
+    public function getTaxIdNumber(): TaxIdNumber
     {
         return $this->taxIdNumber;
     }
 
 
-    public function setTaxIdNumber(Attribute\TaxIdNumber $taxIdNumber): self
+    public function setTaxIdNumber(TaxIdNumber $taxIdNumber): self
     {
         $this->taxIdNumber = $taxIdNumber;
 
@@ -165,13 +170,13 @@ class ApplicantOrganization extends AbstractModel
     }
 
 
-    public function getPostalCode(): Attribute\PostalCode
+    public function getPostalCode(): PostalCode
     {
         return $this->postalCode;
     }
 
 
-    public function setPostalCode(Attribute\PostalCode $postalCode): self
+    public function setPostalCode(PostalCode $postalCode): self
     {
         $this->postalCode = $postalCode;
 
@@ -193,13 +198,13 @@ class ApplicantOrganization extends AbstractModel
     }
 
 
-    public function getCustomerServicePhone(): Attribute\CustomerServicePhone
+    public function getCustomerServicePhone(): CustomerServicePhone
     {
         return $this->customerServicePhone;
     }
 
 
-    public function setCustomerServicePhone(Attribute\CustomerServicePhone $customerServicePhone): self
+    public function setCustomerServicePhone(CustomerServicePhone $customerServicePhone): self
     {
         $this->customerServicePhone = $customerServicePhone;
 
@@ -235,13 +240,13 @@ class ApplicantOrganization extends AbstractModel
     }
 
 
-    public function getBankRoutingNumber(): Attribute\BankRoutingNumber
+    public function getBankRoutingNumber(): BankRoutingNumber
     {
         return $this->bankRoutingNumber;
     }
 
 
-    public function setBankRoutingNumber(Attribute\BankRoutingNumber $bankRoutingNumber): self
+    public function setBankRoutingNumber(BankRoutingNumber $bankRoutingNumber): self
     {
         $this->bankRoutingNumber = $bankRoutingNumber;
 
@@ -249,13 +254,13 @@ class ApplicantOrganization extends AbstractModel
     }
 
 
-    public function getBankAccountNumber(): Attribute\BankAccountNumber
+    public function getBankAccountNumber(): BankAccountNumber
     {
         return $this->bankAccountNumber;
     }
 
 
-    public function setBankAccountNumber(Attribute\BankAccountNumber $bankAccountNumber): self
+    public function setBankAccountNumber(BankAccountNumber $bankAccountNumber): self
     {
         $this->bankAccountNumber = $bankAccountNumber;
 
@@ -277,13 +282,13 @@ class ApplicantOrganization extends AbstractModel
     }
 
 
-    public function getOrganizationId(): ?Attribute\Id\OrganizationId
+    public function getOrganizationId(): ?OrganizationId
     {
         return $this->organizationId;
     }
 
 
-    public function setOrganizationId(Attribute\Id\OrganizationId $organizationId): self
+    public function setOrganizationId(OrganizationId $organizationId): self
     {
         $this->organizationId = $organizationId;
 

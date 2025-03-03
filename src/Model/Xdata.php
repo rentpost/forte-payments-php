@@ -67,7 +67,7 @@ class Xdata extends AbstractModel implements NormalizableInterface, PreProcessDe
     }
 
 
-    public static function preProcessDataForDenormalization($data): array
+    public static function preProcessDataForDenormalization(mixed $data): array
     {
         return Helper::underscoredListItemsToArray($data, 'xdata', 'xdatas');
     }

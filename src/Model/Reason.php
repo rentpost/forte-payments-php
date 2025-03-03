@@ -4,40 +4,34 @@ declare(strict_types = 1);
 
 namespace Rentpost\ForteApi\Model;
 
-use Rentpost\ForteApi\Attribute as Attribute;
 use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * Reason model
+ *
+ * @author Jacob Thomason <jacob@rentpost.com>
+ */
 class Reason extends AbstractModel
 {
-    /**
-     * @var string
-     */
-    #[Assert\NotBlank]
-    protected $code;
 
-    /**
-     * @var string
-     */
     #[Assert\NotBlank]
-    protected $title;
+    protected string $code;
 
-    /**
-     * @var string
-     */
     #[Assert\NotBlank]
-    protected $description;
+    protected string $title;
 
-    /**
-     * @var string
-     */
     #[Assert\NotBlank]
-    protected $infoRequired;
+    protected string $description;
+
+    #[Assert\NotBlank]
+    protected string $infoRequired;
 
 
     public function getCode(): string
     {
         return $this->code;
     }
+
 
     public function setCode(string $code): self
     {
@@ -46,22 +40,26 @@ class Reason extends AbstractModel
         return $this;
     }
 
+
     public function getTitle(): string
     {
         return $this->title;
     }
 
-    public function setTitle($title): self
+
+    public function setTitle(string $title): self
     {
         $this->title = $title;
 
         return $this;
     }
 
+
     public function getDescription(): string
     {
         return $this->description;
     }
+
 
     public function setDescription(string $description): self
     {
@@ -70,10 +68,12 @@ class Reason extends AbstractModel
         return $this;
     }
 
+
     public function getInfoRequired(): string
     {
         return $this->infoRequired;
     }
+
 
     public function setInfoRequired(string $infoRequired): self
     {
@@ -81,5 +81,4 @@ class Reason extends AbstractModel
 
         return $this;
     }
-
 }

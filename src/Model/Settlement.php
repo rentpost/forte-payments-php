@@ -4,7 +4,15 @@ declare(strict_types = 1);
 
 namespace Rentpost\ForteApi\Model;
 
-use Rentpost\ForteApi\Attribute;
+use Rentpost\ForteApi\Attribute\DateTime;
+use Rentpost\ForteApi\Attribute\Decimal;
+use Rentpost\ForteApi\Attribute\Id\CustomerToken;
+use Rentpost\ForteApi\Attribute\Id\FundingId;
+use Rentpost\ForteApi\Attribute\Id\LocationId;
+use Rentpost\ForteApi\Attribute\Id\OrganizationId;
+use Rentpost\ForteApi\Attribute\Id\SettlementId;
+use Rentpost\ForteApi\Attribute\Id\TransactionId;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * This entire model is "read only" from the API. Hence the validation has been kept simple
@@ -15,65 +23,40 @@ use Rentpost\ForteApi\Attribute;
 class Settlement extends AbstractModel
 {
 
-    /** @var Attribute\Id\OrganizationId */
-    protected $organizationId;
+    protected OrganizationId $organizationId;
+    protected LocationId $locationId;
+    protected ?FundingId $fundingId;
+    protected ?CustomerToken $customerToken;
+    protected ?string $customerId;
+    protected ?string $orderNumber;
+    protected ?string $referenceId;
+    protected SettlementId $settleId;
+    protected ?TransactionId $transactionId;
+    protected ?string $settleBatchId;
+    protected ?DateTime $settleDate;
 
-    /** @var Attribute\Id\LocationId */
-    protected $locationId;
+    #[Assert\NotBlank(allowNull: true)]
+    #[Assert\Choice(['deposit', 'reject', 'withdrawal'])]
+    protected ?string $settleType;
 
-    /** @var Attribute\Id\CustomerToken */
-    protected $customerToken;
+    protected ?string $settleResponseCode = null;
+    protected ?Decimal $settleAmount;
 
-    /** @var string */
-    protected $customerId;
-
-    /** @var string */
-    protected $orderNumber;
-
-    /** @var string */
-    protected $referenceId;
-
-    /** @var Attribute\Id\SettlementId */
-    protected $settleId;
-
-    /** @var string */
-    protected $transactionId;
-
-    /** @var string|null */
-    protected $settleBatchId;
-
-    /** @var Attribute\DateTime */
-    protected $settleDate;
-
-    /** @var string */
-    protected $settleType;
-
-    /** @var string */
-    protected $settleResponseCode;
-
-    /** @var Attribute\Decimal */
-    protected $settleAmount;
-
-    /** @var string */
-    protected $method;
+    #[Assert\Choice(['echeck', 'cc'])]
+    protected string $method;
 
 
     /**
      * The identification number of the associated organization.
      * For example, org_5551236.
      */
-    public function getOrganizationId(): Attribute\Id\OrganizationId
+    public function getOrganizationId(): OrganizationId
     {
         return $this->organizationId;
     }
 
 
-    /**
-     * @internal api read only field
-     *
-     * @param Attribute\Id\OrganizationId $organizationId
-     */
-    public function setOrganizationId(Attribute\Id\OrganizationId $organizationId): self
+    public function setOrganizationId(OrganizationId $organizationId): self
     {
         $this->organizationId = $organizationId;
 
@@ -85,20 +68,33 @@ class Settlement extends AbstractModel
      * The identification number of the associated location.
      * For example, loc_1234568.
      */
-    public function getLocationId(): Attribute\Id\LocationId
+    public function getLocationId(): LocationId
     {
         return $this->locationId;
     }
 
 
-    /**
-     * @internal api read only field
-     *
-     * @param Attribute\Id\LocationId $locationId
-     */
-    public function setLocationId(Attribute\Id\LocationId $locationId): self
+    public function setLocationId(LocationId $locationId): self
     {
         $this->locationId = $locationId;
+
+        return $this;
+    }
+
+
+    /**
+     * The identification number of the funding.
+     * For example, fnd_1234568.
+     */
+    public function getFundingId(): ?FundingId
+    {
+        return $this->fundingId;
+    }
+
+
+    public function setFundingId(FundingId $fundingId): self
+    {
+        $this->fundingId = $fundingId;
 
         return $this;
     }
@@ -108,7 +104,7 @@ class Settlement extends AbstractModel
      * A unique string used to represent a customer.
      * For example, cst_SoGUG6mcLUS1nVzYBIbk3g. [max length = 26]
      */
-    public function getCustomerToken(): Attribute\Id\CustomerToken
+    public function getCustomerToken(): ?CustomerToken
     {
         return $this->customerToken;
     }
@@ -116,10 +112,8 @@ class Settlement extends AbstractModel
 
     /**
      * @internal api read only field
-     *
-     * @param Attribute\Id\CustomerToken $customerToken
      */
-    public function setCustomerToken(Attribute\Id\CustomerToken $customerToken): self
+    public function setCustomerToken(CustomerToken $customerToken): self
     {
         $this->customerToken = $customerToken;
 
@@ -139,8 +133,6 @@ class Settlement extends AbstractModel
 
     /**
      * @internal api read only field
-     *
-     * @param string $customerId
      */
     public function setCustomerId(string $customerId): self
     {
@@ -161,10 +153,6 @@ class Settlement extends AbstractModel
 
     /**
      * @internal api read only field
-     *
-     * @param string|null $orderNumber
-     *
-     * @return self
      */
     public function setOrderNumber(?string $orderNumber): self
     {
@@ -186,8 +174,6 @@ class Settlement extends AbstractModel
 
     /**
      * @internal api read only field
-     *
-     * @param string $referenceId
      */
     public function setReferenceId(string $referenceId): self
     {
@@ -201,7 +187,7 @@ class Settlement extends AbstractModel
      * The settlement ID of the settled transaction
      * (e.g., stl_51cf4633-1767-484f-8784-be76a4076791). [max length = 40]
      */
-    public function getSettleId(): Attribute\Id\SettlementId
+    public function getSettleId(): SettlementId
     {
         return $this->settleId;
     }
@@ -209,10 +195,8 @@ class Settlement extends AbstractModel
 
     /**
      * @internal api read only field
-     *
-     * @param Attribute\Id\SettlementId $settleId
      */
-    public function setSettleId(Attribute\Id\SettlementId $settleId): self
+    public function setSettleId(SettlementId $settleId): self
     {
         $this->settleId = $settleId;
 
@@ -223,7 +207,7 @@ class Settlement extends AbstractModel
     /**
      * A 36-character code that uniquely identifies the transaction.
      */
-    public function getTransactionId(): Attribute\Id\TransactionId
+    public function getTransactionId(): TransactionId
     {
         return $this->transactionId;
     }
@@ -231,10 +215,8 @@ class Settlement extends AbstractModel
 
     /**
      * @internal api read only field
-     *
-     * @param Attribute\Id\TransactionId $transactionId
      */
-    public function setTransactionId(Attribute\Id\TransactionId $transactionId): self
+    public function setTransactionId(TransactionId $transactionId): self
     {
         $this->transactionId = $transactionId;
 
@@ -254,8 +236,6 @@ class Settlement extends AbstractModel
 
     /**
      * @internal api read only field
-     *
-     * @param string|null $settleBatchId
      */
     public function setSettleBatchId(?string $settleBatchId): self
     {
@@ -268,7 +248,7 @@ class Settlement extends AbstractModel
     /**
      * The date when the transaction was settled. This parameter is return only.
      */
-    public function getSettleDate(): Attribute\DateTime
+    public function getSettleDate(): ?DateTime
     {
         return $this->settleDate;
     }
@@ -276,12 +256,8 @@ class Settlement extends AbstractModel
 
     /**
      * @internal api read only field
-     *
-     * @param Attribute\DateTime $settleDate
-     *
-     * @return self
      */
-    public function setSettleDate(Attribute\DateTime $settleDate): self
+    public function setSettleDate(DateTime $settleDate): self
     {
         $this->settleDate = $settleDate;
 
@@ -299,7 +275,7 @@ class Settlement extends AbstractModel
      *      deposit
      *      withdrawal
      */
-    public function getSettleType(): string
+    public function getSettleType(): ?string
     {
         return $this->settleType;
     }
@@ -307,10 +283,6 @@ class Settlement extends AbstractModel
 
     /**
      * @internal api read only field
-     *
-     * @param string $settleType
-     *
-     * @return self
      */
     public function setSettleType(string $settleType): self
     {
@@ -325,7 +297,7 @@ class Settlement extends AbstractModel
      *
      * @see http://www.forte.net/devdocs/reference/response_codes.htm
      *
-     * @note credit card transactions that do not return a settle response can be considered settled.
+     * @internal credit card transactions that do not return a settle response can be considered settled.
      */
     public function getSettleResponseCode(): ?string
     {
@@ -335,10 +307,6 @@ class Settlement extends AbstractModel
 
     /**
      * @internal api read only field
-     *
-     * @param string|null $settleResponseCode
-     *
-     * @return self
      */
     public function setSettleResponseCode(?string $settleResponseCode): self
     {
@@ -351,7 +319,7 @@ class Settlement extends AbstractModel
     /**
      * The amount the transaction settled for. This parameter is return only.
      */
-    public function getSettleAmount(): Attribute\Decimal
+    public function getSettleAmount(): ?Decimal
     {
         return $this->settleAmount;
     }
@@ -359,12 +327,8 @@ class Settlement extends AbstractModel
 
     /**
      * @internal api read only field
-     *
-     * @param Attribute\Decimal $settleAmount
-     *
-     * @return self
      */
-    public function setSettleAmount(Attribute\Decimal $settleAmount): self
+    public function setSettleAmount(Decimal $settleAmount): self
     {
         $this->settleAmount = $settleAmount;
 
@@ -386,10 +350,6 @@ class Settlement extends AbstractModel
 
     /**
      * @internal api read only field
-     *
-     * @param string $method
-     *
-     * @return self
      */
     public function setMethod(string $method): self
     {

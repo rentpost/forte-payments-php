@@ -4,81 +4,37 @@ declare(strict_types = 1);
 
 namespace Rentpost\ForteApi\Model;
 
-use Rentpost\ForteApi\Attribute as Attribute;
-use Symfony\Component\Validator\Constraints as Assert;
+use Rentpost\ForteApi\Attribute\Money;
 
 /**
- * https://www.forte.net/devdocs/api_resources/forte_api_v3.htm#responseobject
+ * Misc response object
+ *
+ * @author Sam Anthony <sam@rentpost.com>
+ * @author Jacob Thomason <jacob@rentpost.com>
  */
 class Response extends AbstractModel
 {
-    /**
-     * @var string
-     */
-    protected $responseDesc;
 
-    /**
-     * @var string
-     */
-    protected $environment;
+    protected ?string $responseDesc;
+    protected ?string $environment;
 
     /**
      * The code indicating whether or not the transaction was authorized.
      * This field is not used for voiding transactions
-     *
-     * @var string
      */
-    protected $authorizationCode;
+    protected ?string $authorizationCode;
 
-    /**
-     * @var string
-     */
-    protected $responseType;
-
-    /**
-     * @var string
-     */
-    protected $responseCode;
-
-    /**
-     * @var string
-     */
-    protected $preauthResult;
-
-    /**
-     * @var string
-     */
-    protected $preauthDesc;
-
-    /**
-     * @var string
-     */
-    protected $preauthNegReport;
-
-    /**
-     * @var string
-     */
-    protected $avsResult;
-
-    /**
-     * @var string
-     */
-    protected $cvvResult;
-
-    /**
-     * @var Attribute\Money
-     */
-    protected $availableCardBalance;
-
-    /**
-     * @var Attribute\Money
-     */
-    protected $requestedAmount;
+    protected ?string $responseType;
+    protected ?string $responseCode;
+    protected ?string $preauthResult;
+    protected ?string $preauthDesc;
+    protected ?string $preauthNegReport;
+    protected ?string $avsResult;
+    protected ?string $cvvResult;
+    protected ?Money $availableCardBalance;
+    protected ?Money $requestedAmount;
 
 
-    /**
-     * @return string|null
-     */
     public function getResponseDesc(): ?string
     {
         return $this->responseDesc;
@@ -87,8 +43,6 @@ class Response extends AbstractModel
 
     /**
      * @internal here to keep deserializer happy
-     *
-     * @param string|null $responseDesc
      */
     public function setResponseDesc(?string $responseDesc): void
     {
@@ -96,9 +50,6 @@ class Response extends AbstractModel
     }
 
 
-    /**
-     * @return string|null
-     */
     public function getEnvironment(): ?string
     {
         return $this->environment;
@@ -107,8 +58,6 @@ class Response extends AbstractModel
 
     /**
      * @internal here to keep deserializer happy
-     *
-     * @param string|null $environment
      */
     public function setEnvironment(?string $environment): void
     {
@@ -116,9 +65,6 @@ class Response extends AbstractModel
     }
 
 
-    /**
-     * @return string|null
-     */
     public function getAuthorizationCode(): ?string
     {
         return $this->authorizationCode;
@@ -127,8 +73,6 @@ class Response extends AbstractModel
 
     /**
      * @internal here to keep deserializer happy
-     *
-     * @param string|null $authorizationCode
      */
     public function setAuthorizationCode(?string $authorizationCode): void
     {
@@ -136,9 +80,6 @@ class Response extends AbstractModel
     }
 
 
-    /**
-     * @return string|null
-     */
     public function getResponseType(): ?string
     {
         return $this->responseType;
@@ -147,8 +88,6 @@ class Response extends AbstractModel
 
     /**
      * @internal here to keep deserializer happy
-     *
-     * @param string|null $responseType
      */
     public function setResponseType(?string $responseType): void
     {
@@ -156,9 +95,6 @@ class Response extends AbstractModel
     }
 
 
-    /**
-     * @return string|null
-     */
     public function getResponseCode(): ?string
     {
         return $this->responseCode;
@@ -167,8 +103,6 @@ class Response extends AbstractModel
 
     /**
      * @internal here to keep deserializer happy
-     *
-     * @param string|null $responseCode
      */
     public function setResponseCode(?string $responseCode): void
     {
@@ -176,9 +110,6 @@ class Response extends AbstractModel
     }
 
 
-    /**
-     * @return string|null
-     */
     public function getPreauthResult(): ?string
     {
         return $this->preauthResult;
@@ -187,8 +118,6 @@ class Response extends AbstractModel
 
     /**
      * @internal here to keep deserializer happy
-     *
-     * @param string|null $preauthResult
      */
     public function setPreauthResult(?string $preauthResult): void
     {
@@ -196,9 +125,6 @@ class Response extends AbstractModel
     }
 
 
-    /**
-     * @return string|null
-     */
     public function getPreauthDesc(): ?string
     {
         return $this->preauthDesc;
@@ -207,8 +133,6 @@ class Response extends AbstractModel
 
     /**
      * @internal here to keep deserializer happy
-     *
-     * @param string|null $preauthDesc
      */
     public function setPreauthDesc(?string $preauthDesc): void
     {
@@ -216,9 +140,6 @@ class Response extends AbstractModel
     }
 
 
-    /**
-     * @return string|null
-     */
     public function getPreauthNegReport(): ?string
     {
         return $this->preauthNegReport;
@@ -227,8 +148,6 @@ class Response extends AbstractModel
 
     /**
      * @internal here to keep deserializer happy
-     *
-     * @param string|null $preauthNegReport
      */
     public function setPreauthNegReport(?string $preauthNegReport): void
     {
@@ -236,9 +155,6 @@ class Response extends AbstractModel
     }
 
 
-    /**
-     * @return string|null
-     */
     public function getAvsResult(): ?string
     {
         return $this->avsResult;
@@ -247,8 +163,6 @@ class Response extends AbstractModel
 
     /**
      * @internal here to keep deserializer happy
-     *
-     * @param string|null $avsResult
      */
     public function setAvsResult(?string $avsResult): void
     {
@@ -256,9 +170,6 @@ class Response extends AbstractModel
     }
 
 
-    /**
-     * @return string|null
-     */
     public function getCvvResult(): ?string
     {
         return $this->cvvResult;
@@ -267,8 +178,6 @@ class Response extends AbstractModel
 
     /**
      * @internal here to keep deserializer happy
-     *
-     * @param string|null $cvvResult
      */
     public function setCvvResult(?string $cvvResult): void
     {
@@ -276,10 +185,7 @@ class Response extends AbstractModel
     }
 
 
-    /**
-     * @return Attribute\Money|null
-     */
-    public function getAvailableCardBalance(): ?Attribute\Money
+    public function getAvailableCardBalance(): ?Money
     {
         return $this->availableCardBalance;
     }
@@ -287,19 +193,14 @@ class Response extends AbstractModel
 
     /**
      * @internal here to keep deserializer happy
-     *
-     * @param Attribute\Money|null $availableCardBalance
      */
-    public function setAvailableCardBalance(?Attribute\Money $availableCardBalance): void
+    public function setAvailableCardBalance(?Money $availableCardBalance): void
     {
         $this->availableCardBalance = $availableCardBalance;
     }
 
 
-    /**
-     * @return Attribute\Money|null
-     */
-    public function getRequestedAmount(): ?Attribute\Money
+    public function getRequestedAmount(): ?Money
     {
         return $this->requestedAmount;
     }
@@ -307,10 +208,8 @@ class Response extends AbstractModel
 
     /**
      * @internal here to keep deserializer happy
-     *
-     * @param Attribute\Money|null $requestedAmount
      */
-    public function setRequestedAmount(?Attribute\Money $requestedAmount): void
+    public function setRequestedAmount(?Money $requestedAmount): void
     {
         $this->requestedAmount = $requestedAmount;
     }

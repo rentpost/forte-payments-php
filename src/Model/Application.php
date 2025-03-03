@@ -4,8 +4,11 @@ declare(strict_types = 1);
 
 namespace Rentpost\ForteApi\Model;
 
-use Rentpost\ForteApi\Attribute as Attribute;
-use Rentpost\ForteApi\Model as Model;
+use Rentpost\ForteApi\Attribute\DateTime;
+use Rentpost\ForteApi\Attribute\Id\ApplicationId;
+use Rentpost\ForteApi\Attribute\Id\LocationId;
+use Rentpost\ForteApi\Attribute\IpAddress;
+use Rentpost\ForteApi\Attribute\Money;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -16,179 +19,77 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Application extends AbstractModel
 {
 
-    /** @var Attribute\Id\ApplicationId */
-    protected $applicationId;
+    protected ?ApplicationId $applicationId = null;
 
-    /** @var string */
-    protected $status;
-
-    /** @var array */
-    protected $declineReason;
-
-    /**
-     * @var mixed
-     */
     #[Assert\NotBlank]
-    protected $feeId;
+    protected string $feeId;
 
-    /**
-     * @var Attribute\IpAddress
-     */
     #[Assert\NotBlank]
-    protected $sourceIp;
+    protected IpAddress $sourceIp;
 
-    /**
-     * @var Attribute\Money
-     */
     #[Assert\NotBlank]
-    protected $annualVolume;
+    protected Money $annualVolume;
 
-    /**
-     * @var Attribute\Money
-     */
     #[Assert\NotBlank]
-    protected $averageTransactionAmount;
+    protected Money $averageTransactionAmount;
 
-    /**
-     * @var string
-     */
     #[Assert\NotBlank]
     #[Assert\Choice(['internet', 'phone', 'mail', 'point_of_sale'])]
-    protected $marketType;
+    protected string $marketType;
 
-    /**
-     * @var string
-     */
     #[Assert\NotBlank]
-    protected $tAndCVersion;
+    protected string $tAndCVersion;
 
-    /**
-     * @var Attribute\DateTime
-     */
     #[Assert\NotBlank]
-    protected $tAndCTimeStamp;
+    protected DateTime $tAndCTimeStamp;
 
-    /**
-     * @var string
-     */
     #[Assert\NotBlank]
     #[Assert\Length(max: 128)]
     #[Assert\Regex('/^[a-zA-Z0-9_-]*$/')]
-    protected $riskSessionId;
+    protected string $riskSessionId;
 
-    /**
-     * @var Model\ApplicantOrganization
-     */
     #[Assert\NotBlank]
     #[Assert\Valid]
-    protected $applicantOrganization;
+    protected ApplicantOrganization $applicantOrganization;
 
-    /**
-     * @var Model\Owner
-     */
-    #[Assert\NotBlank]
     #[Assert\Valid]
-    protected $owner1;
+    protected Owner $owner1;
 
-    /**
-     * @var Model\Owner
-     */
     #[Assert\Valid]
-    protected $owner2;
+    protected ?Owner $owner2 = null;
 
-    /**
-     * @var Model\Owner
-     */
     #[Assert\Valid]
-    protected $owner3;
+    protected ?Owner $owner3 = null;
 
-    /**
-     * @var Model\Owner
-     */
     #[Assert\Valid]
-    protected $owner4;
+    protected ?Owner $owner4 = null;
 
-    /**
-     * @var Attribute\Money
-     */
-    protected $maximumTransactionAmount;
+    protected Money $maximumTransactionAmount;
+    protected Money $averagePayableAmount;
+    protected Money $maximumPayableAmount;
+    protected Money $monthlyPayableVolume;
 
-    /**
-     * @var Attribute\Money
-     */
-    protected $averagePayableAmount;
+    // These are only available after the initial submission
+    protected ?DateTime $receivedDate = null;
+    protected ?DateTime $updatedDate = null;
+    protected ?string $salesRep = null;
+    protected ?string $feePlan = null;
+    protected ?LocationId $locationId = null;
 
-    /**
-     * @var Attribute\Money
-     */
-    protected $maximumPayableAmount;
+    #[Assert\Choice(['approved', 'pending', 'declined', 'enrolled', 'rejected', 'recalled'])]
+    protected ?string $status = null;
 
-    /**
-     * @var Attribute\Money
-     */
-    protected $monthlyPayableVolume;
-
-    /**
-     * @var Attribute\DateTime
-     */
-    protected $receivedDate;
-
-    /**
-     * @var Attribute\DateTime
-     */
-    protected $updatedDate;
-
-    /**
-     * @var string
-     */
-    protected $salesRep;
-
-    /**
-     * @var string
-     */
-    protected $feePlan;
-
-    /**
-     * @var Attribute\Id\LocationId
-     */
-    protected $locationId;
+    /** @var string[] */
+    protected array $declineReason = [];
 
 
-    public function getStatus(): ?string
-    {
-        return $this->status;
-    }
-
-
-    public function setStatus(?string $status): self
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
-
-    public function getDeclineReason(): ?array
-    {
-        return $this->declineReason;
-    }
-
-
-    public function setDeclineReason(?array $declineReason): self
-    {
-        $this->declineReason = $declineReason;
-
-        return $this;
-    }
-
-
-    public function getApplicationId(): ?Attribute\Id\ApplicationId
+    public function getApplicationId(): ?ApplicationId
     {
         return $this->applicationId;
     }
 
 
-    public function setApplicationId(Attribute\Id\ApplicationId $applicationId): self
+    public function setApplicationId(ApplicationId $applicationId): self
     {
         $this->applicationId = $applicationId;
 
@@ -196,27 +97,27 @@ class Application extends AbstractModel
     }
 
 
-    public function getFeeId()
+    public function getFeeId(): string
     {
         return $this->feeId;
     }
 
 
-    public function setFeeId($feeId): self
+    public function setFeeId(string|int $feeId): self
     {
-        $this->feeId = $feeId;
+        $this->feeId = (string)$feeId;
 
         return $this;
     }
 
 
-    public function getSourceIp(): Attribute\IpAddress
+    public function getSourceIp(): IpAddress
     {
         return $this->sourceIp;
     }
 
 
-    public function setSourceIp(Attribute\IpAddress $sourceIp): self
+    public function setSourceIp(IpAddress $sourceIp): self
     {
         $this->sourceIp = $sourceIp;
 
@@ -224,13 +125,13 @@ class Application extends AbstractModel
     }
 
 
-    public function getAnnualVolume(): Attribute\Money
+    public function getAnnualVolume(): Money
     {
         return $this->annualVolume;
     }
 
 
-    public function setAnnualVolume(Attribute\Money $annualVolume): self
+    public function setAnnualVolume(Money $annualVolume): self
     {
         $this->annualVolume = $annualVolume;
 
@@ -238,13 +139,13 @@ class Application extends AbstractModel
     }
 
 
-    public function getAverageTransactionAmount(): Attribute\Money
+    public function getAverageTransactionAmount(): Money
     {
         return $this->averageTransactionAmount;
     }
 
 
-    public function setAverageTransactionAmount(Attribute\Money $averageTransactionAmount): self
+    public function setAverageTransactionAmount(Money $averageTransactionAmount): self
     {
         $this->averageTransactionAmount = $averageTransactionAmount;
 
@@ -280,13 +181,13 @@ class Application extends AbstractModel
     }
 
 
-    public function getTAndCTimeStamp(): Attribute\DateTime
+    public function getTAndCTimeStamp(): DateTime
     {
         return $this->tAndCTimeStamp;
     }
 
 
-    public function setTAndCTimeStamp(Attribute\DateTime $tAndCTimeStamp): self
+    public function setTAndCTimeStamp(DateTime $tAndCTimeStamp): self
     {
         $this->tAndCTimeStamp = $tAndCTimeStamp;
 
@@ -308,13 +209,13 @@ class Application extends AbstractModel
     }
 
 
-    public function getApplicantOrganization(): Model\ApplicantOrganization
+    public function getApplicantOrganization(): ApplicantOrganization
     {
         return $this->applicantOrganization;
     }
 
 
-    public function setApplicantOrganization(Model\ApplicantOrganization $applicantOrganization): self
+    public function setApplicantOrganization(ApplicantOrganization $applicantOrganization): self
     {
         $this->applicantOrganization = $applicantOrganization;
 
@@ -322,13 +223,13 @@ class Application extends AbstractModel
     }
 
 
-    public function getOwner1(): Model\Owner
+    public function getOwner1(): Owner
     {
         return $this->owner1;
     }
 
 
-    public function setOwner1(Model\Owner $owner): self
+    public function setOwner1(Owner $owner): self
     {
         $this->owner1 = $owner;
 
@@ -336,13 +237,13 @@ class Application extends AbstractModel
     }
 
 
-    public function getOwner2(): ?Model\Owner
+    public function getOwner2(): ?Owner
     {
         return $this->owner2;
     }
 
 
-    public function setOwner2(?Model\Owner $owner): self
+    public function setOwner2(?Owner $owner): self
     {
         $this->owner2 = $owner;
 
@@ -350,13 +251,13 @@ class Application extends AbstractModel
     }
 
 
-    public function getOwner3(): ?Model\Owner
+    public function getOwner3(): ?Owner
     {
         return $this->owner3;
     }
 
 
-    public function setOwner3(?Model\Owner $owner): self
+    public function setOwner3(?Owner $owner): self
     {
         $this->owner3 = $owner;
 
@@ -364,13 +265,13 @@ class Application extends AbstractModel
     }
 
 
-    public function getOwner4(): ?Model\Owner
+    public function getOwner4(): ?Owner
     {
         return $this->owner4;
     }
 
 
-    public function setOwner4(?Model\Owner $owner): self
+    public function setOwner4(?Owner $owner): self
     {
         $this->owner4 = $owner;
 
@@ -378,13 +279,13 @@ class Application extends AbstractModel
     }
 
 
-    public function getMaximumTransactionAmount(): Attribute\Money
+    public function getMaximumTransactionAmount(): Money
     {
         return $this->maximumTransactionAmount;
     }
 
 
-    public function setMaximumTransactionAmount(Attribute\Money $maximumTransactionAmount): self
+    public function setMaximumTransactionAmount(Money $maximumTransactionAmount): self
     {
         $this->maximumTransactionAmount = $maximumTransactionAmount;
 
@@ -392,13 +293,13 @@ class Application extends AbstractModel
     }
 
 
-    public function getAveragePayableAmount(): Attribute\Money
+    public function getAveragePayableAmount(): Money
     {
         return $this->averagePayableAmount;
     }
 
 
-    public function setAveragePayableAmount(Attribute\Money $averagePayableAmount): self
+    public function setAveragePayableAmount(Money $averagePayableAmount): self
     {
         $this->averagePayableAmount = $averagePayableAmount;
 
@@ -406,13 +307,13 @@ class Application extends AbstractModel
     }
 
 
-    public function getMaximumPayableAmount(): Attribute\Money
+    public function getMaximumPayableAmount(): Money
     {
         return $this->maximumPayableAmount;
     }
 
 
-    public function setMaximumPayableAmount(Attribute\Money$maximumPayableAmount): self
+    public function setMaximumPayableAmount(Money $maximumPayableAmount): self
     {
         $this->maximumPayableAmount = $maximumPayableAmount;
 
@@ -420,13 +321,13 @@ class Application extends AbstractModel
     }
 
 
-    public function getMonthlyPayableVolume(): Attribute\Money
+    public function getMonthlyPayableVolume(): Money
     {
         return $this->monthlyPayableVolume;
     }
 
 
-    public function setMonthlyPayableVolume(Attribute\Money $monthlyPayableVolume): self
+    public function setMonthlyPayableVolume(Money $monthlyPayableVolume): self
     {
         $this->monthlyPayableVolume = $monthlyPayableVolume;
 
@@ -434,13 +335,13 @@ class Application extends AbstractModel
     }
 
 
-    public function getReceivedDate(): ?Attribute\DateTime
+    public function getReceivedDate(): ?DateTime
     {
         return $this->receivedDate;
     }
 
 
-    public function setReceivedDate(Attribute\DateTime $receivedDate): self
+    public function setReceivedDate(DateTime $receivedDate): self
     {
         $this->receivedDate = $receivedDate;
 
@@ -448,13 +349,13 @@ class Application extends AbstractModel
     }
 
 
-    public function getUpdatedDate(): ?Attribute\DateTime
+    public function getUpdatedDate(): ?DateTime
     {
         return $this->updatedDate;
     }
 
 
-    public function setUpdatedDate(Attribute\DateTime $updatedDate): self
+    public function setUpdatedDate(DateTime $updatedDate): self
     {
         $this->updatedDate = $updatedDate;
 
@@ -490,15 +391,44 @@ class Application extends AbstractModel
     }
 
 
-    public function getLocationId(): ?Attribute\Id\LocationId
+    public function getLocationId(): ?LocationId
     {
         return $this->locationId;
     }
 
 
-    public function setLocationId(Attribute\Id\LocationId $locationId): self
+    public function setLocationId(LocationId $locationId): self
     {
         $this->locationId = $locationId;
+
+        return $this;
+    }
+
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+
+    public function setStatus(?string $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+
+    /** @return string[] */
+    public function getDeclineReason(): ?array
+    {
+        return $this->declineReason;
+    }
+
+
+    public function setDeclineReason(?array $declineReason): self
+    {
+        $this->declineReason = $declineReason;
 
         return $this;
     }

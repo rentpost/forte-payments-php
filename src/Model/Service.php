@@ -4,8 +4,6 @@ declare(strict_types = 1);
 
 namespace Rentpost\ForteApi\Model;
 
-use Rentpost\ForteApi\Attribute;
-use Rentpost\ForteApi\Model as Model;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -16,36 +14,20 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Service extends AbstractModel
 {
 
-    /**
-     * @var Model\EcheckSetting
-     */
-    #[Assert\NotBlank]
     #[Assert\Valid]
-    protected $echeck;
+    protected EcheckSetting $echeck;
 
-    /**
-     * @var Model\CardSetting
-     */
-    #[Assert\NotBlank]
     #[Assert\Valid]
-    protected $card;
+    protected CardSetting $card;
 
 
-    /**
-     * Get the value of echeck
-     */
-    public function getEcheck(): Model\EcheckSetting
+    public function getEcheck(): EcheckSetting
     {
         return $this->echeck;
     }
 
 
-    /**
-     * Set the value of echeck
-     *
-     * @param Model\EcheckSetting $echeck
-     */
-    public function setEcheck(Model\EcheckSetting $echeck): self
+    public function setEcheck(EcheckSetting $echeck): self
     {
         $this->echeck = $echeck;
 
@@ -53,21 +35,13 @@ class Service extends AbstractModel
     }
 
 
-    /**
-     * Get the value of card
-     */
-    public function getCard(): Model\CardSetting
+    public function getCard(): CardSetting
     {
         return $this->card;
     }
 
 
-    /**
-     * Set the value of card
-     *
-     * @param Model\CardSetting $card
-     */
-    public function setCard(Model\CardSetting $card): self
+    public function setCard(CardSetting $card): self
     {
         $this->card = $card;
 

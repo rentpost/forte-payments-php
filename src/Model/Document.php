@@ -4,7 +4,9 @@ declare(strict_types = 1);
 
 namespace Rentpost\ForteApi\Model;
 
-use Rentpost\ForteApi\Attribute;
+use Rentpost\ForteApi\Attribute\Date;
+use Rentpost\ForteApi\Attribute\Id\DocumentId;
+use Rentpost\ForteApi\Attribute\Id\DocumentResourceId;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -16,14 +18,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Document extends AbstractModel
 {
 
-    protected ?Attribute\Id\DocumentId $documentId = null;
+    protected ?DocumentId $documentId = null;
 
     #[Assert\NotBlank]
     #[Assert\Choice(['dispute', 'application'])]
     protected ?string $resource = null;
 
     #[Assert\NotBlank]
-    protected ?Attribute\Id\DocumentResourceId $resourceId = null;
+    protected ?DocumentResourceId $resourceId = null;
 
     #[Assert\NotBlank]
     protected ?string $description = null;
@@ -31,27 +33,19 @@ class Document extends AbstractModel
     /**
      * 10MB limit, using 1000 calculation instead of 1024 to be careful
      */
-    #[Assert\LessThanOrEqual(10000000)]
+    #[Assert\LessThanOrEqual(10_000_000)]
     protected ?int $size = null;
-    protected ?Attribute\Date $receivedDate = null;
+    protected ?Date $receivedDate = null;
     protected ?string $file = null;
 
 
-    /**
-     * Gets the Document id
-     */
-    public function getDocumentId(): ?Attribute\Id\DocumentId
+    public function getDocumentId(): ?DocumentId
     {
         return $this->documentId;
     }
 
 
-    /**
-     * Sets the Document id
-     *
-     * @param Attribute\Id\DocumentId $documentId
-     */
-    public function setDocumentId(Attribute\Id\DocumentId $documentId): self
+    public function setDocumentId(DocumentId $documentId): self
     {
         $this->documentId = $documentId;
 
@@ -59,20 +53,12 @@ class Document extends AbstractModel
     }
 
 
-    /**
-     * Gets the resource
-     */
     public function getResource(): string
     {
         return $this->resource;
     }
 
 
-    /**
-     * Sets the resource
-     *
-     * @param string $resource
-     */
     public function setResource(string $resource): self
     {
         $this->resource = $resource;
@@ -81,21 +67,13 @@ class Document extends AbstractModel
     }
 
 
-    /**
-     * Gets the Resource id
-     */
-    public function getResourceId(): Attribute\Id\DocumentResourceId
+    public function getResourceId(): DocumentResourceId
     {
         return $this->resourceId;
     }
 
 
-    /**
-     * Sets the Resource id
-     *
-     * @param Attribute\Id\DocumentResourceId $resourceId
-     */
-    public function setResourceId(Attribute\Id\DocumentResourceId $resourceId): self
+    public function setResourceId(DocumentResourceId $resourceId): self
     {
         $this->resourceId = $resourceId;
 
@@ -103,20 +81,12 @@ class Document extends AbstractModel
     }
 
 
-    /**
-     * Gets the description
-     */
     public function getDescription(): string
     {
         return $this->description;
     }
 
 
-    /**
-     * Sets the description
-     *
-     * @param string $description
-     */
     public function setDescription(string $description): self
     {
         $this->description = $description;
@@ -125,20 +95,12 @@ class Document extends AbstractModel
     }
 
 
-    /**
-     * Gets the size in bytes
-     */
     public function getSize(): ?int
     {
         return $this->size;
     }
 
 
-    /**
-     * Sets the size in bytes
-     *
-     * @param int $size
-     */
     public function setSize(int $size): self
     {
         $this->size = $size;
@@ -147,21 +109,13 @@ class Document extends AbstractModel
     }
 
 
-    /**
-     * Gets the date received
-     */
-    public function getReceivedDate(): ?Attribute\Date
+    public function getReceivedDate(): ?Date
     {
         return $this->receivedDate;
     }
 
 
-    /**
-     * Sets the date received
-     *
-     * @param Attribute\Date $receivedDate
-     */
-    public function setReceivedDate(Attribute\Date $receivedDate): self
+    public function setReceivedDate(Date $receivedDate): self
     {
         $this->receivedDate = $receivedDate;
 
@@ -169,20 +123,12 @@ class Document extends AbstractModel
     }
 
 
-    /**
-     * Gets the file path
-     */
     public function getFile(): ?string
     {
         return $this->file;
     }
 
 
-    /**
-     * Sets the file path
-     *
-     * @param string $file
-     */
     public function setFile(string $file): self
     {
         $this->file = $file;

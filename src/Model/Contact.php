@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace Rentpost\ForteApi\Model;
 
-use Rentpost\ForteApi\Attribute;
+use Rentpost\ForteApi\Attribute\Phone;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -18,29 +18,22 @@ class Contact extends AbstractModel
     #[Assert\Choice(['primary', 'sales', 'billing', 'support', 'technical'])]
     protected ?string $type = null;
 
-    #[Assert\NotBlank]
+    #[Assert\NotBlank(allowNull: true)]
     protected ?string $fullName = null;
 
-    #[Assert\NotBlank]
+    #[Assert\NotBlank(allowNull: true)]
     #[Assert\Email]
     protected ?string $emailAddress = null;
 
-    #[Assert\NotBlank]
-    protected ?Attribute\Phone $phone = null;
+    protected ?Phone $phone = null;
 
 
-    /**
-     * Get type
-     */
     public function getType(): ?string
     {
         return $this->type;
     }
 
 
-    /**
-     * Set type
-     */
     public function setType(string $type): self
     {
         $this->type = $type;
@@ -49,18 +42,12 @@ class Contact extends AbstractModel
     }
 
 
-    /**
-     * Get the value of fullName
-     */
     public function getFullName(): ?string
     {
         return $this->fullName;
     }
 
 
-    /**
-     * Set the value of fullName
-     */
     public function setFullName(string $fullName): self
     {
         $this->fullName = $fullName;
@@ -69,18 +56,12 @@ class Contact extends AbstractModel
     }
 
 
-    /**
-     * Get the value of emailAddress
-     */
     public function getEmailAddress(): ?string
     {
         return $this->emailAddress;
     }
 
 
-    /**
-     * Set the value of emailAddress
-     */
     public function setEmailAddress(string $emailAddress): self
     {
         $this->emailAddress = $emailAddress;
@@ -89,19 +70,13 @@ class Contact extends AbstractModel
     }
 
 
-    /**
-     * Get the value of phone
-     */
-    public function getPhone(): ?Attribute\Phone
+    public function getPhone(): ?Phone
     {
         return $this->phone;
     }
 
 
-    /**
-     * Set the value of phone
-     */
-    public function setPhone(Attribute\Phone $phone): self
+    public function setPhone(Phone $phone): self
     {
         $this->phone = $phone;
 

@@ -6,6 +6,12 @@ namespace Rentpost\ForteApi\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * FundingSource model
+ *
+ * @author Sam Anthony <sam@rentpost.com>
+ * @author Jacob Thomason <jacob@rentpost.com>
+ */
 class FundingSource extends AbstractModel
 {
 

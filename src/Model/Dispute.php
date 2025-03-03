@@ -4,7 +4,12 @@ declare(strict_types = 1);
 
 namespace Rentpost\ForteApi\Model;
 
-use Rentpost\ForteApi\Attribute as Attribute;
+use Rentpost\ForteApi\Attribute\DateTime;
+use Rentpost\ForteApi\Attribute\Id\DisputeId;
+use Rentpost\ForteApi\Attribute\Id\LocationId;
+use Rentpost\ForteApi\Attribute\Id\OrganizationId;
+use Rentpost\ForteApi\Attribute\Id\TransactionId;
+use Rentpost\ForteApi\Attribute\Money;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -15,118 +20,51 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Dispute extends AbstractModel
 {
 
-    /**
-     * @var Attribute\Id\DisputeId
-     */
-    #[Assert\NotBlank]
-    protected $disputeId;
+    protected DisputeId $disputeId;
+    protected OrganizationId $organizationId;
+    protected LocationId $locationId;
 
-    /**
-     * @var Attribute\Id\OrganizationId
-     */
-    #[Assert\NotBlank]
-    protected $organizationId;
-
-    /**
-     * @var Attribute\Id\LocationId
-     */
-    #[Assert\NotBlank]
-    protected $locationId;
-
-    /**
-     * @var string
-     */
     #[Assert\NotBlank]
     #[Assert\Choice(['documents needed', 'reviewing', 'pending', 'won', 'lost'])]
-    protected $status;
+    protected string $status;
 
-    /**
-     * @var Attribute\Money
-     */
+    protected Money $disputeAmount;
+    protected Money $originalAmount;
+
     #[Assert\NotBlank]
-    protected $disputeAmount;
+    protected string $actionCode;
 
-    /**
-     * @var Attribute\Money
-     */
-    #[Assert\NotBlank]
-    protected $originalAmount;
-
-    /**
-     * @var string
-     */
-    #[Assert\NotBlank]
-    protected $actionCode;
-
-    /**
-     * @var string
-     */
     #[Assert\NotBlank]
     #[Assert\Choice(['DRFT', 'PNOT', 'CHBK'])]
-    protected $adjustmentType;
+    protected string $adjustmentType;
 
-    /**
-     * @var Attribute\DateTime
-     */
-    #[Assert\NotBlank]
-    protected $receivedDate;
+    protected DateTime $receivedDate;
+    protected DateTime $dueDate;
+    protected DateTime $lastUpdateDate;
+    protected DateTime $lastFundingDate;
 
-    /**
-     * @var Attribute\DateTime
-     */
     #[Assert\NotBlank]
-    protected $dueDate;
+    protected string $commentFromIssuer;
 
-    /**
-     * @var Attribute\DateTime
-     */
-    #[Assert\NotBlank]
-    protected $lastUpdateDate;
-
-    /**
-     * @var Attribute\DateTime
-     */
-    #[Assert\NotBlank]
-    protected $lastFundingDate;
-
-    /**
-     * @var string
-     */
-    #[Assert\NotBlank]
-    protected $commentFromIssuer;
-
-    /**
-     * @var Model\Reason
-     */
-    #[Assert\NotBlank]
     #[Assert\Valid]
-    protected $reason;
+    protected Reason $reason;
 
-    /**
-     * @var Model\Card
-     */
-    #[Assert\NotBlank]
     #[Assert\Valid]
-    protected $card;
+    protected Card $card;
 
-    /**
-     * @var string
-     */
-    protected $transactionId;
+    protected TransactionId $transactionId;
 
-    /**
-     * @var string
-     */
-    protected $disputeNumber;
+    #[Assert\NotBlank]
+    protected string $disputeNumber;
 
 
-    public function getDisputeId(): Attribute\Id\DisputeId
+    public function getDisputeId(): DisputeId
     {
         return $this->disputeId;
     }
 
 
-    public function setDisputeId(Attribute\Id\DisputeId $disputeId): self
+    public function setDisputeId(DisputeId $disputeId): self
     {
         $this->disputeId = $disputeId;
 
@@ -134,13 +72,13 @@ class Dispute extends AbstractModel
     }
 
 
-    public function getOrganizationId(): Attribute\Id\OrganizationId
+    public function getOrganizationId(): OrganizationId
     {
         return $this->organizationId;
     }
 
 
-    public function setOrganizationId(Attribute\Id\OrganizationId $organizationId)
+    public function setOrganizationId(OrganizationId $organizationId): self
     {
         $this->organizationId = $organizationId;
 
@@ -148,13 +86,13 @@ class Dispute extends AbstractModel
     }
 
 
-    public function getLocationId(): Attribute\Id\LocationId
+    public function getLocationId(): LocationId
     {
         return $this->locationId;
     }
 
 
-    public function setLocationId(Attribute\Id\LocationId $locationId): self
+    public function setLocationId(LocationId $locationId): self
     {
         $this->locationId = $locationId;
 
@@ -176,13 +114,13 @@ class Dispute extends AbstractModel
     }
 
 
-    public function getDisputeAmount(): Attribute\Money
+    public function getDisputeAmount(): Money
     {
         return $this->disputeAmount;
     }
 
 
-    public function setDisputeAmount(Attribute\Money $disputeAmount): self
+    public function setDisputeAmount(Money $disputeAmount): self
     {
         $this->disputeAmount = $disputeAmount;
 
@@ -190,13 +128,13 @@ class Dispute extends AbstractModel
     }
 
 
-    public function getOriginalAmount(): Attribute\Money
+    public function getOriginalAmount(): Money
     {
         return $this->originalAmount;
     }
 
 
-    public function setOriginalAmount(Attribute\Money $originalAmount): self
+    public function setOriginalAmount(Money $originalAmount): self
     {
         $this->originalAmount = $originalAmount;
 
@@ -232,13 +170,13 @@ class Dispute extends AbstractModel
     }
 
 
-    public function getReceivedDate(): Attribute\DateTime
+    public function getReceivedDate(): DateTime
     {
         return $this->receivedDate;
     }
 
 
-    public function setReceivedDate(Attribute\DateTime $receivedDate): self
+    public function setReceivedDate(DateTime $receivedDate): self
     {
         $this->receivedDate = $receivedDate;
 
@@ -246,13 +184,13 @@ class Dispute extends AbstractModel
     }
 
 
-    public function getDueDate(): Attribute\DateTime
+    public function getDueDate(): DateTime
     {
         return $this->dueDate;
     }
 
 
-    public function setDueDate(Attribute\DateTime $dueDate): self
+    public function setDueDate(DateTime $dueDate): self
     {
         $this->dueDate = $dueDate;
 
@@ -260,13 +198,13 @@ class Dispute extends AbstractModel
     }
 
 
-    public function getLastUpdateDate(): Attribute\DateTime
+    public function getLastUpdateDate(): DateTime
     {
         return $this->lastUpdateDate;
     }
 
 
-    public function setLastUpdateDate(Attribute\DateTime $lastUpdateDate): self
+    public function setLastUpdateDate(DateTime $lastUpdateDate): self
     {
         $this->lastUpdateDate = $lastUpdateDate;
 
@@ -274,13 +212,13 @@ class Dispute extends AbstractModel
     }
 
 
-    public function getLastFundingDate(): Attribute\DateTime
+    public function getLastFundingDate(): DateTime
     {
         return $this->lastFundingDate;
     }
 
 
-    public function setLastFundingDate(Attribute\DateTime $lastFundingDate): self
+    public function setLastFundingDate(DateTime $lastFundingDate): self
     {
         $this->lastFundingDate = $lastFundingDate;
 
@@ -330,13 +268,13 @@ class Dispute extends AbstractModel
     }
 
 
-    public function getTransactionId(): string
+    public function getTransactionId(): TransactionId
     {
         return $this->transactionId;
     }
 
 
-    public function setTransactionId(string $transactionId): self
+    public function setTransactionId(TransactionId $transactionId): self
     {
         $this->transactionId = $transactionId;
 

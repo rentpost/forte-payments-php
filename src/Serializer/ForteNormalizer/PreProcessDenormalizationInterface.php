@@ -9,10 +9,11 @@ namespace Rentpost\ForteApi\Serializer\ForteNormalizer;
  */
 interface PreProcessDenormalizationInterface
 {
+
     /**
      * @internal Do not call this directly, it will be called by `ForteObjectNormalizer`
      *
-     * @param $data a scalar value or array. This is the data used to "build" the object
+     * @param mixed $data   A scalar value or array. This is the data used to "build" the object
      *
      * Sometimes the data been presented is not quite in a useful state to "build" the object
      *
@@ -22,7 +23,7 @@ interface PreProcessDenormalizationInterface
      * an object which has a property of `fruits`. We can use this method to preprocess the data before
      * its used by the serializer to be denormalized.
      *
-     * @return mixed adjusted scalar value or array ready for denormalization
+     * @return mixed[]    Array ready for denormalization
      */
-    public static function preProcessDataForDenormalization($data): array;
+    public static function preProcessDataForDenormalization(mixed $data): array;
 }

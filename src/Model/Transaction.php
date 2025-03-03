@@ -4,180 +4,106 @@ declare(strict_types = 1);
 
 namespace Rentpost\ForteApi\Model;
 
-use Rentpost\ForteApi\Attribute;
-use Rentpost\ForteApi\Model;
+use Rentpost\ForteApi\Attribute\DateTime;
+use Rentpost\ForteApi\Attribute\Id\CustomerToken;
+use Rentpost\ForteApi\Attribute\Id\LocationId;
+use Rentpost\ForteApi\Attribute\Id\OrganizationId;
+use Rentpost\ForteApi\Attribute\Id\TransactionId;
+use Rentpost\ForteApi\Attribute\IpAddress;
+use Rentpost\ForteApi\Attribute\Money;
 use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * Transaction model
+ *
+ * @author Jacob Thomason <jacob@rentpost.com>
+ */
 class Transaction extends AbstractModel
 {
 
-    /**
-     * @var Attribute\Id\OrganizationId
-     */
-    protected $organizationId;
+    protected OrganizationId $organizationId;
+    protected LocationId $locationId;
 
-    /**
-     * @var Attribute\Id\LocationId
-     */
-    protected $locationId;
-
-    /**
-     * @var string
-     */
     #[Assert\NotBlank]
     #[Assert\Choice(['sale', 'authorize', 'credit', 'void', 'capture', 'inquiry', 'verify', 'force', 'reverse'])]
-    protected $action;
+    protected string $action;
 
-    /**
-     * @var Attribute\Money
-     */
-    protected $authorizationAmount;
+    protected string $status;
 
-    /**
-     * @var Attribute\Id\CustomerToken
-     */
-    protected $customerToken;
+    protected CustomerToken $customerToken;
 
-    /**
-     * @var string
-     */
     #[Assert\Length(max: 15)]
-    protected $customerId;
+    protected ?string $customerId = null;
 
-    /**
-     * @var Attribute\Id\PaymethodToken
-     */
-    protected $paymethodToken;
+    protected ?string $paymethodToken = null;
 
-    /**
-     * @var string
-     */
     #[Assert\Length(max: 15)]
-    protected $referenceId;
+    protected ?string $referenceId = null;
 
-    /**
-     * @var string
-     */
+    protected Money $authorizationAmount;
+
     #[Assert\Length(max: 36)]
-    protected $orderNumber;
+    protected ?string $orderNumber = null;
 
-    /**
-     * @var Attribute\Id\TransactionId
-     */
-    protected $originalTransactionId;
+    protected ?TransactionId $originalTransactionId = null;
+    protected ?TransactionId $transactionId = null;
+    protected string $authorizationCode;
 
-    /**
-     * @var Attribute\Id\TransactionId
-     */
-    protected $transactionId;
-
-    /**
-     * @var string
-     */
-    protected $authorizationCode;
-
-    /**
-     * @var string
-     */
     #[Assert\Length(max: 50)]
-    protected $enteredBy;
+    protected ?string $enteredBy = null;
 
-    /**
-     * Read only
-     * @var Attribute\DateTime
-     */
-    protected $receivedDate;
+    // API read only
+    protected ?DateTime $receivedDate;
 
-    /**
-     * Read only
-     * @var Attribute\DateTime
-     */
-    protected $originationDate;
+    // API read only
+    protected ?DateTime $originationDate;
 
-    /**
-     * @var Attribute\Money
-     */
-    protected $salesTaxAmount;
+    protected ?Money $salesTaxAmount = null;
 
-    /**
-     * Read only
-     * @var Attribute\Money
-     */
-    protected $subtotalAmount;
+    // API read only
+    protected ?Money $subtotalAmount;
 
-    /**
-     * @var Attribute\Money
-     */
-    protected $serviceFeeAmount;
+    protected ?Money $serviceFeeAmount = null;
+    protected ?bool $recurringIndicator = null;
+    protected ?IpAddress $customerIpAddress = null;
 
-    /**
-     * @var boolean
-     */
-    protected $recurringIndicator;
-
-    /**
-     * @var Attribute\IpAddress
-     */
-    protected $customerIpAddress;
-
-    /**
-     * @var string
-     */
     #[Assert\Choice(['customer', 'paymethod'])]
-    protected $saveToken;
+    protected ?string $saveToken = null;
 
-    /**
-     * @var Model\Address
-     */
+    // API read only
+    protected ?string $attemptNumber;
+
+    // API read only
+    protected ?int $cofTransactionType;
+
+    protected ?string $cofInitialTransactionId = null;
+
     #[Assert\Valid]
-    protected $billingAddress;
+    protected Address $billingAddress;
 
-    /**
-     * @var Model\Address
-     */
     #[Assert\Valid]
-    protected $shippingAddress;
+    protected ?Address $shippingAddress = null;
 
-    /**
-     * @var Model\Card
-     */
     #[Assert\Valid]
-    protected $card;
+    protected ?Card $card = null;
 
-    /**
-     * @var Model\Echeck
-     */
     #[Assert\Valid]
-    protected $echeck;
+    protected ?Echeck $echeck = null;
 
-    /**
-     * @var Model\LineItems
-     */
     #[Assert\Valid]
-    protected $lineItems;
+    protected ?LineItems $lineItems = null;
 
-    /**
-     * @var Model\Xdata
-     */
     #[Assert\Valid]
-    protected $xdata;
+    protected ?Xdata $xdata = null;
 
 
-    /**
-     * @return Attribute\Id\OrganizationId
-     */
-    public function getOrganizationId(): ?Attribute\Id\OrganizationId
+    public function getOrganizationId(): OrganizationId
     {
         return $this->organizationId;
     }
 
 
-    /**
-     * @param Attribute\Id\OrganizationId $organizationId
-     *
-     * @return self
-     */
-    public function setOrganizationId(Attribute\Id\OrganizationId $organizationId): self
+    public function setOrganizationId(OrganizationId $organizationId): self
     {
         $this->organizationId = $organizationId;
 
@@ -185,21 +111,13 @@ class Transaction extends AbstractModel
     }
 
 
-    /**
-     * @return Attribute\Id\LocationId
-     */
-    public function getLocationId(): ?Attribute\Id\LocationId
+    public function getLocationId(): LocationId
     {
         return $this->locationId;
     }
 
 
-    /**
-     * @param Attribute\Id\LocationId $locationId
-     *
-     * @return self
-     */
-    public function setLocationId(Attribute\Id\LocationId $locationId): self
+    public function setLocationId(LocationId $locationId): self
     {
         $this->locationId = $locationId;
 
@@ -207,20 +125,12 @@ class Transaction extends AbstractModel
     }
 
 
-    /**
-     * @return string
-     */
     public function getAction(): string
     {
         return $this->action;
     }
 
 
-    /**
-     * @param string $action
-     *
-     * @return self
-     */
     public function setAction(string $action): self
     {
         $this->action = $action;
@@ -229,43 +139,27 @@ class Transaction extends AbstractModel
     }
 
 
-    /**
-     * @return Attribute\Money|null
-     */
-    public function getAuthorizationAmount(): ?Attribute\Money
+    public function getStatus(): string
     {
-        return $this->authorizationAmount;
+        return $this->status;
     }
 
 
-    /**
-     * @param Attribute\Money|null $authorizationAmount
-     *
-     * @return self
-     */
-    public function setAuthorizationAmount(?Attribute\Money $authorizationAmount): self
+    public function setStatus(string $status): self
     {
-        $this->authorizationAmount = $authorizationAmount;
+        $this->status = $status;
 
         return $this;
     }
 
 
-    /**
-     * @return Attribute\Id\CustomerToken
-     */
-    public function getCustomerToken(): ?Attribute\Id\CustomerToken
+    public function getCustomerToken(): CustomerToken
     {
         return $this->customerToken;
     }
 
 
-    /**
-     * @param Attribute\Id\CustomerToken $customerToken
-     *
-     * @return self
-     */
-    public function setCustomerToken(Attribute\Id\CustomerToken $customerToken): self
+    public function setCustomerToken(CustomerToken $customerToken): self
     {
         $this->customerToken = $customerToken;
 
@@ -273,21 +167,13 @@ class Transaction extends AbstractModel
     }
 
 
-    /**
-     * @return string
-     */
     public function getCustomerId(): ?string
     {
         return $this->customerId;
     }
 
 
-    /**
-     * @param string $customerId
-     *
-     * @return self
-     */
-    public function setCustomerId(string $customerId): self
+    public function setCustomerId(?string $customerId): self
     {
         $this->customerId = $customerId;
 
@@ -295,21 +181,13 @@ class Transaction extends AbstractModel
     }
 
 
-    /**
-     * @return Attribute\Id\PaymethodToken
-     */
-    public function getPaymethodToken(): ?Attribute\Id\PaymethodToken
+    public function getPaymethodToken(): ?string
     {
         return $this->paymethodToken;
     }
 
 
-    /**
-     * @param Attribute\Id\PaymethodToken $paymethodToken
-     *
-     * @return self
-     */
-    public function setPaymethodToken(Attribute\Id\PaymethodToken $paymethodToken): self
+    public function setPaymethodToken(?string $paymethodToken): self
     {
         $this->paymethodToken = $paymethodToken;
 
@@ -317,21 +195,13 @@ class Transaction extends AbstractModel
     }
 
 
-    /**
-     * @return string
-     */
     public function getReferenceId(): ?string
     {
         return $this->referenceId;
     }
 
 
-    /**
-     * @param string $referenceId
-     *
-     * @return self
-     */
-    public function setReferenceId(string $referenceId): self
+    public function setReferenceId(?string $referenceId): self
     {
         $this->referenceId = $referenceId;
 
@@ -339,21 +209,27 @@ class Transaction extends AbstractModel
     }
 
 
-    /**
-     * @return string
-     */
+    public function getAuthorizationAmount(): Money
+    {
+        return $this->authorizationAmount;
+    }
+
+
+    public function setAuthorizationAmount(Money $authorizationAmount): self
+    {
+        $this->authorizationAmount = $authorizationAmount;
+
+        return $this;
+    }
+
+
     public function getOrderNumber(): ?string
     {
         return $this->orderNumber;
     }
 
 
-    /**
-     * @param string $orderNumber
-     *
-     * @return self
-     */
-    public function setOrderNumber(string $orderNumber): self
+    public function setOrderNumber(?string $orderNumber): self
     {
         $this->orderNumber = $orderNumber;
 
@@ -361,21 +237,13 @@ class Transaction extends AbstractModel
     }
 
 
-    /**
-     * @return Attribute\Id\TransactionId
-     */
-    public function getOriginalTransactionId(): ?Attribute\Id\TransactionId
+    public function getOriginalTransactionId(): ?TransactionId
     {
         return $this->originalTransactionId;
     }
 
 
-    /**
-     * @param Attribute\Id\TransactionId $originalTransactionId
-     *
-     * @return self
-     */
-    public function setOriginalTransactionId(Attribute\Id\TransactionId $originalTransactionId): self
+    public function setOriginalTransactionId(?TransactionId $originalTransactionId): self
     {
         $this->originalTransactionId = $originalTransactionId;
 
@@ -383,21 +251,13 @@ class Transaction extends AbstractModel
     }
 
 
-    /**
-     * @return Attribute\Id\TransactionId
-     */
-    public function getTransactionId(): ?Attribute\Id\TransactionId
+    public function getTransactionId(): ?TransactionId
     {
         return $this->transactionId;
     }
 
 
-    /**
-     * @param Attribute\Id\TransactionId $transactionId
-     *
-     * @return self
-     */
-    public function setTransactionId(Attribute\Id\TransactionId $transactionId): self
+    public function setTransactionId(?TransactionId $transactionId): self
     {
         $this->transactionId = $transactionId;
 
@@ -405,20 +265,12 @@ class Transaction extends AbstractModel
     }
 
 
-    /**
-     * @return string
-     */
-    public function getAuthorizationCode(): ?string
+    public function getAuthorizationCode(): string
     {
         return $this->authorizationCode;
     }
 
 
-    /**
-     * @param string $authorizationCode
-     *
-     * @return self
-     */
     public function setAuthorizationCode(string $authorizationCode): self
     {
         $this->authorizationCode = $authorizationCode;
@@ -427,21 +279,13 @@ class Transaction extends AbstractModel
     }
 
 
-    /**
-     * @return string
-     */
     public function getEnteredBy(): ?string
     {
         return $this->enteredBy;
     }
 
 
-    /**
-     * @param string $enteredBy
-     *
-     * @return self
-     */
-    public function setEnteredBy(string $enteredBy): self
+    public function setEnteredBy(?string $enteredBy): self
     {
         $this->enteredBy = $enteredBy;
 
@@ -449,65 +293,25 @@ class Transaction extends AbstractModel
     }
 
 
-    /**
-     * @return Attribute\DateTime
-     */
-    public function getReceivedDate(): ?Attribute\DateTime
+    public function getReceivedDate(): ?DateTime
     {
         return $this->receivedDate;
     }
 
 
-    /**
-     * @param Attribute\DateTime $receivedDate
-     *
-     * @return self
-     */
-    public function setReceivedDate(Attribute\DateTime $receivedDate): self
-    {
-        $this->receivedDate = $receivedDate;
-
-        return $this;
-    }
-
-
-    /**
-     * @return Attribute\DateTime
-     */
-    public function getOriginationDate(): ?Attribute\DateTime
+    public function getOriginationDate(): ?DateTime
     {
         return $this->originationDate;
     }
 
 
-    /**
-     * @param Attribute\DateTime $originationDate
-     *
-     * @return self
-     */
-    public function setOriginationDate(Attribute\DateTime $originationDate): self
-    {
-        $this->originationDate = $originationDate;
-
-        return $this;
-    }
-
-
-    /**
-     * @return Attribute\Money
-     */
-    public function getSalesTaxAmount(): ?Attribute\Money
+    public function getSalesTaxAmount(): ?Money
     {
         return $this->salesTaxAmount;
     }
 
 
-    /**
-     * @param Attribute\Money $salesTaxAmount
-     *
-     * @return self
-     */
-    public function setSalesTaxAmount(Attribute\Money $salesTaxAmount): self
+    public function setSalesTaxAmount(?Money $salesTaxAmount): self
     {
         $this->salesTaxAmount = $salesTaxAmount;
 
@@ -515,43 +319,19 @@ class Transaction extends AbstractModel
     }
 
 
-    /**
-     * @return Attribute\Money
-     */
-    public function getSubtotalAmount(): ?Attribute\Money
+    public function getSubtotalAmount(): ?Money
     {
         return $this->subtotalAmount;
     }
 
 
-    /**
-     * @param Attribute\Money $subtotalAmount
-     *
-     * @return self
-     */
-    public function setSubtotalAmount(Attribute\Money $subtotalAmount): self
-    {
-        $this->subtotalAmount = $subtotalAmount;
-
-        return $this;
-    }
-
-
-    /**
-     * @return Attribute\Money
-     */
-    public function getServiceFeeAmount(): ?Attribute\Money
+    public function getServiceFeeAmount(): ?Money
     {
         return $this->serviceFeeAmount;
     }
 
 
-    /**
-     * @param Attribute\Money $serviceFeeAmount
-     *
-     * @return self
-     */
-    public function setServiceFeeAmount(Attribute\Money $serviceFeeAmount): self
+    public function setServiceFeeAmount(?Money $serviceFeeAmount): self
     {
         $this->serviceFeeAmount = $serviceFeeAmount;
 
@@ -559,21 +339,13 @@ class Transaction extends AbstractModel
     }
 
 
-    /**
-     * @return bool
-     */
     public function getRecurringIndicator(): ?bool
     {
         return $this->recurringIndicator;
     }
 
 
-    /**
-     * @param string $recurringIndicator
-     *
-     * @return self
-     */
-    public function setRecurringIndicator(string $recurringIndicator): self
+    public function setRecurringIndicator(?bool $recurringIndicator): self
     {
         $this->recurringIndicator = $recurringIndicator;
 
@@ -581,21 +353,13 @@ class Transaction extends AbstractModel
     }
 
 
-    /**
-     * @return Attribute\IpAddress
-     */
-    public function getCustomerIpAddress(): ?Attribute\IpAddress
+    public function getCustomerIpAddress(): ?IpAddress
     {
         return $this->customerIpAddress;
     }
 
 
-    /**
-     * @param Attribute\IpAddress $customerIpAddress
-     *
-     * @return self
-     */
-    public function setCustomerIpAddress(Attribute\IpAddress $customerIpAddress): self
+    public function setCustomerIpAddress(?IpAddress $customerIpAddress): self
     {
         $this->customerIpAddress = $customerIpAddress;
 
@@ -603,21 +367,13 @@ class Transaction extends AbstractModel
     }
 
 
-    /**
-     * @return string
-     */
     public function getSaveToken(): ?string
     {
         return $this->saveToken;
     }
 
 
-    /**
-     * @param string $saveToken
-     *
-     * @return self
-     */
-    public function setSaveToken(string $saveToken): self
+    public function setSaveToken(?string $saveToken): self
     {
         $this->saveToken = $saveToken;
 
@@ -625,21 +381,39 @@ class Transaction extends AbstractModel
     }
 
 
-    /**
-     * @return Model\Address
-     */
-    public function getBillingAddress(): ?Model\Address
+    public function getAttemptNumber(): ?string
+    {
+        return $this->attemptNumber;
+    }
+
+
+    public function getCofTransactionType(): ?int
+    {
+        return $this->cofTransactionType;
+    }
+
+
+    public function getCofInitialTransactionId(): ?string
+    {
+        return $this->cofInitialTransactionId;
+    }
+
+
+    public function setCofInitialTransactionId(?string $cofInitialTransactionId): self
+    {
+        $this->cofInitialTransactionId = $cofInitialTransactionId;
+
+        return $this;
+    }
+
+
+    public function getBillingAddress(): Address
     {
         return $this->billingAddress;
     }
 
 
-    /**
-     * @param Model\Address $billingAddress
-     *
-     * @return self
-     */
-    public function setBillingAddress(Model\Address $billingAddress): self
+    public function setBillingAddress(Address $billingAddress): self
     {
         $this->billingAddress = $billingAddress;
 
@@ -647,21 +421,13 @@ class Transaction extends AbstractModel
     }
 
 
-    /**
-     * @return Model\Address
-     */
-    public function getShippingAddress(): ?Model\Address
+    public function getShippingAddress(): ?Address
     {
         return $this->shippingAddress;
     }
 
 
-    /**
-     * @param Model\Address $shippingAddress
-     *
-     * @return self
-     */
-    public function setShippingAddress(Model\Address $shippingAddress): self
+    public function setShippingAddress(?Address $shippingAddress): self
     {
         $this->shippingAddress = $shippingAddress;
 
@@ -669,21 +435,13 @@ class Transaction extends AbstractModel
     }
 
 
-    /**
-     * @return Model\Card
-     */
-    public function getCard(): ?Model\Card
+    public function getCard(): ?Card
     {
         return $this->card;
     }
 
 
-    /**
-     * @param Model\Card $card
-     *
-     * @return self
-     */
-    public function setCard(Model\Card $card): self
+    public function setCard(?Card $card): self
     {
         $this->card = $card;
 
@@ -691,21 +449,13 @@ class Transaction extends AbstractModel
     }
 
 
-    /**
-     * @return Model\Echeck
-     */
-    public function getEcheck(): ?Model\Echeck
+    public function getEcheck(): ?Echeck
     {
         return $this->echeck;
     }
 
 
-    /**
-     * @param Model\Echeck $echeck
-     *
-     * @return self
-     */
-    public function setEcheck(Model\Echeck $echeck): self
+    public function setEcheck(?Echeck $echeck): self
     {
         $this->echeck = $echeck;
 
@@ -713,21 +463,13 @@ class Transaction extends AbstractModel
     }
 
 
-    /**
-     * @return Model\LineItems
-     */
-    public function getLineItems(): ?Model\LineItems
+    public function getLineItems(): ?LineItems
     {
         return $this->lineItems;
     }
 
 
-    /**
-     * @param Model\LineItems $lineItems
-     *
-     * @return self
-     */
-    public function setLineItems(Model\LineItems $lineItems): self
+    public function setLineItems(?LineItems $lineItems): self
     {
         $this->lineItems = $lineItems;
 
@@ -735,21 +477,13 @@ class Transaction extends AbstractModel
     }
 
 
-    /**
-     * @return Model\Xdata
-     */
-    public function getXdata(): ?Model\Xdata
+    public function getXdata(): ?Xdata
     {
         return $this->xdata;
     }
 
 
-    /**
-     * @param Model\Xdata $xdata
-     *
-     * @return self
-     */
-    public function setXdata(Model\Xdata $xdata): self
+    public function setXdata(?Xdata $xdata): self
     {
         $this->xdata = $xdata;
 
