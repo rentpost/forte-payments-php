@@ -21,12 +21,13 @@ class PhysicalAddress extends AbstractModel
     protected string $streetLine1;
 
     #[Assert\Length(max: 35)]
-    protected string $streetLine2;
+    protected ?string $streetLine2;
 
     #[Assert\NotBlank]
     #[Assert\Length(max: 25)]
     protected string $locality;
 
+    #[Assert\NotBlank]
     #[Assert\Length(max: 10)]
     protected string $region;
 
