@@ -45,7 +45,7 @@ class Document extends AbstractModel
     }
 
 
-    public function setDocumentId(DocumentId $documentId): self
+    public function setDocumentId(?DocumentId $documentId): self
     {
         $this->documentId = $documentId;
 
@@ -53,13 +53,13 @@ class Document extends AbstractModel
     }
 
 
-    public function getResource(): string
+    public function getResource(): ?string
     {
         return $this->resource;
     }
 
 
-    public function setResource(string $resource): self
+    public function setResource(?string $resource): self
     {
         $this->resource = $resource;
 
@@ -67,13 +67,13 @@ class Document extends AbstractModel
     }
 
 
-    public function getResourceId(): DocumentResourceId
+    public function getResourceId(): ?DocumentResourceId
     {
         return $this->resourceId;
     }
 
 
-    public function setResourceId(DocumentResourceId $resourceId): self
+    public function setResourceId(?DocumentResourceId $resourceId): self
     {
         $this->resourceId = $resourceId;
 
@@ -81,13 +81,13 @@ class Document extends AbstractModel
     }
 
 
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
 
-    public function setDescription(string $description): self
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
 
@@ -101,7 +101,7 @@ class Document extends AbstractModel
     }
 
 
-    public function setSize(int $size): self
+    public function setSize(?int $size): self
     {
         $this->size = $size;
 
@@ -115,7 +115,7 @@ class Document extends AbstractModel
     }
 
 
-    public function setReceivedDate(Date $receivedDate): self
+    public function setReceivedDate(?Date $receivedDate): self
     {
         $this->receivedDate = $receivedDate;
 
@@ -129,7 +129,7 @@ class Document extends AbstractModel
     }
 
 
-    public function setFile(string $file): self
+    public function setFile(?string $file): self
     {
         $this->file = $file;
 

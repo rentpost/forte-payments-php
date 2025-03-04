@@ -141,7 +141,7 @@ class Funding extends AbstractModel
     /**
      * @internal api read only field
      */
-    public function setEffectiveDate(DateTime $effectiveDate): self
+    public function setEffectiveDate(?DateTime $effectiveDate): self
     {
         $this->effectiveDate = $effectiveDate;
 
@@ -161,7 +161,7 @@ class Funding extends AbstractModel
     /**
      * @internal api read only field
      */
-    public function setOriginationDate(DateTime $originationDate): self
+    public function setOriginationDate(?DateTime $originationDate): self
     {
         $this->originationDate = $originationDate;
 
@@ -181,7 +181,7 @@ class Funding extends AbstractModel
     /**
      * @internal api read only field
      */
-    public function setNetAmount(Decimal $netAmount): self
+    public function setNetAmount(?Decimal $netAmount): self
     {
         $this->netAmount = $netAmount;
 

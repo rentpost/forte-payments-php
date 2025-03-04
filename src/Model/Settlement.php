@@ -92,7 +92,7 @@ class Settlement extends AbstractModel
     }
 
 
-    public function setFundingId(FundingId $fundingId): self
+    public function setFundingId(?FundingId $fundingId): self
     {
         $this->fundingId = $fundingId;
 
@@ -113,7 +113,7 @@ class Settlement extends AbstractModel
     /**
      * @internal api read only field
      */
-    public function setCustomerToken(CustomerToken $customerToken): self
+    public function setCustomerToken(?CustomerToken $customerToken): self
     {
         $this->customerToken = $customerToken;
 
@@ -257,7 +257,7 @@ class Settlement extends AbstractModel
     /**
      * @internal api read only field
      */
-    public function setSettleDate(DateTime $settleDate): self
+    public function setSettleDate(?DateTime $settleDate): self
     {
         $this->settleDate = $settleDate;
 
@@ -284,7 +284,7 @@ class Settlement extends AbstractModel
     /**
      * @internal api read only field
      */
-    public function setSettleType(string $settleType): self
+    public function setSettleType(?string $settleType): self
     {
         $this->settleType = $settleType;
 
@@ -328,7 +328,7 @@ class Settlement extends AbstractModel
     /**
      * @internal api read only field
      */
-    public function setSettleAmount(Decimal $settleAmount): self
+    public function setSettleAmount(?Decimal $settleAmount): self
     {
         $this->settleAmount = $settleAmount;
 

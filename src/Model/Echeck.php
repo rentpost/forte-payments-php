@@ -60,7 +60,7 @@ class Echeck extends AbstractModel
     /**
      * @internal api read only field
      */
-    public function setLast4AccountNumber(string $last4AccountNumber): self
+    public function setLast4AccountNumber(?string $last4AccountNumber): self
     {
         $this->last4AccountNumber = $last4AccountNumber;
 
@@ -102,7 +102,7 @@ class Echeck extends AbstractModel
     }
 
 
-    public function setAccountType(string $accountType): self
+    public function setAccountType(?string $accountType): self
     {
         $this->accountType = $accountType;
 
@@ -116,7 +116,7 @@ class Echeck extends AbstractModel
     }
 
 
-    public function setItemDescription(string $itemDescription): self
+    public function setItemDescription(?string $itemDescription): self
     {
         $this->itemDescription = $itemDescription;
 
@@ -130,7 +130,7 @@ class Echeck extends AbstractModel
     }
 
 
-    public function setSecCode(string $secCode): self
+    public function setSecCode(?string $secCode): self
     {
         $this->secCode = $secCode;
 
@@ -144,7 +144,7 @@ class Echeck extends AbstractModel
     }
 
 
-    public function setOneTimeToken(OneTimeToken $oneTimeToken): self
+    public function setOneTimeToken(?OneTimeToken $oneTimeToken): self
     {
         $this->oneTimeToken = $oneTimeToken;
 

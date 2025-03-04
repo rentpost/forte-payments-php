@@ -89,7 +89,7 @@ class Application extends AbstractModel
     }
 
 
-    public function setApplicationId(ApplicationId $applicationId): self
+    public function setApplicationId(?ApplicationId $applicationId): self
     {
         $this->applicationId = $applicationId;
 
@@ -341,7 +341,7 @@ class Application extends AbstractModel
     }
 
 
-    public function setReceivedDate(DateTime $receivedDate): self
+    public function setReceivedDate(?DateTime $receivedDate): self
     {
         $this->receivedDate = $receivedDate;
 
@@ -355,7 +355,7 @@ class Application extends AbstractModel
     }
 
 
-    public function setUpdatedDate(DateTime $updatedDate): self
+    public function setUpdatedDate(?DateTime $updatedDate): self
     {
         $this->updatedDate = $updatedDate;
 
@@ -369,7 +369,7 @@ class Application extends AbstractModel
     }
 
 
-    public function setSalesRep(string $salesRep): self
+    public function setSalesRep(?string $salesRep): self
     {
         $this->salesRep = $salesRep;
 
@@ -383,7 +383,7 @@ class Application extends AbstractModel
     }
 
 
-    public function setFeePlan(string $feePlan): self
+    public function setFeePlan(?string $feePlan): self
     {
         $this->feePlan = $feePlan;
 

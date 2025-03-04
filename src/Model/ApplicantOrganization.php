@@ -288,7 +288,7 @@ class ApplicantOrganization extends AbstractModel
     }
 
 
-    public function setOrganizationId(OrganizationId $organizationId): self
+    public function setOrganizationId(?OrganizationId $organizationId): self
     {
         $this->organizationId = $organizationId;
 

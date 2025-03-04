@@ -37,7 +37,7 @@ class Card extends AbstractModel
     protected int $expireYear;
 
     #[Assert\Length(max: 5)]
-    protected string $cardVerificationValue;
+    protected ?string $cardVerificationValue = null;
 
     protected ?bool $procurementCard = null;
 
@@ -104,7 +104,7 @@ class Card extends AbstractModel
     }
 
 
-    public function setLast4AccountNumber(string $last4AccountNumber): self
+    public function setLast4AccountNumber(?string $last4AccountNumber): self
     {
         $this->last4AccountNumber = $last4AccountNumber;
 
@@ -140,13 +140,13 @@ class Card extends AbstractModel
     }
 
 
-    public function getCardVerificationValue(): string
+    public function getCardVerificationValue(): ?string
     {
         return $this->cardVerificationValue;
     }
 
 
-    public function setCardVerificationValue(string $cardVerificationValue): self
+    public function setCardVerificationValue(?string $cardVerificationValue): self
     {
         $this->cardVerificationValue = $cardVerificationValue;
 
@@ -160,7 +160,7 @@ class Card extends AbstractModel
     }
 
 
-    public function setProcurementCard(bool $procurementCard): self
+    public function setProcurementCard(?bool $procurementCard): self
     {
         $this->procurementCard = $procurementCard;
 
@@ -174,7 +174,7 @@ class Card extends AbstractModel
     }
 
 
-    public function setCustomerAccountingCode(string $customerAccountingCode): self
+    public function setCustomerAccountingCode(?string $customerAccountingCode): self
     {
         $this->customerAccountingCode = $customerAccountingCode;
 
@@ -188,7 +188,7 @@ class Card extends AbstractModel
     }
 
 
-    public function setOneTimeToken(OneTimeToken $oneTimeToken): self
+    public function setOneTimeToken(?OneTimeToken $oneTimeToken): self
     {
         $this->oneTimeToken = $oneTimeToken;
 
@@ -202,7 +202,7 @@ class Card extends AbstractModel
     }
 
 
-    public function setCardReader(string $cardReader): self
+    public function setCardReader(?string $cardReader): self
     {
         $this->cardReader = $cardReader;
 
@@ -216,7 +216,7 @@ class Card extends AbstractModel
     }
 
 
-    public function setCardData(string $cardData): self
+    public function setCardData(?string $cardData): self
     {
         $this->cardData = $cardData;
 

@@ -34,7 +34,7 @@ class Contact extends AbstractModel
     }
 
 
-    public function setType(string $type): self
+    public function setType(?string $type): self
     {
         $this->type = $type;
 
@@ -48,7 +48,7 @@ class Contact extends AbstractModel
     }
 
 
-    public function setFullName(string $fullName): self
+    public function setFullName(?string $fullName): self
     {
         $this->fullName = $fullName;
 
@@ -62,7 +62,7 @@ class Contact extends AbstractModel
     }
 
 
-    public function setEmailAddress(string $emailAddress): self
+    public function setEmailAddress(?string $emailAddress): self
     {
         $this->emailAddress = $emailAddress;
 
@@ -76,7 +76,7 @@ class Contact extends AbstractModel
     }
 
 
-    public function setPhone(Phone $phone): self
+    public function setPhone(?Phone $phone): self
     {
         $this->phone = $phone;
 
