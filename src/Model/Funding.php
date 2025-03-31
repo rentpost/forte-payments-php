@@ -43,7 +43,7 @@ class Funding extends AbstractModel
 
     protected FundingSource $fundingSource;
     protected ?string $entryDescription = null;
-    protected ?string $fundingResponseCode;
+    protected ?string $fundingResponseCode = null;
 
 
     /**
