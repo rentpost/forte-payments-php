@@ -48,10 +48,11 @@ class HttpClient
         string $uri,
         string $responseModelFqns,
         array $options = [],
-        int $retryAttempts = 3
+        int $retryAttempts = 3,
     ): AbstractModel
     {
-        if ($overrideJson = RequestOverrideHack::getOverrideJson()) {
+        $overrideJson = RequestOverrideHack::getOverrideJson();
+        if ($overrideJson) {
             return $this->validatingSerializer->deserialize($overrideJson, $responseModelFqns);
         }
 
@@ -61,10 +62,10 @@ class HttpClient
             $model = $this->validatingSerializer->deserialize($json, $responseModelFqns);
         } catch (ConnectException $e) {
             if ($retryAttempts > 0) {
-                $this->doRequest($httpMethod, $uri, $responseModelFqns, $options, $retryAttempts);
+                sleep(3);
+                $retryAttempts--;
 
-                sleep(2); // Wait a few seconds before hitting the endpoint again
-                $retryAttempts--; // Decrement attempts to retry the request
+                return $this->doRequest($httpMethod, $uri, $responseModelFqns, $options, $retryAttempts);
             }
 
             throw $e;
@@ -76,16 +77,15 @@ class HttpClient
             // These response codes are generally tempoorary and can be retried
             if (in_array($response->getStatusCode(), [502, 503, 504])) {
                 if ($retryAttempts > 0) {
-                    $this->doRequest($httpMethod, $uri, $responseModelFqns, $options, $retryAttempts);
+                    sleep(3);
+                    $retryAttempts--;
 
-                    sleep(3); // Wait a few seconds before hitting the endpoint again
-                    $retryAttempts--; // Decrement attempts to retry the request
+                    return $this->doRequest($httpMethod, $uri, $responseModelFqns, $options, $retryAttempts);
                 }
             }
 
             throw $e;
         }
-
 
         if ($response->getStatusCode() < 200 || $response->getStatusCode() >= 300) {
             throw ExceptionRequestFactory::make($response, $model);
@@ -111,7 +111,7 @@ class HttpClient
         string $httpMethod,
         string $uri,
         string $responseModelFqns,
-        ?AbstractModel $requestDataModel = null
+        ?AbstractModel $requestDataModel = null,
     ): AbstractModel
     {
         if ($requestDataModel) {
@@ -143,7 +143,7 @@ class HttpClient
         string $uri,
         string $responseModelFqns,
         AbstractModel $requestDataModel,
-        Attachment $attachment
+        Attachment $attachment,
     ): AbstractModel
     {
         $boundary = uniqid('rp', true);

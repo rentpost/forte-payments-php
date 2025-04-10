@@ -61,7 +61,7 @@ class ApplicationSubResource extends AbstractSubResource
      */
     public function find(
         ?ApplicationFilter $filter = null,
-        ?PaginationData $paginationData = null
+        ?PaginationData $paginationData = null,
     ): Model\ApplicationCollection
     {
         $uri = UriBuilder::build(
