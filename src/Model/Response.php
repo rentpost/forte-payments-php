@@ -15,24 +15,24 @@ use Rentpost\ForteApi\Attribute\Money;
 class Response extends AbstractModel
 {
 
-    protected ?string $responseDesc;
-    protected ?string $environment;
+    protected ?string $responseDesc = null;
+    protected ?string $environment = null;
 
     /**
      * The code indicating whether or not the transaction was authorized.
      * This field is not used for voiding transactions
      */
-    protected ?string $authorizationCode;
+    protected ?string $authorizationCode = null;
 
-    protected ?string $responseType;
-    protected ?string $responseCode;
-    protected ?string $preauthResult;
-    protected ?string $preauthDesc;
-    protected ?string $preauthNegReport;
-    protected ?string $avsResult;
-    protected ?string $cvvResult;
-    protected ?Money $availableCardBalance;
-    protected ?Money $requestedAmount;
+    protected ?string $responseType = null;
+    protected ?string $responseCode = null;
+    protected ?string $preauthResult = null;
+    protected ?string $preauthDesc = null;
+    protected ?string $preauthNegReport = null;
+    protected ?string $avsResult = null;
+    protected ?string $cvvResult = null;
+    protected ?Money $availableCardBalance = null;
+    protected ?Money $requestedAmount = null;
 
 
     public function getResponseDesc(): ?string
