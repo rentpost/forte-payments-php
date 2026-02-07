@@ -22,7 +22,7 @@ class Owner extends AbstractModel
     protected float $percentage;
 
     #[Assert\NotBlank]
-    #[Assert\Choice(['ceo', 'cfo', 'coo', 'managing_member', 'general_partner', 'president', 'vice_president', 'treasurer', 'other'])]
+    #[Assert\Choice(choices: ['ceo', 'cfo', 'coo', 'managing_member', 'general_partner', 'president', 'vice_president', 'treasurer', 'other'])]
     protected string $title;
 
     #[Assert\NotBlank]

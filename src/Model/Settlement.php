@@ -36,13 +36,13 @@ class Settlement extends AbstractModel
     protected ?DateTime $settleDate;
 
     #[Assert\NotBlank(allowNull: true)]
-    #[Assert\Choice(['deposit', 'reject', 'withdrawal'])]
+    #[Assert\Choice(choices: ['deposit', 'reject', 'withdrawal'])]
     protected ?string $settleType;
 
     protected ?string $settleResponseCode = null;
     protected ?Decimal $settleAmount;
 
-    #[Assert\Choice(['echeck', 'cc'])]
+    #[Assert\Choice(choices: ['echeck', 'cc'])]
     protected string $method;
 
 

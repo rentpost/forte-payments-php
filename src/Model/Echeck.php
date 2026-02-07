@@ -26,7 +26,7 @@ class Echeck extends AbstractModel
     protected BankAccountNumber $accountNumber;
     protected BankRoutingNumber $routingNumber;
 
-    #[Assert\Choice(['Checking', 'Savings'])]
+    #[Assert\Choice(choices: ['Checking', 'Savings'])]
     protected ?string $accountType = null;
 
     protected ?string $itemDescription = null;

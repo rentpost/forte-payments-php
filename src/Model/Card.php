@@ -17,7 +17,7 @@ class Card extends AbstractModel
 {
 
     #[Assert\NotBlank]
-    #[Assert\Choice(['mast', 'visa', 'amex', 'disc', 'dine', 'jcb'])]
+    #[Assert\Choice(choices: ['mast', 'visa', 'amex', 'disc', 'dine', 'jcb'])]
     protected string $cardType;
 
     #[Assert\NotBlank]

@@ -25,7 +25,7 @@ class Dispute extends AbstractModel
     protected LocationId $locationId;
 
     #[Assert\NotBlank]
-    #[Assert\Choice(['documents needed', 'reviewing', 'pending', 'won', 'lost'])]
+    #[Assert\Choice(choices: ['documents needed', 'reviewing', 'pending', 'won', 'lost'])]
     protected string $status;
 
     protected Money $disputeAmount;
@@ -35,7 +35,7 @@ class Dispute extends AbstractModel
     protected string $actionCode;
 
     #[Assert\NotBlank]
-    #[Assert\Choice(['DRFT', 'PNOT', 'CHBK'])]
+    #[Assert\Choice(choices: ['DRFT', 'PNOT', 'CHBK'])]
     protected string $adjustmentType;
 
     protected DateTime $receivedDate;

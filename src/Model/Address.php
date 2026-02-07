@@ -47,10 +47,10 @@ class Address extends AbstractModel
     #[Assert\Length(max: 50)]
     protected ?string $label = null;
 
-    #[Assert\Choice(['default_billing', 'none', 'both'])]
+    #[Assert\Choice(choices: ['default_billing', 'none', 'both'])]
     protected ?string $addressType = null;
 
-    #[Assert\Choice(['residential', 'commercial'])]
+    #[Assert\Choice(choices: ['residential', 'commercial'])]
     protected string $shippingAddressType;
 
     #[Assert\Valid]

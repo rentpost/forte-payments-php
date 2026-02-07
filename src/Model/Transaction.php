@@ -25,7 +25,7 @@ class Transaction extends AbstractModel
     protected LocationId $locationId;
 
     #[Assert\NotBlank]
-    #[Assert\Choice(['sale', 'authorize', 'credit', 'void', 'capture', 'inquiry', 'verify', 'force', 'reverse'])]
+    #[Assert\Choice(choices: ['sale', 'authorize', 'credit', 'void', 'capture', 'inquiry', 'verify', 'force', 'reverse'])]
     protected string $action;
 
     protected string $status;
@@ -67,7 +67,7 @@ class Transaction extends AbstractModel
     protected ?bool $recurringIndicator = null;
     protected ?IpAddress $customerIpAddress = null;
 
-    #[Assert\Choice(['customer', 'paymethod'])]
+    #[Assert\Choice(choices: ['customer', 'paymethod'])]
     protected ?string $saveToken = null;
 
     // API read only

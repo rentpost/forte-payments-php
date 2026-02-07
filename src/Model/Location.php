@@ -22,7 +22,7 @@ class Location extends AbstractModel
     protected OrganizationId $organizationId;
     protected LocationId $locationId;
 
-    #[Assert\Choice(['live', 'pending', 'closing', 'on-hold', 'deleted'])]
+    #[Assert\Choice(choices: ['live', 'pending', 'closing', 'on-hold', 'deleted'])]
     protected string $status;
 
     /**
@@ -54,7 +54,7 @@ class Location extends AbstractModel
     protected string $currency;
 
     #[Assert\Length(max: 2)]
-    #[Assert\Choice(['PT', 'MT', 'CT', 'ET'])]
+    #[Assert\Choice(choices: ['PT', 'MT', 'CT', 'ET'])]
     protected string $timezone;
 
     #[Assert\Length(max: 20)]

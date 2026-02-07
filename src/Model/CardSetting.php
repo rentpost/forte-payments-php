@@ -17,7 +17,7 @@ class CardSetting extends AbstractModel
 
     protected ?DateTime $cutOffTime = null;
 
-    #[Assert\Choice(['internet', 'phone', 'mail', 'point_of_sale'])]
+    #[Assert\Choice(choices: ['internet', 'phone', 'mail', 'point_of_sale'])]
     protected ?string $marketType = null;
 
     protected ?int $serviceFeePercentage = null;
@@ -34,13 +34,13 @@ class CardSetting extends AbstractModel
     protected ?float $serviceFeeVisaTaxAmount = null;
 
     /** @var string[] */
-    #[Assert\Choice(['VISA', 'AMEX', 'MC', 'JCB', 'DISC'])]
+    #[Assert\Choice(choices: ['VISA', 'AMEX', 'MC', 'JCB', 'DISC'])]
     protected ?array $cardTypes = null;
 
-    #[Assert\Choice(['enabled', 'disabled'])]
+    #[Assert\Choice(choices: ['enabled', 'disabled'])]
     protected ?string $accountUpdater = null;
 
-    #[Assert\Choice([true, false])]
+    #[Assert\Choice(choices: [true, false])]
     protected ?bool $gateway = null;
 
     protected ?string $platform = null;

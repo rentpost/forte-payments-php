@@ -25,7 +25,7 @@ class Funding extends AbstractModel
     protected LocationId $locationId;
     protected FundingId $fundingId;
 
-    #[Assert\Choice(['completed', 'pending', 'failed', 'not_applicable'])]
+    #[Assert\Choice(choices: ['completed', 'pending', 'failed', 'not_applicable'])]
     protected string $status;
 
     protected ?DateTime $effectiveDate;

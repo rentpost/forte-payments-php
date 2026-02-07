@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Contact extends AbstractModel
 {
 
-    #[Assert\Choice(['primary', 'sales', 'billing', 'support', 'technical'])]
+    #[Assert\Choice(choices: ['primary', 'sales', 'billing', 'support', 'technical'])]
     protected ?string $type = null;
 
     #[Assert\NotBlank(allowNull: true)]

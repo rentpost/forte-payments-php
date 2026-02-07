@@ -34,7 +34,7 @@ class Application extends AbstractModel
     protected Money $averageTransactionAmount;
 
     #[Assert\NotBlank]
-    #[Assert\Choice(['internet', 'phone', 'mail', 'point_of_sale'])]
+    #[Assert\Choice(choices: ['internet', 'phone', 'mail', 'point_of_sale'])]
     protected string $marketType;
 
     #[Assert\NotBlank]
@@ -76,7 +76,7 @@ class Application extends AbstractModel
     protected ?string $feePlan = null;
     protected ?LocationId $locationId = null;
 
-    #[Assert\Choice(['approved', 'pending', 'declined', 'enrolled', 'rejected', 'recalled'])]
+    #[Assert\Choice(choices: ['approved', 'pending', 'declined', 'enrolled', 'rejected', 'recalled'])]
     protected ?string $status = null;
 
     /** @var string[] */

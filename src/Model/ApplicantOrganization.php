@@ -28,7 +28,7 @@ class ApplicantOrganization extends AbstractModel
     protected TaxIdNumber $taxIdNumber;
 
     #[Assert\NotBlank]
-    #[Assert\Choice(['c_corporation', 'government', 'limited_liability_corporation', 'partnership_general_or_limited', 'publicly_held_corporation', 's_corporation', 'sole_proprietorship', 'tax_exempt_or_non_profit_organization'])]
+    #[Assert\Choice(choices: ['c_corporation', 'government', 'limited_liability_corporation', 'partnership_general_or_limited', 'publicly_held_corporation', 's_corporation', 'sole_proprietorship', 'tax_exempt_or_non_profit_organization'])]
     protected string $legalStructure;
 
     #[Assert\NotBlank]
@@ -66,7 +66,7 @@ class ApplicantOrganization extends AbstractModel
     #[Assert\NotBlank]
     protected BankAccountNumber $bankAccountNumber;
 
-    #[Assert\Choice(['checking', 'savings'])]
+    #[Assert\Choice(choices: ['checking', 'savings'])]
     protected string $bankAccountType;
 
     protected ?OrganizationId $organizationId = null;

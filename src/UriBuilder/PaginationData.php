@@ -19,7 +19,7 @@ class PaginationData implements ValidatableSerializableInterface
     /**
      * @var string
      */
-    #[Assert\Choice(['asc', 'desc'])]
+    #[Assert\Choice(choices: ['asc', 'desc'])]
     protected $order_direction;
 
     /** @var string */

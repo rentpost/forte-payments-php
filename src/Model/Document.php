@@ -21,7 +21,7 @@ class Document extends AbstractModel
     protected ?DocumentId $documentId = null;
 
     #[Assert\NotBlank]
-    #[Assert\Choice(['dispute', 'application'])]
+    #[Assert\Choice(choices: ['dispute', 'application'])]
     protected ?string $resource = null;
 
     #[Assert\NotBlank]
