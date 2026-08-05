@@ -33,7 +33,7 @@ class SettlementSubResource extends AbstractSubResource
     {
         $uri = UriBuilder::build('settlements/', [], $filter, $pagination);
 
-        return $this->getHttpClient()->makeModelRequest('get', $uri, Model\SettlementCollection::class);
+        return $this->getHttpClient()->makeModelRequest('GET', $uri, Model\SettlementCollection::class);
     }
 
 
@@ -54,6 +54,6 @@ class SettlementSubResource extends AbstractSubResource
             $transactionId->getValue()
         ]);
 
-        return $this->getHttpClient()->makeModelRequest('get', $uri, Model\SettlementCollection::class);
+        return $this->getHttpClient()->makeModelRequest('GET', $uri, Model\SettlementCollection::class);
     }
 }

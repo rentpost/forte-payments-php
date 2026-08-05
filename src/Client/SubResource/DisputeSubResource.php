@@ -33,7 +33,7 @@ class DisputeSubResource extends AbstractSubResource
             $disputeId->getValue(),
         ]);
 
-        return $this->getHttpClient()->makeModelRequest('get', $uri, Model\Dispute::class);
+        return $this->getHttpClient()->makeModelRequest('GET', $uri, Model\Dispute::class);
     }
 
 
@@ -55,6 +55,6 @@ class DisputeSubResource extends AbstractSubResource
             $pagination,
         );
 
-        return $this->getHttpClient()->makeModelRequest('get', $uri, Model\DisputeCollection::class);
+        return $this->getHttpClient()->makeModelRequest('GET', $uri, Model\DisputeCollection::class);
     }
 }

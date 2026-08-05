@@ -30,7 +30,7 @@ class ApplicationSubResource extends AbstractSubResource
     {
         $uri = UriBuilder::build('organizations/%s/applications', [$this->getAuthOrgId()->getValue()]);
 
-        return $this->getHttpClient()->makeModelRequest('post', $uri, Model\Application::class, $application);
+        return $this->getHttpClient()->makeModelRequest('POST', $uri, Model\Application::class, $application);
     }
 
 
@@ -48,7 +48,7 @@ class ApplicationSubResource extends AbstractSubResource
             $applicationId->getValue(),
         ]);
 
-        return $this->getHttpClient()->makeModelRequest('get', $uri, Model\Application::class, null);
+        return $this->getHttpClient()->makeModelRequest('GET', $uri, Model\Application::class, null);
     }
 
 
@@ -71,6 +71,6 @@ class ApplicationSubResource extends AbstractSubResource
             $paginationData,
         );
 
-        return $this->getHttpClient()->makeModelRequest('get', $uri, Model\ApplicationCollection::class, null);
+        return $this->getHttpClient()->makeModelRequest('GET', $uri, Model\ApplicationCollection::class, null);
     }
 }

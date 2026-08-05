@@ -40,7 +40,7 @@ class TransactionSubResource extends AbstractSubResource
         ]);
 
         return $this->getHttpClient()
-            ->makeModelRequest('post', $uri, Model\Transaction::class, $transaction);
+            ->makeModelRequest('POST', $uri, Model\Transaction::class, $transaction);
     }
 
 
@@ -61,7 +61,7 @@ class TransactionSubResource extends AbstractSubResource
         ]);
 
         return $this->getHttpClient()
-            ->makeModelRequest('put', $uri, Model\Transaction::class, $transaction);
+            ->makeModelRequest('PUT', $uri, Model\Transaction::class, $transaction);
     }
 
 
@@ -82,7 +82,7 @@ class TransactionSubResource extends AbstractSubResource
             $transactionId->getValue(),
         ]);
 
-        return $this->getHttpClient()->makeModelRequest('get', $uri, Model\Transaction::class);
+        return $this->getHttpClient()->makeModelRequest('GET', $uri, Model\Transaction::class);
     }
 
 
@@ -162,7 +162,7 @@ class TransactionSubResource extends AbstractSubResource
             $pagination,
         );
 
-        return $this->getHttpClient()->makeModelRequest('get', $uri, Model\TransactionCollection::class);
+        return $this->getHttpClient()->makeModelRequest('GET', $uri, Model\TransactionCollection::class);
     }
 
 
@@ -180,7 +180,7 @@ class TransactionSubResource extends AbstractSubResource
     {
         $uri = UriBuilder::build('transactions/', [], $filter, $pagination);
 
-        return $this->getHttpClient()->makeModelRequest('get', $uri, Model\TransactionCollection::class);
+        return $this->getHttpClient()->makeModelRequest('GET', $uri, Model\TransactionCollection::class);
     }
 
 
@@ -221,7 +221,7 @@ class TransactionSubResource extends AbstractSubResource
         ]);
 
         return $this->getHttpClient()
-            ->makeModelRequest('put', $uri, Model\Transaction::class, $transactionCopy);
+            ->makeModelRequest('PUT', $uri, Model\Transaction::class, $transactionCopy);
     }
 
 

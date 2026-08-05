@@ -37,7 +37,7 @@ class FundingSubResource extends AbstractSubResource
             $fundingId->getValue(),
         ]);
 
-        return $this->getHttpClient()->makeModelRequest('get', $uri, Model\Funding::class);
+        return $this->getHttpClient()->makeModelRequest('GET', $uri, Model\Funding::class);
     }
 
 
@@ -60,7 +60,7 @@ class FundingSubResource extends AbstractSubResource
             $pagination,
         );
 
-        return $this->getHttpClient()->makeModelRequest('get', $uri, Model\FundingCollection::class);
+        return $this->getHttpClient()->makeModelRequest('GET', $uri, Model\FundingCollection::class);
     }
 
 
@@ -76,7 +76,7 @@ class FundingSubResource extends AbstractSubResource
     {
         $uri = UriBuilder::build('fundings/', [], $filter, $pagination);
 
-        return $this->getHttpClient()->makeModelRequest('get', $uri, Model\FundingCollection::class);
+        return $this->getHttpClient()->makeModelRequest('GET', $uri, Model\FundingCollection::class);
     }
 
 
@@ -101,7 +101,7 @@ class FundingSubResource extends AbstractSubResource
             $fundingId->getValue(),
         ], null, $pagination);
 
-        return $this->getHttpClient()->makeModelRequest('get', $uri, Model\TransactionCollection::class);
+        return $this->getHttpClient()->makeModelRequest('GET', $uri, Model\TransactionCollection::class);
     }
 
 
@@ -126,6 +126,6 @@ class FundingSubResource extends AbstractSubResource
             $fundingId->getValue(),
         ], null, $pagination);
 
-        return $this->getHttpClient()->makeModelRequest('get', $uri, Model\SettlementCollection::class);
+        return $this->getHttpClient()->makeModelRequest('GET', $uri, Model\SettlementCollection::class);
     }
 }

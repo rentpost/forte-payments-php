@@ -34,7 +34,7 @@ class LocationSubResource extends AbstractSubResource
             $locationId->getValue(),
         ]);
 
-        return $this->getHttpClient()->makeModelRequest('get', $uri, Model\Location::class);
+        return $this->getHttpClient()->makeModelRequest('GET', $uri, Model\Location::class);
     }
 
 
@@ -57,7 +57,7 @@ class LocationSubResource extends AbstractSubResource
             $pagination,
         );
 
-        return $this->getHttpClient()->makeModelRequest('get', $uri, Model\LocationCollection::class);
+        return $this->getHttpClient()->makeModelRequest('GET', $uri, Model\LocationCollection::class);
     }
 
 
@@ -107,6 +107,6 @@ class LocationSubResource extends AbstractSubResource
         ]);
 
         return $this->getHttpClient()
-            ->makeModelRequest('put', $uri, Model\Location::class, $location);
+            ->makeModelRequest('PUT', $uri, Model\Location::class, $location);
     }
 }

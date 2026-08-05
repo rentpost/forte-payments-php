@@ -28,7 +28,7 @@ class DocumentSubResource extends AbstractSubResource
         $uri = UriBuilder::build('organizations/%s/documents', [$this->getAuthOrgId()->getValue()]);
 
         return $this->getHttpClient()
-            ->makeModelRequestWithAttachment('post', $uri, Model\Document::class, $document, $attachment);
+            ->makeModelRequestWithAttachment('POST', $uri, Model\Document::class, $document, $attachment);
     }
 
 
@@ -45,6 +45,6 @@ class DocumentSubResource extends AbstractSubResource
         ]);
 
         return $this->getHttpClient()
-            ->makeModelRequest('get', $uri, Model\Document::class);
+            ->makeModelRequest('GET', $uri, Model\Document::class);
     }
 }

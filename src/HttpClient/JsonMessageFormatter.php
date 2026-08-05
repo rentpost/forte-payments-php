@@ -48,7 +48,10 @@ class JsonMessageFormatter extends \GuzzleHttp\MessageFormatter
         $jsonData['response_headers'] = $responseHeaders;
         $jsonData['response_body'] = $responseBody;
 
-        return \GuzzleHttp\json_encode($jsonData);
+        // PHP's own json_encode with JSON_THROW_ON_ERROR, rather than \GuzzleHttp\json_encode which
+        // is deprecated and goes in guzzle 8.  Both throw on a value that will not encode; only the
+        // exception type differs, and nothing here catches it.
+        return json_encode($jsonData, JSON_THROW_ON_ERROR);
     }
 
 
