@@ -53,15 +53,15 @@ class Transaction extends AbstractModel
     protected ?string $enteredBy = null;
 
     // API read only
-    protected ?DateTime $receivedDate;
+    protected ?DateTime $receivedDate = null;
 
     // API read only
-    protected ?DateTime $originationDate;
+    protected ?DateTime $originationDate = null;
 
     protected ?Money $salesTaxAmount = null;
 
     // API read only
-    protected ?Money $subtotalAmount;
+    protected ?Money $subtotalAmount = null;
 
     protected ?Money $serviceFeeAmount = null;
     protected ?bool $recurringIndicator = null;
@@ -71,10 +71,10 @@ class Transaction extends AbstractModel
     protected ?string $saveToken = null;
 
     // API read only
-    protected ?string $attemptNumber;
+    protected ?string $attemptNumber = null;
 
     // API read only
-    protected ?int $cofTransactionType;
+    protected ?int $cofTransactionType = null;
 
     protected ?string $cofInitialTransactionId = null;
 

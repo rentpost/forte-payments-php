@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Location extends AbstractModel
 {
 
-    protected ?OrganizationId $parentOrganizationId;
+    protected ?OrganizationId $parentOrganizationId = null;
     protected OrganizationId $organizationId;
     protected LocationId $locationId;
 

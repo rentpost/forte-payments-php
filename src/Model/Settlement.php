@@ -25,22 +25,22 @@ class Settlement extends AbstractModel
 
     protected OrganizationId $organizationId;
     protected LocationId $locationId;
-    protected ?FundingId $fundingId;
-    protected ?CustomerToken $customerToken;
-    protected ?string $customerId;
-    protected ?string $orderNumber;
-    protected ?string $referenceId;
+    protected ?FundingId $fundingId = null;
+    protected ?CustomerToken $customerToken = null;
+    protected ?string $customerId = null;
+    protected ?string $orderNumber = null;
+    protected ?string $referenceId = null;
     protected SettlementId $settleId;
-    protected ?TransactionId $transactionId;
-    protected ?string $settleBatchId;
-    protected ?DateTime $settleDate;
+    protected TransactionId $transactionId;
+    protected ?string $settleBatchId = null;
+    protected ?DateTime $settleDate = null;
 
     #[Assert\NotBlank(allowNull: true)]
     #[Assert\Choice(choices: ['deposit', 'reject', 'withdrawal'])]
-    protected ?string $settleType;
+    protected ?string $settleType = null;
 
     protected ?string $settleResponseCode = null;
-    protected ?Decimal $settleAmount;
+    protected ?Decimal $settleAmount = null;
 
     #[Assert\Choice(choices: ['echeck', 'cc'])]
     protected string $method;
@@ -125,7 +125,7 @@ class Settlement extends AbstractModel
      * A merchant-defined string created at the customer level to identify the customer.
      * [max length = 15]
      */
-    public function getCustomerId(): string
+    public function getCustomerId(): ?string
     {
         return $this->customerId;
     }
@@ -134,7 +134,7 @@ class Settlement extends AbstractModel
     /**
      * @internal api read only field
      */
-    public function setCustomerId(string $customerId): self
+    public function setCustomerId(?string $customerId): self
     {
         $this->customerId = $customerId;
 
@@ -166,7 +166,7 @@ class Settlement extends AbstractModel
      * A merchant-defined string that identifies the transaction.
      * [max length = 50]
      */
-    public function getReferenceId(): string
+    public function getReferenceId(): ?string
     {
         return $this->referenceId;
     }
@@ -175,7 +175,7 @@ class Settlement extends AbstractModel
     /**
      * @internal api read only field
      */
-    public function setReferenceId(string $referenceId): self
+    public function setReferenceId(?string $referenceId): self
     {
         $this->referenceId = $referenceId;
 
