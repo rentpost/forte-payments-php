@@ -28,9 +28,9 @@ class Funding extends AbstractModel
     #[Assert\Choice(choices: ['completed', 'pending', 'failed', 'not_applicable'])]
     protected string $status;
 
-    protected ?DateTime $effectiveDate;
-    protected ?DateTime $originationDate;
-    protected ?Decimal $netAmount;
+    protected ?DateTime $effectiveDate = null;
+    protected ?DateTime $originationDate = null;
+    protected ?Decimal $netAmount = null;
 
     /**
      * Forte currently isn't supporting this object as the docs state, instead it's returning
