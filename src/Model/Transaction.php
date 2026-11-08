@@ -52,7 +52,7 @@ class Transaction extends AbstractModel
     #[Assert\Length(max: 50)]
     protected ?string $enteredBy = null;
 
-    // API read only
+    // Read only: Forte returns it on a transaction
     protected ?DateTime $receivedDate = null;
 
     // API read only
@@ -70,8 +70,8 @@ class Transaction extends AbstractModel
     #[Assert\Choice(choices: ['customer', 'paymethod'])]
     protected ?string $saveToken = null;
 
-    // API read only
-    protected ?string $attemptNumber = null;
+    // Read only: Forte returns it on a transaction
+    protected ?int $attemptNumber = null;
 
     // API read only
     protected ?int $cofTransactionType = null;
@@ -299,6 +299,14 @@ class Transaction extends AbstractModel
     }
 
 
+    public function setReceivedDate(?DateTime $receivedDate): self
+    {
+        $this->receivedDate = $receivedDate;
+
+        return $this;
+    }
+
+
     public function getOriginationDate(): ?DateTime
     {
         return $this->originationDate;
@@ -381,9 +389,17 @@ class Transaction extends AbstractModel
     }
 
 
-    public function getAttemptNumber(): ?string
+    public function getAttemptNumber(): ?int
     {
         return $this->attemptNumber;
+    }
+
+
+    public function setAttemptNumber(?int $attemptNumber): self
+    {
+        $this->attemptNumber = $attemptNumber;
+
+        return $this;
     }
 
 

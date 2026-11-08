@@ -177,6 +177,25 @@ class TransactionsTest extends AbstractIntegrationTest
 
 
     /**
+     * The organization reads the transaction without naming its location, which comes with it
+     *
+     * @depends testFindOne
+     */
+    public function testFindOneInOrganization(Model\Transaction $transaction): void
+    {
+        $transactionResource = $this->getForteClient()->useTransactions('sandbox');
+
+        $found = $transactionResource->findOneInOrganization(
+            $transactionResource->getAuthOrgId(),
+            $transaction->getTransactionId(),
+        );
+
+        $this->assertSame($transaction->getTransactionId()->getValue(), $found->getTransactionId()->getValue());
+        $this->assertSame(UserSettings::getSandboxMerchantLocationId()->getValue(), $found->getLocationId()->getValue());
+    }
+
+
+    /**
      * After `testFindOne` has ran, we know for sure the new item inserted in available from the API
      *
      * @depends testFindOne
