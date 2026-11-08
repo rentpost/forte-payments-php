@@ -87,6 +87,25 @@ class TransactionSubResource extends AbstractSubResource
 
 
     /**
+     * Finds a transaction made at any of the organization's locations, its own location among its fields
+     *
+     * @param Attribute\Id\OrganizationId $organizationId       Use reseller org id if reseller
+     */
+    public function findOneInOrganization(
+        Attribute\Id\OrganizationId $organizationId,
+        Attribute\Id\TransactionId $transactionId,
+    ): Model\Transaction
+    {
+        $uri = UriBuilder::build('organizations/%s/transactions/%s', [
+            $organizationId->getValue(),
+            $transactionId->getValue(),
+        ]);
+
+        return $this->getHttpClient()->makeModelRequest('GET', $uri, Model\Transaction::class);
+    }
+
+
+    /**
      * When anything is just inserted (POST) into Forte, it can take several
      * seconds to become available. This will wait and retry a few times until it becomes available
      *
